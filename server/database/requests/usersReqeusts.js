@@ -13,11 +13,15 @@ class usersData {
     }
 
     add(user) {
-        return this._data.add(user.name, user)
+        return this._data.set(user.name, user) ? user : null;
     }
 
     has(name) {
         return this._data.has(name)
+    }
+
+    clear() {
+        this._data.clear();
     }
 
 }
@@ -25,4 +29,4 @@ class usersData {
 const instance = new usersData();
 Object.freeze(instance);
 
-export default instance;
+module.exports = instance;

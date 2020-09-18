@@ -1,15 +1,16 @@
-const server = require('http').createServer();
-const io = require('socket.io')(server);
+let express = require('express');
+let usersRouter =  require('./api/routers/usersRouter');
+let bodyParser = require('body-parser');
+let morgan = require('morgan')
 
-io.on('connect', socket => {
-    console.log("New client connected");
-    // either with send()
-    socket.emit('message','Hello!');
 
-    // handle the event sent with socket.send()
-    socket.on('message', (data) => {
-        console.log(data);
-    });
-});
+let app = express();
+app.use(express.json());
+app.use('/users',usersRouter);
+app.use(morgan('dev'));
 
-server.listen(8080);
+
+app.listen(8080);
+console.log("lisening on port 8080");
+
+module.exports = app; //for testing

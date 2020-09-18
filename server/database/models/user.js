@@ -4,3 +4,5 @@ class User{
         this.chats = new Map();
     }
 }
+
+module.exports = User;
