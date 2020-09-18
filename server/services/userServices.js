@@ -5,7 +5,7 @@ let User = require("../database/models/user")
 
 function createUser(name) {
         if (userRequests.has(name))
-            return false;
+            return null;
         else {
             let newUser = new User(name);
             return userRequests.add(newUser);
