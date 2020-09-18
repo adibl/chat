@@ -1,19 +1,20 @@
 let userRequests = require("../database/requests/usersReqeusts");
 let User = require("../database/models/user")
+let usersManager = new userRequests();
 
 
 
 function createUser(name) {
-        if (userRequests.has(name))
+        if (usersManager.has(name))
             return null;
         else {
             let newUser = new User(name);
-            return userRequests.add(newUser);
+            return usersManager.add(newUser);
         }
 }
 
 function getUser(name) {
-    return userRequests.get(name)
+    return usersManager.get(name)
 }
 
 module.exports = {getUser, createUser};

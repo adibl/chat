@@ -1,12 +1,11 @@
 class usersData {
     constructor(){
-        if(! usersData.instance){
-            this._data = new Map();
-            usersData.instance = this;
+        if(usersData.exists){
+            return usersData.Instance
         }
-
-        return usersData.instance;
-    }
+        this._data = new Map();
+        usersData.Instance = this;
+        }
 
     get(name) {
         return this._data.get(name)
@@ -26,7 +25,5 @@ class usersData {
 
 }
 
-const instance = new usersData();
-Object.freeze(instance);
 
-module.exports = instance;
+module.exports = usersData;

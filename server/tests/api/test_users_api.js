@@ -7,13 +7,15 @@ let chaiHttp = require('chai-http');
 let request = require('requests');
 let server = require('../../app');
 let users = require('../../database/requests/usersReqeusts')
+const User = require("../../database/models/user");
 const { expect } = chai;
+const userManager = new users();
 
 chai.use(chaiHttp);
 
 describe('Users', () => {
     beforeEach((done) => {
-        users.clear();
+        userManager.clear();
         done();
     });
 
@@ -67,5 +69,33 @@ describe('Users', () => {
         });
 
     });
+
+
+    describe('GET /users/{username}', () => {
+        before((done) => {
+            userManager.add(new User("adi"));
+            done();
+        })
+        it('it should get adi user', (done) => {
+            chai.request(server)
+                .get('/users/adi')
+                .end((err, res) => {
+                    expect(res).to.have.status(200);
+                    expect(res.body.name).to.equals("adi");
+                    done();
+                });
+        });
+
+        it('it should fail getting user', (done) => {
+            chai.request(server)
+                .get('/users/noSuchName')
+                .end((err, res) => {
+                    expect(res).to.have.status(404);
+                    done();
+                });
+        });
+
+    });
+
 
 });
