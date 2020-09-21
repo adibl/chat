@@ -23,7 +23,7 @@ describe('Users', () => {
 
         it('it should create new user', (done) => {
             chai.request(server)
-                .put('/users')
+                .post('/users')
                 .send({"name": "adi"})
                 .end((err, res) => {
                     expect(res).to.have.status(200);
@@ -37,10 +37,10 @@ describe('Users', () => {
 
             Promise.all([
                 requester
-                    .put('/users')
+                    .post('/users')
                     .send({"name": "adi"}),
                 requester
-                    .put('/users')
+                    .post('/users')
                     .send({"name": "adi"}),
             ]).then(responses => {
                 console.log(responses[0].statusCode);
@@ -54,7 +54,7 @@ describe('Users', () => {
 
         it('it should fail to create user without a name', (done) => {
             let req = chai.request(server)
-                .put('/users')
+                .post('/users')
                 .send({})
                 .end((err, res) => {
                     expect(res).to.have.status(400);
@@ -64,7 +64,7 @@ describe('Users', () => {
 
         it('it should fail to create user with empty name', (done) => {
             let req = chai.request(server)
-                .put('/users')
+                .post('/users')
                 .send({"name": ""})
                 .end((err, res) => {
                     expect(res).to.have.status(400);

@@ -3,7 +3,7 @@ let userServices = require("./../../services/userServices");
 
 const router = express.Router();
 
-router.put('/', function (req,res) {
+router.post('/', function (req,res) {
     console.log("body:" + req.body.name);
     if (req.body.name === undefined || req.body.name === "") {
         res.status(400).json("must send not empty name");

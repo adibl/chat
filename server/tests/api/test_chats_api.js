@@ -27,7 +27,7 @@ describe('Chats', () => {
 
         it('it should create new chat', (done) => {
             chai.request(server)
-                .put('/chats')
+                .post('/chats')
                 .send({"name": "newChat", "creator": "adi", "members": ["matan", "rotem"]})
                 .end((err, res) => {
                     expect(res).to.have.status(200);
@@ -39,7 +39,7 @@ describe('Chats', () => {
 
         it('it should fail due to user dont exist', (done) => {
             chai.request(server)
-                .put('/chats')
+                .post('/chats')
                 .send({"name": "newChat", "creator": "adi", "members": ["matan", "DontExist"]})
                 .end((err, res) => {
                     expect(res).to.have.status(409);
@@ -49,7 +49,7 @@ describe('Chats', () => {
 
         it('it should fail due to no members in request', (done) => {
             chai.request(server)
-                .put('/chats')
+                .post('/chats')
                 .send({"name": "newChat", "creator": "adi"})
                 .end((err, res) => {
                     expect(res).to.have.status(400);
