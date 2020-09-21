@@ -1,10 +1,10 @@
-class usersData {
+class usersRequests {
     constructor(){
-        if(usersData.exists){
-            return usersData.Instance
+        if(usersRequests.exists){
+            return usersRequests.Instance
         }
         this._data = new Map();
-        usersData.Instance = this;
+        usersRequests.Instance = this;
         }
 
     get(name) {
@@ -29,5 +29,5 @@ class usersData {
 
 }
 
-let data = new usersData();
+let data = new usersRequests();
 module.exports = data;

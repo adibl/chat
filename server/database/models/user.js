@@ -1,8 +1,7 @@
-class User{
+class user {
     constructor(userName) {
         this.name = userName;
-        this.chats = new Map();
     }
 }
 
-module.exports = User;
+module.exports = user;

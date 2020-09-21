@@ -1,4 +1,4 @@
-class chatsData {
+class conversationRequests {
     constructor(){
         this._data = new Map();
     }
@@ -25,5 +25,5 @@ class chatsData {
 
 }
 
-let data = new chatsData();
+let data = new conversationRequests();
 module.exports = data;

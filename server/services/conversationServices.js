@@ -1,16 +1,16 @@
-let chatsData = require("../database/requests/chatsRequests");
+let chatsData = require("../database/requests/conversationsRequests");
 let userServices = require("./userServices");
-let Chat = require("../database/models/chat");
+let conversation = require("../database/models/conversation");
 
 
-function createChat(chat) {
-    for(let user of [...chat.members, chat.creator]) {
+function createConversation(name, creator, members, type) {
+    for(let user of [...members, creator]) {
         if (!userServices.hasUser(user)) {
             return null
         }
     }
 
-    let newChat = new Chat(chat.name, chat.creator, chat.members);
+    let newChat = new conversation(name, creator, type);
     return chatsData.add(newChat);
 }
 
@@ -30,4 +30,4 @@ function clear() {
     chatsData.clear();
 }
 
-module.exports = {getChatMetadata, createChat, remove, clear, hasChat};
+module.exports = {getChatMetadata, createConversation, remove, clear, hasChat};

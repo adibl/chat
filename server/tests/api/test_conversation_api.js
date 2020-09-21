@@ -4,7 +4,7 @@ let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../../app');
 let userManager = require('../../database/requests/usersReqeusts');
-let chatManager = require('../../database/requests/chatsRequests');
+let chatManager = require('../../database/requests/conversationsRequests');
 const User = require("../../database/models/user");
 const { expect } = chai;
 
@@ -19,16 +19,16 @@ describe('Chats', () => {
         done();
     })
 
-    describe('POST /chats', () => {
+    describe('POST /conversations', () => {
         beforeEach((done) => {
             chatManager.clear();
             done();
         })
 
-        it('it should create new chat', (done) => {
+        it('it should create new conversation', (done) => {
             chai.request(server)
-                .post('/chats')
-                .send({"name": "newChat", "creator": "adi", "members": ["matan", "rotem"]})
+                .post('/conversations')
+                .send({"name": "newChat", "creator": "adi", "members": ["matan", "rotem"], "type": "group"})
                 .end((err, res) => {
                     expect(res).to.have.status(200);
                     expect(res.body.name).to.equals("newChat");
@@ -39,8 +39,8 @@ describe('Chats', () => {
 
         it('it should fail due to user dont exist', (done) => {
             chai.request(server)
-                .post('/chats')
-                .send({"name": "newChat", "creator": "adi", "members": ["matan", "DontExist"]})
+                .post('/conversations')
+                .send({"name": "newChat", "creator": "adi", "members": ["matan", "DontExist"], "type": "group"})
                 .end((err, res) => {
                     expect(res).to.have.status(409);
                     done();
@@ -49,7 +49,7 @@ describe('Chats', () => {
 
         it('it should fail due to no members in request', (done) => {
             chai.request(server)
-                .post('/chats')
+                .post('/conversations')
                 .send({"name": "newChat", "creator": "adi"})
                 .end((err, res) => {
                     expect(res).to.have.status(400);
