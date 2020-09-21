@@ -15,6 +15,10 @@ function getUser(name) {
     return usersManager.get(name)
 }
 
+function hasUser(name) {
+    return usersManager.has(name);
+}
+
 function remove(name) {
     return usersManager.remove(name);
 }
@@ -23,4 +27,4 @@ function clear() {
     usersManager.clear();
 }
 
-module.exports = {getUser, createUser, remove, clear};
+module.exports = {getUser, createUser, remove, clear, hasUser};
