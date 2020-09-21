@@ -14,12 +14,10 @@ const userManager = new users();
 chai.use(chaiHttp);
 
 describe('Users', () => {
-    beforeEach((done) => {
-        userManager.clear();
-        done();
-    });
+
 
     describe('POST /users', () => {
+
         it('it should create new user', (done) => {
             chai.request(server)
                 .put('/users')
@@ -31,21 +29,14 @@ describe('Users', () => {
                 });
         });
 
-        it('it should fail to create 2 users with the same name', (done) => {
-            let req = chai.request(server)
+        it('it should fail create user with the same name', (done) => {
+            chai.request(server)
                 .put('/users')
                 .send({"name": "adi"})
-                .then((res) => {
-                    expect(res).to.have.status(200);
-                    expect(res.body.name).to.equals("adi");
-
-                }).then(chai.request(server)
-                    .put('/users')
-                    .send({"name": "adi"})
-                    .end((err, res) => {
-                        expect(res).to.have.status(409);
-                        done();
-                    }));
+                .end((err, res) => {
+                    expect(res).to.have.status(409);
+                    done();
+                });
         });
 
         it('it should fail to create user without a name', (done) => {
@@ -72,7 +63,7 @@ describe('Users', () => {
 
 
     describe('GET /users/{username}', () => {
-        before((done) => {
+        beforeEach((done) => {
             userManager.add(new User("adi"));
             done();
         })

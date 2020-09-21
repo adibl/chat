@@ -6,8 +6,9 @@ let morgan = require('morgan')
 
 let app = express();
 app.use(express.json());
-app.use('/users',usersRouter);
 app.use(morgan('dev'));
+app.use('/users',usersRouter);
+
 
 
 app.listen(8080);

@@ -21,4 +21,8 @@ function remove(name) {
     return usersManager.remove(name);
 }
 
-module.exports = {getUser, createUser, remove};
+function clear() {
+    usersManager.clear();
+}
+
+module.exports = {getUser, createUser, remove, clear};
