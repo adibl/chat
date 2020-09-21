@@ -19,6 +19,10 @@ class usersData {
         return this._data.has(name)
     }
 
+    remove(name) {
+        return this._data.delete(name);
+    }
+
     clear() {
         this._data.clear();
     }

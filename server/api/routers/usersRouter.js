@@ -11,7 +11,6 @@ router.put('/', function (req,res) {
 
     let newUser = userServices.createUser(req.body.name);
     if (newUser !== null) {
-        console.log("create new user named " + JSON.stringify(newUser));
         res.json(newUser);
     }
     else {
@@ -26,6 +25,16 @@ router.get('/:username', function (req,res) {
     }
     else {
         res.json(user);
+    }
+});
+
+router.delete('/:username', function (req,res) {
+    let name = req.params.username
+    if (userServices.remove(name)) {
+        res.status(200).json(name);
+    }
+    else {
+        res.status(404).json("username don't exist");
     }
 });
 

@@ -17,4 +17,8 @@ function getUser(name) {
     return usersManager.get(name)
 }
 
-module.exports = {getUser, createUser};
+function remove(name) {
+    return usersManager.remove(name);
+}
+
+module.exports = {getUser, createUser, remove};

@@ -98,4 +98,40 @@ describe('Users', () => {
     });
 
 
+    describe('DELETE /users/{username}', () => {
+        before((done) => {
+            userManager.add(new User("adi"));
+            done();
+        })
+        it('it should delete adi user', (done) => {
+            chai.request(server)
+                .delete('/users/adi')
+                .end((err, res) => {
+                    expect(res).to.have.status(200);
+                    expect(res.body).to.equals("adi");
+                    done();
+                });
+        });
+
+        it('it should fail delete user', (done) => {
+            chai.request(server)
+                .delete('/users/noSuchName')
+                .end((err, res) => {
+                    expect(res).to.have.status(404);
+                    done();
+                });
+        });
+
+        it('it should fail delete user', (done) => {
+            chai.request(server)
+                .delete('/users/')
+                .end((err, res) => {
+                    expect(res).to.have.status(404);
+                    done();
+                });
+        });
+
+    });
+
+
 });
