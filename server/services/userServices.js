@@ -1,7 +1,5 @@
-let userRequests = require("../database/requests/usersReqeusts");
+let usersManager = require("../database/requests/usersReqeusts");
 let User = require("../database/models/user")
-let usersManager = new userRequests();
-
 
 
 function createUser(name) {

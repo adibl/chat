@@ -1,7 +1,7 @@
 let express = require('express');
 let usersRouter =  require('./api/routers/usersRouter');
 let bodyParser = require('body-parser');
-let morgan = require('morgan')
+let morgan = require('morgan');
 
 
 let app = express();

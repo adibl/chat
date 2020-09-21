@@ -29,5 +29,5 @@ class usersData {
 
 }
 
-
-module.exports = usersData;
+let data = new usersData();
+module.exports = data;

@@ -6,10 +6,9 @@ let chai = require('chai');
 let chaiHttp = require('chai-http');
 let request = require('requests');
 let server = require('../../app');
-let users = require('../../database/requests/usersReqeusts')
+let userManager = require('../../database/requests/usersReqeusts')
 const User = require("../../database/models/user");
 const { expect } = chai;
-const userManager = new users();
 
 chai.use(chaiHttp);
 
@@ -17,6 +16,10 @@ describe('Users', () => {
 
 
     describe('POST /users', () => {
+        beforeEach((done) => {
+            userManager.clear();
+            done();
+        })
 
         it('it should create new user', (done) => {
             chai.request(server)
@@ -29,14 +32,24 @@ describe('Users', () => {
                 });
         });
 
-        it('it should fail create user with the same name', (done) => {
-            chai.request(server)
-                .put('/users')
-                .send({"name": "adi"})
-                .end((err, res) => {
-                    expect(res).to.have.status(409);
-                    done();
-                });
+        it('it should fail to create 2 users with the same name', (done) => {
+            let requester = chai.request(server).keepOpen();
+
+            Promise.all([
+                requester
+                    .put('/users')
+                    .send({"name": "adi"}),
+                requester
+                    .put('/users')
+                    .send({"name": "adi"}),
+            ]).then(responses => {
+                console.log(responses[0].statusCode);
+                console.log(responses[1].statusCode);
+                let statusCodes = responses.map((response) => response.statusCode);
+                expect(statusCodes).to.contain(200);
+                expect(statusCodes).to.contain(409);
+                done();
+            }).catch((err) => console.error(err));
         });
 
         it('it should fail to create user without a name', (done) => {
@@ -64,15 +77,16 @@ describe('Users', () => {
 
     describe('GET /users/{username}', () => {
         beforeEach((done) => {
-            userManager.add(new User("adi"));
+            userManager.clear();
+            userManager.add(new User("adi2"));
             done();
         })
         it('it should get adi user', (done) => {
             chai.request(server)
-                .get('/users/adi')
+                .get('/users/adi2')
                 .end((err, res) => {
                     expect(res).to.have.status(200);
-                    expect(res.body.name).to.equals("adi");
+                    expect(res.body.name).to.equals("adi2");
                     done();
                 });
         });
@@ -90,16 +104,17 @@ describe('Users', () => {
 
 
     describe('DELETE /users/{username}', () => {
-        before((done) => {
-            userManager.add(new User("adi"));
+        beforeEach((done) => {
+            userManager.clear();
+            userManager.add(new User("moran"));
             done();
         })
         it('it should delete adi user', (done) => {
             chai.request(server)
-                .delete('/users/adi')
+                .delete('/users/moran')
                 .end((err, res) => {
                     expect(res).to.have.status(200);
-                    expect(res.body).to.equals("adi");
+                    expect(res.body).to.equals("moran");
                     done();
                 });
         });
