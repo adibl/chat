@@ -3,7 +3,7 @@ const basicDataRequests = require("./basicDataRequests");
 class messageRequests extends basicDataRequests{
 
     async add(message) {
-        return this._data.set(message.id, message) ? message : null;
+        this._data.set(message.id, message);
     }
 
 }

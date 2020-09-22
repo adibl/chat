@@ -7,7 +7,8 @@ async function createUser(name) {
             return null;
         else {
             let newUser = new User(name);
-            return usersManager.add(newUser);
+            await usersManager.add(newUser);
+            return newUser;
         }
 }
 
