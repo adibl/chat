@@ -14,7 +14,6 @@ async function _testUsersExist(usernames) {
     }
 }
 
-
 async function createConversation(name, creator, members, type) {
     await _testUsersExist([...members, creator]);
 

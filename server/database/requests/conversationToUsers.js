@@ -14,7 +14,13 @@ class conversationToUsers {
 
     async add(conversationId, usernames) {
         for(let user of usernames) {
-            this._usersToConv.set(user, (this._usersToConv.get(user) || []).push(conversationId));
+            if (this._usersToConv.get(user)) {
+                this._usersToConv.get(user).push(conversationId);
+            }
+            else {
+                this._usersToConv.set(user, [conversationId]);
+            }
+
         }
 
         if (this._convToUsers.has(conversationId)) {
