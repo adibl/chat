@@ -9,10 +9,10 @@ class conversationToMessages {
 
     add(conversationId, message = null) {
         if (message) {
-            return this._data.set(conversationId, (this._data.get(conversationId) ?? []).push(message));
+            this._data.set(conversationId, (this._data.get(conversationId) || []).push(message));
         }
         else {
-            return this._data.set(conversationId, []);
+            this._data.set(conversationId, []);
         }
 
     }

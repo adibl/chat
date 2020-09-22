@@ -1,7 +1,7 @@
 class conversationToUsers {
     constructor() {
-        this._convToUsers = new map();
-        this._usersToConv = new map();
+        this._convToUsers = new Map();
+        this._usersToConv = new Map();
     }
 
     getByConversationId(id) {
@@ -12,9 +12,16 @@ class conversationToUsers {
         return this._usersToConv.get(name);
     }
 
-    add(conversationId, username) {
-        this._usersToConv.set(username, (this._usersToConv.get(username) ?? []).push(conversationId));
-        this._convToUsers.push(conversationId, (this._convToUsers.get(conversationId) ?? []).push(username));
+    add(conversationId, usernames) {
+        for(let user of usernames) {
+            this._usersToConv.set(user, (this._usersToConv.get(user) || []).push(conversationId));
+        }
+
+        if (this._convToUsers.has(conversationId)) {
+            return this._convToUsers.set(conversationId, this._convToUsers.get(conversationId).concat(usernames));
+        }
+
+        return this._convToUsers.set(conversationId, usernames);
     }
 
     hasUser(name) {

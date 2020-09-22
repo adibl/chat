@@ -30,6 +30,7 @@ describe('Chats', () => {
                 .post('/conversations')
                 .send({"name": "newChat", "creator": "adi", "members": ["matan", "rotem"], "type": "group"})
                 .end((err, res) => {
+                    expect(res.error).to.be.false;
                     expect(res).to.have.status(200);
                     expect(res.body.name).to.equals("newChat");
                     expect(res.body.creator).to.equals("adi");

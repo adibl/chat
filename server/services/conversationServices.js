@@ -1,6 +1,9 @@
 let chatsData = require("../database/requests/conversationsRequests");
 let userServices = require("./userServices");
 let conversation = require("../database/models/conversation");
+let conversationToUsers = require("../database/requests/conversationToUsers");
+let conversationToMessages = require("../database/requests/conversationToMessages");
+
 
 
 function createConversation(name, creator, members, type) {
@@ -11,14 +14,23 @@ function createConversation(name, creator, members, type) {
     }
 
     let newChat = new conversation(name, creator, type);
-    return chatsData.add(newChat);
+    if (!chatsData.add(newChat)) {
+        return null;
+    }
+
+    if (!conversationToUsers.add(newChat.id, [...members, creator])) {
+        return null;
+    }
+
+    conversationToMessages.add(newChat.id);
+    return newChat;
 }
 
-function getChatMetadata(id) {
+function getConversationMetadata(id) {
     return chatsData.get(id)
 }
 
-function hasChat(id) {
+function hasConversation(id) {
     return chatsData.has(id);
 }
 
@@ -30,4 +42,4 @@ function clear() {
     chatsData.clear();
 }
 
-module.exports = {getChatMetadata, createConversation, remove, clear, hasChat};
+module.exports = {getConversationMetadata, createConversation, remove, clear, hasConversation};
