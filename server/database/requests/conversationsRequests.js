@@ -1,28 +1,9 @@
-class conversationRequests {
-    constructor(){
-        this._data = new Map();
-    }
+const basicDataRequests = require("./basicDataRequests");
 
-    get(id) {
-        return this._data.get(id);
-    }
-
+class conversationRequests extends basicDataRequests{
     add(chat) {
         return this._data.set(chat.id, chat) ? chat : null;
     }
-
-    has(id) {
-        return this._data.has(id);
-    }
-
-    remove(id) {
-        return this._data.delete(id);
-    }
-
-    clear() {
-        this._data.clear();
-    }
-
 }
 
 let data = new conversationRequests();
