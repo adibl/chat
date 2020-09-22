@@ -3,23 +3,28 @@ let userServices = require("./userServices");
 let conversation = require("../database/models/conversation");
 let conversationToUsers = require("../database/requests/conversationToUsers");
 let conversationToMessages = require("../database/requests/conversationToMessages");
+let ApiError = require("../ApiError");
 
+
+function _testUsersExist(usernames) {
+    for(let user of usernames) {
+        if (!userServices.hasUser(user)) {
+            throw new ApiError(409, `user ${user} dont exist`)
+        }
+    }
+}
 
 
 function createConversation(name, creator, members, type) {
-    for(let user of [...members, creator]) {
-        if (!userServices.hasUser(user)) {
-            return null
-        }
-    }
+    _testUsersExist([...members, creator]);
 
     let newChat = new conversation(name, creator, type);
     if (!chatsData.add(newChat)) {
-        return null;
+        throw new ApiError(500, "cant access to server");
     }
 
     if (!conversationToUsers.add(newChat.id, [...members, creator])) {
-        return null;
+        throw new ApiError(500, "cant access to server");
     }
 
     conversationToMessages.add(newChat.id);
