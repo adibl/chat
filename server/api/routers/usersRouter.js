@@ -8,14 +8,17 @@ router.post('/', async function (req,res) {
     if (req.body.name === undefined || req.body.name === "") {
         res.status(400).json("must send not empty name");
     }
-
-    let newUser = await userServices.createUser(req.body.name);
-    if (newUser !== null) {
-        res.json(newUser);
-    }
     else {
-        res.status(409).json("username already exists");
+        let newUser = await userServices.createUser(req.body.name);
+        if (newUser !== null) {
+            res.json(newUser);
+        }
+        else {
+            res.status(409).json("username already exists");
+        }
     }
+
+
 });
 
 router.get('/:username', async function (req,res) {

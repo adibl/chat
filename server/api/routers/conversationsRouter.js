@@ -29,8 +29,9 @@ router.get('/:conversationId', async function (req,res) {
     if (conversationData) {
         res.json(conversationData);
     }
-
-    res.status(404).json(`conversation ${req.params.conversationId} not found`);
+    else {
+        res.status(404).json(`conversation ${req.params.conversationId} not found`);
+    }
 });
 
 module.exports = router;
