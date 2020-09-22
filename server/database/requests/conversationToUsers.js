@@ -4,15 +4,15 @@ class conversationToUsers {
         this._usersToConv = new Map();
     }
 
-    getByConversationId(id) {
+    async getByConversationId(id) {
         return this._convToUsers.get(id);
     }
 
-    getByUsername(name) {
+    async getByUsername(name) {
         return this._usersToConv.get(name);
     }
 
-    add(conversationId, usernames) {
+    async add(conversationId, usernames) {
         for(let user of usernames) {
             this._usersToConv.set(user, (this._usersToConv.get(user) || []).push(conversationId));
         }
@@ -24,15 +24,15 @@ class conversationToUsers {
         return this._convToUsers.set(conversationId, usernames);
     }
 
-    hasUser(name) {
+    async hasUser(name) {
         return this._usersToConv.has(name);
     }
 
-    hasConversation(id) {
+    async hasConversation(id) {
         return this._convToUsers.has(id);
     }
 
-    removeByConversationId(id) {
+    async removeByConversationId(id) {
         let userNames = this._convToUsers.get(id);
         if (!userNames) {
             return false;
@@ -45,7 +45,7 @@ class conversationToUsers {
         return this._convToUsers.remove(id);
     }
 
-    clear() {
+    async clear() {
         this._convToUsers.clear();
         this._usersToConv.clear();
     }

@@ -1,7 +1,7 @@
 const basicDataRequests = require("./basicDataRequests");
 
 class usersRequests extends basicDataRequests{
-    add(user) {
+    async add(user) {
         return this._data.set(user.name, user) ? user : null;
     }
 }

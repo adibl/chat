@@ -1,7 +1,7 @@
 const basicDataRequests = require("./basicDataRequests");
 
 class conversationRequests extends basicDataRequests{
-    add(chat) {
+     async add(chat) {
         return this._data.set(chat.id, chat) ? chat : null;
     }
 }

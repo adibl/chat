@@ -3,19 +3,19 @@ class basicDataRequests {
         this._data = new Map();
     }
 
-    get(key) {
+    async get(key) {
         return this._data.get(key)
     }
 
-    has(key) {
+    async has(key) {
         return this._data.has(key)
     }
 
-    remove(key) {
+    async remove(key) {
         return this._data.delete(key);
     }
 
-    clear() {
+    async clear() {
         this._data.clear();
     }
 

@@ -3,13 +3,13 @@ let userServices = require("./../../services/userServices");
 
 const router = express.Router();
 
-router.post('/', function (req,res) {
+router.post('/', async function (req,res) {
     console.log("body:" + req.body.name);
     if (req.body.name === undefined || req.body.name === "") {
         res.status(400).json("must send not empty name");
     }
 
-    let newUser = userServices.createUser(req.body.name);
+    let newUser = await userServices.createUser(req.body.name);
     if (newUser !== null) {
         res.json(newUser);
     }
@@ -18,8 +18,8 @@ router.post('/', function (req,res) {
     }
 });
 
-router.get('/:username', function (req,res) {
-    let user = userServices.getUser(req.params.username);
+router.get('/:username', async function (req,res) {
+    let user = await userServices.getUser(req.params.username);
     if (!user) {
         res.status(404).json("username don't exist");
     }
@@ -28,9 +28,9 @@ router.get('/:username', function (req,res) {
     }
 });
 
-router.delete('/:username', function (req,res) {
+router.delete('/:username', async function (req,res) {
     let name = req.params.username
-    if (userServices.remove(name)) {
+    if (await userServices.remove(name)) {
         res.status(200).json(name);
     }
     else {

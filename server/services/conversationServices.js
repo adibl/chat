@@ -6,47 +6,47 @@ let conversationToMessages = require("../database/requests/conversationToMessage
 let ApiError = require("../ApiError");
 
 
-function _testUsersExist(usernames) {
+async function _testUsersExist(usernames) {
     for(let user of usernames) {
-        if (!userServices.hasUser(user)) {
+        if (!await userServices.hasUser(user)) {
             throw new ApiError(409, `user ${user} dont exist`)
         }
     }
 }
 
 
-function createConversation(name, creator, members, type) {
-    _testUsersExist([...members, creator]);
+async function createConversation(name, creator, members, type) {
+    await _testUsersExist([...members, creator]);
 
     let newChat = new conversation(name, creator, type);
-    if (!chatsData.add(newChat)) {
-        throw new ApiError(500, "cant access to server");
+    try {
+        await chatsData.add(newChat)
+        await conversationToUsers.add(newChat.id, [...members, creator])
+        await conversationToMessages.add(newChat.id);
+    }
+    catch (err) {
+        throw new ApiError(500, 'cant accesses to database');
     }
 
-    if (!conversationToUsers.add(newChat.id, [...members, creator])) {
-        throw new ApiError(500, "cant access to server");
-    }
-
-    conversationToMessages.add(newChat.id);
     return newChat;
 }
 
-function getConversationMetadata(id) {
+async function getConversationMetadata(id) {
     return chatsData.get(id)
 }
 
-function hasConversation(id) {
+async function hasConversation(id) {
     return chatsData.has(id);
 }
 
-function remove(id) {
+async function remove(id) {
     return chatsData.remove(id);
 }
 
-function clear() {
-    chatsData.clear();
-    conversationToUsers.clear();
-    conversationToMessages.clear();
+async function clear() {
+    await chatsData.clear();
+    await conversationToUsers.clear();
+    return conversationToMessages.clear();
 }
 
 module.exports = {getConversationMetadata, createConversation, remove, clear, hasConversation};

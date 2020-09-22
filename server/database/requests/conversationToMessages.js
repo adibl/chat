@@ -3,11 +3,11 @@ class conversationToMessages {
         this._data = new Map();
     }
 
-    get(id) {
+    async get(id) {
         return this._data.get(id);
     }
 
-    add(conversationId, message = null) {
+    async add(conversationId, message = null) {
         if (message) {
             this._data.set(conversationId, (this._data.get(conversationId) || []).push(message));
         }
@@ -17,15 +17,15 @@ class conversationToMessages {
 
     }
 
-    has(id) {
+    async has(id) {
         return this._data.has(id);
     }
 
-    remove(id) {
+    async remove(id) {
         return this._data.delete(id);
     }
 
-    clear() {
+    async clear() {
         this._data.clear();
     }
 

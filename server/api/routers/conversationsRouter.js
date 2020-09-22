@@ -3,13 +3,13 @@ let chatServices = require("../../services/conversationServices");
 
 const router = express.Router();
 
-router.post('/', function (req,res) {
+router.post('/', async function (req,res) {
     if (!(req.body.name && req.body.creator && req.body.members && req.body.type)) {
         res.status(400).json("must send not empty name, creator, members and type");
         return;
     }
     try {
-        let newConversation = chatServices.createConversation(req.body.name, req.body.creator, req.body.members, req.body.type);
+        let newConversation = await chatServices.createConversation(req.body.name, req.body.creator, req.body.members, req.body.type);
         if (newConversation !== null) {
             res.json(newConversation);
         }
@@ -24,8 +24,8 @@ router.post('/', function (req,res) {
 
 });
 
-router.get('/:conversationId', function (req,res) {
-    let conversationData = chatServices.getConversationMetadata(req.params.conversationId);
+router.get('/:conversationId', async function (req,res) {
+    let conversationData = await chatServices.getConversationMetadata(req.params.conversationId);
     if (conversationData) {
         res.json(conversationData);
     }

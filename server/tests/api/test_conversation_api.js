@@ -68,15 +68,18 @@ describe('Chats', () => {
     });
 
     describe('GET /conversations/{conversationId}', () => {
-        beforeEach((done) => {
-            conversationManager.clear();
-            this.value = conversationManager.createConversation(null, "adi", ["matan"], "personal");
+        let conversationId = null;
+
+        beforeEach(async (done) => {
+            await conversationManager.clear();
+            let conversation = await conversationManager.createConversation(null, "adi", ["matan"], "personal");
+            conversationId = conversation.id;
             done();
         })
 
         it('it should create new conversation', (done) => {
             chai.request(server)
-                .get(`/conversations/${this.value.id}`)
+                .get(`/conversations/${conversationId}`)
                 .end((err, res) => {
                     expect(res.error).to.be.false;
                     expect(res).to.have.status(200);
