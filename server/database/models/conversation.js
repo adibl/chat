@@ -2,7 +2,7 @@ let uuid = require('uuid');
 
 class conversation {
     constructor(name, creator, type) {
-        this.id = new uuid.v4();
+        this.id = uuid.v4();
         this.name = name;
         this.type = type;
         this.creator = creator;

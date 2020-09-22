@@ -3,19 +3,22 @@ process.env.NODE_ENV = 'test';
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../../app');
-let userManager = require('../../database/requests/usersReqeusts');
+let userManager = require('../../services/userServices');
 let chatManager = require('../../database/requests/conversationsRequests');
+let conversationManager = require("../../services/conversationServices");
 const User = require("../../database/models/user");
+const conversation = require("../../database/models/conversation");
 const { expect } = chai;
+let uuid = require('uuid');
 
 chai.use(chaiHttp);
 
 describe('Chats', () => {
     before((done) => {
         userManager.clear();
-        userManager.add(new User("adi"));
-        userManager.add(new User("matan"));
-        userManager.add(new User("rotem"));
+        userManager.createUser("adi");
+        userManager.createUser("matan");
+        userManager.createUser("rotem");
         done();
     })
 
@@ -60,8 +63,38 @@ describe('Chats', () => {
 
 
 
+
+
     });
 
+    describe('GET /conversations/{conversationId}', () => {
+        beforeEach((done) => {
+            conversationManager.clear();
+            this.value = conversationManager.createConversation(null, "adi", ["matan"], "personal");
+            done();
+        })
 
+        it('it should create new conversation', (done) => {
+            chai.request(server)
+                .get(`/conversations/${this.value.id}`)
+                .end((err, res) => {
+                    expect(res.error).to.be.false;
+                    expect(res).to.have.status(200);
+                    expect(res.body.creator).to.equals("adi");
+                    expect(res.body.members).to.equals(undefined);
+                    expect(res.body.type).to.equals("personal");
+                    done();
+                });
+        });
 
+        it('it should fail due to id is wrong', (done) => {
+            chai.request(server)
+                .get(`/conversations/${uuid.v4()}`)
+                .end((err, res) => {
+                    expect(res).to.have.status(404);
+                    done();
+                });
+        });
+        
+    });
 });

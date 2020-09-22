@@ -45,6 +45,8 @@ function remove(id) {
 
 function clear() {
     chatsData.clear();
+    conversationToUsers.clear();
+    conversationToMessages.clear();
 }
 
 module.exports = {getConversationMetadata, createConversation, remove, clear, hasConversation};

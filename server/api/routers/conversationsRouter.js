@@ -24,4 +24,13 @@ router.post('/', function (req,res) {
 
 });
 
+router.get('/:conversationId', function (req,res) {
+    let conversationData = chatServices.getConversationMetadata(req.params.conversationId);
+    if (conversationData) {
+        res.json(conversationData);
+    }
+
+    res.status(404).json(`conversation ${req.params.conversationId} not found`);
+});
+
 module.exports = router
