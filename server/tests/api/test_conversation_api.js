@@ -20,13 +20,13 @@ describe('Chats', () => {
         userManager.createUser("matan");
         userManager.createUser("rotem");
         done();
-    })
+    });
 
     describe('POST /conversations', () => {
         after(async (done) => {
             await chatManager.clear();
             done();
-        })
+        });
 
         it('it should create new conversation', (done) => {
             chai.request(server)
@@ -75,7 +75,7 @@ describe('Chats', () => {
             let conversation = await conversationManager.createConversation(null, "adi", ["matan"], "personal");
             conversationId = conversation.id;
             done();
-        })
+        });
 
         it('it should create new conversation', (done) => {
             chai.request(server)

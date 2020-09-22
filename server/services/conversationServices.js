@@ -20,8 +20,8 @@ async function createConversation(name, creator, members, type) {
 
     let newChat = new conversation(name, creator, type);
     try {
-        await chatsData.add(newChat)
-        await conversationToUsers.add(newChat.id, [...members, creator])
+        await chatsData.add(newChat);
+        await conversationToUsers.add(newChat.id, [...members, creator]);
         await conversationToMessages.add(newChat.id);
     }
     catch (err) {

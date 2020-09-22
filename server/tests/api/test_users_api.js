@@ -6,7 +6,7 @@ let chai = require('chai');
 let chaiHttp = require('chai-http');
 let request = require('requests');
 let server = require('../../app');
-let userManager = require('../../database/requests/usersReqeusts')
+let userManager = require('../../database/requests/usersReqeusts');
 const User = require("../../database/models/user");
 const { expect } = chai;
 
@@ -53,7 +53,7 @@ describe('Users', () => {
         });
 
         it('it should fail to create user without a name', (done) => {
-            let req = chai.request(server)
+            chai.request(server)
                 .post('/users')
                 .send({})
                 .end((err, res) => {
@@ -63,7 +63,7 @@ describe('Users', () => {
         });
 
         it('it should fail to create user with empty name', (done) => {
-            let req = chai.request(server)
+            chai.request(server)
                 .post('/users')
                 .send({"name": ""})
                 .end((err, res) => {

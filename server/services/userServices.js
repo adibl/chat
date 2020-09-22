@@ -1,5 +1,5 @@
 let usersManager = require("../database/requests/usersReqeusts");
-let User = require("../database/models/user")
+let User = require("../database/models/user");
 
 
 async function createUser(name) {

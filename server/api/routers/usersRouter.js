@@ -29,7 +29,7 @@ router.get('/:username', async function (req,res) {
 });
 
 router.delete('/:username', async function (req,res) {
-    let name = req.params.username
+    let name = req.params.username;
     if (await userServices.remove(name)) {
         res.status(200).json(name);
     }
@@ -38,4 +38,4 @@ router.delete('/:username', async function (req,res) {
     }
 });
 
-module.exports = router
+module.exports = router;

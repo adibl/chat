@@ -14,6 +14,6 @@ app.use('/conversations',chatsRouter);
 
 
 app.listen(8080);
-console.log("lisening on port 8080");
+console.log("listening on port 8080");
 
 module.exports = app; //for testing
