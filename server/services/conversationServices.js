@@ -3,13 +3,12 @@ let userServices = require("./userServices");
 let conversation = require("../database/models/conversation");
 let conversationToUsers = require("../database/requests/conversationToUsers");
 let conversationToMessages = require("../database/requests/conversationToMessages");
-let ApiError = require("../ApiError");
 
 
 async function _testUsersExist(usernames) {
     for(let user of usernames) {
         if (!await userServices.hasUser(user)) {
-            throw new ApiError(409, `user ${user} dont exist`)
+            throw new RangeError(`user ${user} dont exist`);
         }
     }
 }
@@ -18,14 +17,9 @@ async function createConversation(name, creator, members, type) {
     await _testUsersExist([...members, creator]);
 
     let newChat = new conversation(name, creator, type);
-    try {
-        await chatsData.add(newChat);
-        await conversationToUsers.add(newChat.id, [...members, creator]);
-        await conversationToMessages.add(newChat.id);
-    }
-    catch (err) {
-        throw new ApiError(500, 'cant accesses to database');
-    }
+    await chatsData.add(newChat);
+    await conversationToUsers.add(newChat.id, [...members, creator]);
+    await conversationToMessages.add(newChat.id);
 
     return newChat;
 }

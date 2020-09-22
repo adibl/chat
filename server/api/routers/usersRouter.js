@@ -1,9 +1,10 @@
 let express = require('express');
 let userServices = require("./../../services/userServices");
+let createError = require('http-errors');
 
 const router = express.Router();
 
-router.post('/', async function (req,res) {
+router.post('/', async function (req,res, next) {
     if (req.body.name === undefined || req.body.name === "") {
         res.status(400).json("must send not empty name");
     }
@@ -13,30 +14,30 @@ router.post('/', async function (req,res) {
             res.json(newUser);
         }
         else {
-            res.status(409).json("username already exists");
+            next(createError(409, "username already exists"));
         }
     }
 
 
 });
 
-router.get('/:username', async function (req,res) {
+router.get('/:username', async function (req,res, next) {
     let user = await userServices.getUser(req.params.username);
     if (!user) {
-        res.status(404).json("username don't exist");
+        next(createError(404, "username don't exist"));
     }
     else {
         res.json(user);
     }
 });
 
-router.delete('/:username', async function (req,res) {
+router.delete('/:username', async function (req,res, next) {
     let name = req.params.username;
     if (await userServices.remove(name)) {
         res.status(200).json(name);
     }
     else {
-        res.status(404).json("username don't exist");
+        next(createError(404, "username don't exist"));
     }
 });
 
