@@ -23,8 +23,8 @@ describe('Chats', () => {
     })
 
     describe('POST /conversations', () => {
-        beforeEach((done) => {
-            chatManager.clear();
+        after(async (done) => {
+            await chatManager.clear();
             done();
         })
 

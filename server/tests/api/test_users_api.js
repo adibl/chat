@@ -16,10 +16,10 @@ describe('Users', () => {
 
 
     describe('POST /users', () => {
-        beforeEach((done) => {
-            userManager.clear();
+        beforeEach(async (done) => {
+            await userManager.clear();
             done();
-        })
+        });
 
         it('it should create new user', (done) => {
             chai.request(server)
@@ -76,11 +76,12 @@ describe('Users', () => {
 
 
     describe('GET /users/{username}', () => {
-        beforeEach((done) => {
-            userManager.clear();
-            userManager.add(new User("adi2"));
+        beforeEach(async (done) => {
+            await userManager.clear();
+            await userManager.add(new User("adi2"));
             done();
-        })
+        });
+
         it('it should get adi user', (done) => {
             chai.request(server)
                 .get('/users/adi2')
@@ -104,12 +105,13 @@ describe('Users', () => {
 
 
     describe('DELETE /users/{username}', () => {
-        beforeEach((done) => {
-            userManager.clear();
-            userManager.add(new User("moran"));
+        beforeEach(async (done) => {
+            await userManager.clear();
+            await userManager.add(new User("moran"));
             done();
-        })
-        it('it should delete adi user', (done) => {
+        });
+
+        it('it should delete moran user', (done) => {
             chai.request(server)
                 .delete('/users/moran')
                 .end((err, res) => {
