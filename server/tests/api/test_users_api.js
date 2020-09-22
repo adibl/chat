@@ -43,8 +43,6 @@ describe('Users', () => {
                     .post('/users')
                     .send({"name": "adi"}),
             ]).then(responses => {
-                console.log(responses[0].statusCode);
-                console.log(responses[1].statusCode);
                 let statusCodes = responses.map((response) => response.statusCode);
                 expect(statusCodes).to.contain(200);
                 expect(statusCodes).to.contain(409);
