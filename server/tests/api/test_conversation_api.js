@@ -3,27 +3,26 @@ process.env.NODE_ENV = 'test';
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../../app');
-let userManager = require('../../services/userServices');
-let chatManager = require('../../database/requests/conversationsRequests');
-let conversationManager = require("../../services/conversationServices");
 let {Conversation} = require("../../database/models/conversation");
 let {expect} = chai;
 let uuid = require('uuid');
+let services = require('../../loaders/services');
+let {userServices, conversationServices, messageServices} = services;
 
 chai.use(chaiHttp);
 
-describe('Chats', () => {
-    before((done) => {
-        userManager.clear();
-        userManager.createUser("adi");
-        userManager.createUser("matan");
-        userManager.createUser("rotem");
+describe('Conversation', () => {
+    before(async (done) => {
+        await userServices.clear();
+        await userServices.createUser("adi");
+        await userServices.createUser("matan");
+        await userServices.createUser("rotem");
         done();
     });
 
     describe('POST /conversations', () => {
         after(async (done) => {
-            await chatManager.clear();
+            await conversationServices.clear();
             done();
         });
 
@@ -65,8 +64,8 @@ describe('Chats', () => {
         let conversationId = null;
 
         beforeEach(async (done) => {
-            await conversationManager.clear();
-            let conversation = await conversationManager.createConversation(new Conversation(null, "adi", "personal"), ["matan"]);
+            await conversationServices.clear();
+            let conversation = await conversationServices.createConversation(new Conversation(null, "adi", "personal"), ["matan"]);
             conversationId = conversation.id;
             done();
         });

@@ -1,21 +1,25 @@
-let conversationToMessages = require("../database/requests/conversationToMessages");
-let messagesRequests = require("../database/requests/messagesRequests");
-let {message, getMessageFromJson} = require("../database/models/message");
-let conversationToUsers = require("../database/requests/conversationToUsers");
-let webSocketHandler = require("../api/webSocketInitializer");
-
-
-async function sendMessageToGroup(messageJson, conversationId) {
-    let message = getMessageFromJson(messageJson);
-
-    if (!message) {
-        throw new RangeError("message must have text and sender");
+class messagesServices {
+    constructor(conversationToMessages, messagesRequests, getMessageFromJson, conversationToUsers, webSocketHandler) {
+        this._conversationToMessages = conversationToMessages;
+        this._messagesRequests = messagesRequests;
+        this._getMessageFromJson = getMessageFromJson;
+        this._conversationToUsers = conversationToUsers;
+        this._webSocketHandler = webSocketHandler;
     }
-    await messagesRequests.add(message);
-    await conversationToMessages.add(conversationId, message);
-    let users = await conversationToUsers.getByConversationId(conversationId);
-    await webSocketHandler.getInstance().sendMessage(conversationId, users, message);
-    return message;
+
+    async sendMessageToGroup(messageJson, conversationId) {
+        let message = this._getMessageFromJson(messageJson);
+
+        if (!message) {
+            throw new RangeError("message must have text and sender");
+        }
+        await this._messagesRequests.add(message);
+        await this._conversationToMessages.add(conversationId, message);
+        let users = await this._conversationToUsers.getByConversationId(conversationId);
+        await this._webSocketHandler.getInstance().sendMessage(conversationId, users, message);
+        return message;
+    }
 }
 
-module.exports = {sendMessageToGroup};
+
+module.exports = messagesServices;

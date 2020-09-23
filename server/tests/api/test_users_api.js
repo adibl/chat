@@ -4,10 +4,8 @@ process.env.NODE_ENV = 'test';
 //Require the dev-dependencies
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let request = require('requests');
 let server = require('../../app');
-let userManager = require('../../database/requests/usersReqeusts');
-let conversationManager = require("../../services/conversationServices");
+let {userServices, conversationServices, messageServices} = require('../../loaders/services');
 const User = require("../../database/models/user");
 const {Conversation} = require("../../database/models/conversation");
 const {expect} = chai;
@@ -19,7 +17,7 @@ describe('Users', () => {
 
     describe('POST /users', () => {
         beforeEach(async (done) => {
-            await userManager.clear();
+            await userServices.clear();
             done();
         });
 
@@ -76,9 +74,9 @@ describe('Users', () => {
 
     describe('GET /users/{username}', () => {
         beforeEach(async (done) => {
-            await userManager.clear();
-            await userManager.add(new User("adi2"));
-            await conversationManager.createConversation(new Conversation(null, "adi2", "personal"),[]);
+            await userServices.clear();
+            await userServices.createUser("adi2");
+            await conversationServices.createConversation(new Conversation(null, "adi2", "personal"),[]);
             done();
         });
 
@@ -105,8 +103,8 @@ describe('Users', () => {
 
     describe('DELETE /users/{username}', () => {
         beforeEach(async (done) => {
-            await userManager.clear();
-            await userManager.add(new User("moran"));
+            await userServices.clear();
+            await userServices.createUser("moran");
             done();
         });
 

@@ -5,9 +5,9 @@ process.env.NODE_ENV = 'test';
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../../app');
-let userManager = require('../../services/userServices');
-let conversationService = require("../../services/conversationServices");
+let {userServices, conversationServices, messageServices} = require('../../loaders/services');
 let {Conversation} = require("../../database/models/conversation");
+
 const {expect} = chai;
 
 chai.use(chaiHttp);
@@ -16,11 +16,11 @@ describe('Messages', () => {
     let conversationId = null;
 
     before(async (done) => {
-        await userManager.clear();
-        await userManager.createUser("adi");
-        await userManager.createUser("matan");
-        await userManager.createUser("rotem");
-        let conversation = await conversationService.createConversation(new Conversation(null, "adi", "personal"), ["rotem"]);
+        await userServices.clear();
+        await userServices.createUser("adi");
+        await userServices.createUser("matan");
+        await userServices.createUser("rotem");
+        let conversation = await conversationServices.createConversation(new Conversation(null, "adi", "personal"), ["rotem"]);
         conversationId = conversation.id;
         done();
     });

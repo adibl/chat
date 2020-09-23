@@ -1,37 +1,44 @@
-let usersManager = require("../database/requests/usersReqeusts");
-let User = require("../database/models/user");
-let conversationToUsers = require("../database/requests/conversationToUsers");
 
-
-async function createUser(name) {
-    if (await usersManager.has(name)) {
-        return null;
+class userServices {
+    constructor(usersManager, User, conversationToUsers) {
+        this._usersManager = usersManager;
+        this._user = User;
+        this._conversationToUsers = conversationToUsers;
     }
-    else {
-        let newUser = new User(name);
-        await usersManager.add(newUser);
-        return newUser;
-    }
+
+
+
+        async createUser(name) {
+            if (await this._usersManager.has(name)) {
+                return null;
+            } else {
+                let newUser = new this._user(name);
+                await this._usersManager.add(newUser);
+                return newUser;
+            }
+        }
+
+        async getUser(name) {
+            return this._usersManager.get(name);
+        }
+
+        async getUserConversations(name) {
+            return await this._conversationToUsers.getByUsername(name);
+        }
+
+        async hasUser(name) {
+            return this._usersManager.has(name);
+        }
+
+        async remove(name) {
+            return this._usersManager.remove(name);
+        }
+
+        async clear() {
+            return this._usersManager.clear();
+        }
+
+
 }
 
-async function getUser(name) {
-    return usersManager.get(name);
-}
-
-async function getUserConversations(name) {
-    return await conversationToUsers.getByUsername(name);
-}
-
-async function hasUser(name) {
-    return usersManager.has(name);
-}
-
-async function remove(name) {
-    return usersManager.remove(name);
-}
-
-async function clear() {
-    return usersManager.clear();
-}
-
-module.exports = {getUser, createUser, remove, clear, hasUser, getUserConversations};
+module.exports = userServices;
