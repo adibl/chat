@@ -30,5 +30,4 @@ class SocketConnections {
     }
 }
 
-let connections = new SocketConnections();
-module.exports = connections;
+module.exports = SocketConnections;

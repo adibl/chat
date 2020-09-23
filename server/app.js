@@ -1,26 +1,17 @@
 let express = require('express');
-let morgan = require('morgan');
-let webSocketHandler = require('./api/webSocketInitializer');
 const http = require("http");
+let routersLoader = require('./loaders/routerLoader');
+let servicesLoader = require('./loaders/services');
+let webSocketLoader = require("./loaders/webSocket");
 
 const app = express();
-
 const server = http.createServer(app);
 
-const io = require('socket.io')(server);
-
-
-webSocketHandler.getInstance(io);
-
-app.use(express.json());
-app.use(morgan('dev'));
-let routers = require('./loaders/routerLoader');
-let services = require('./loaders/services');
-let {userServices, conversationServices, messageServices} = services;
-routers(app, userServices, messageServices, conversationServices);
-
+let webSocket =  webSocketLoader(server);
+let {userServices, conversationServices, messageServices} = servicesLoader(webSocket);
+routersLoader(app, userServices, messageServices, conversationServices);
 
 server.listen(8080);
 console.log("listening on port 8080");
 
-module.exports = app;
+module.exports = server;

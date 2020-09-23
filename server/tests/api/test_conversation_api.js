@@ -6,8 +6,9 @@ let server = require('../../app');
 let {Conversation} = require("../../database/models/conversation");
 let {expect} = chai;
 let uuid = require('uuid');
-let services = require('../../loaders/services');
-let {userServices, conversationServices, messageServices} = services;
+let servicesLoader = require('../../loaders/services');
+let webSocketLoader = require("../../loaders/webSocket");
+let {userServices, conversationServices, messageServices} = servicesLoader(webSocketLoader(server));
 
 chai.use(chaiHttp);
 
