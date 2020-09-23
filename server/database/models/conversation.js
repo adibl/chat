@@ -1,6 +1,6 @@
 let uuid = require('uuid');
 
-class conversation {
+class Conversation {
     constructor(name, creator, type) {
         this.id = uuid.v4();
         this.name = name;
@@ -9,4 +9,10 @@ class conversation {
     }
 }
 
-module.exports = conversation;
+function getConversationFromJson(json) {
+    if (json.name && json.type && json.creator) {
+        return new Conversation(json.name, json.creator, json.type);
+    }
+}
+
+module.exports = {Conversation, getConversationFromJson};

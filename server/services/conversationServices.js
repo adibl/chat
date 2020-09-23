@@ -13,15 +13,14 @@ async function _testUsersExist(usernames) {
     }
 }
 
-async function createConversation(name, creator, members, type) {
-    await _testUsersExist([...members, creator]);
+async function createConversation(conversation, members) {
+    await _testUsersExist([...members, conversation.creator]);
 
-    let newChat = new conversation(name, creator, type);
-    await chatsData.add(newChat);
-    await conversationToUsers.add(newChat.id, [...members, creator]);
-    await conversationToMessages.add(newChat.id);
+    await chatsData.add(conversation);
+    await conversationToUsers.add(conversation.id, [...members, conversation.creator]);
+    await conversationToMessages.add(conversation.id);
 
-    return newChat;
+    return conversation;
 }
 
 async function getConversationMetadata(id) {

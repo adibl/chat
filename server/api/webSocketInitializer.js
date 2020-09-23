@@ -1,6 +1,6 @@
 let socketConnections = require('./webSocket/connection');
 
-class WebSocketServices {
+class WebSocketInitializer {
     static Instance;
 
     constructor(io) {
@@ -10,24 +10,24 @@ class WebSocketServices {
             socketConnections.addUser(ws);
         });
 
-        WebSocketServices.Instance = this;
+        WebSocketInitializer.Instance = this;
     }
 
     static getInstance(io = null) {
-        if (!WebSocketServices.Instance && io) {
-            WebSocketServices.Instance = new WebSocketServices(io);
+        if (!WebSocketInitializer.Instance && io) {
+            WebSocketInitializer.Instance = new WebSocketInitializer(io);
         }
 
-        return WebSocketServices.Instance;
+        return WebSocketInitializer.Instance;
     }
 
-    async sendMessage(conversationId, usernames, message) {
+    async sendMessage(conversationId, usernames, message, type="message") {
         let sockets = socketConnections.getConnections(usernames);
         for (let socket of sockets) {
-            await this._io.to(socket).emit(`message:${conversationId}`, JSON.stringify(message));
+            await this._io.to(socket).emit(`${type}:${conversationId}`, JSON.stringify(message));
             console.log("send to " + socket);
         }
     }
 }
 
-module.exports = WebSocketServices;
+module.exports = WebSocketInitializer;

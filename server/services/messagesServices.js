@@ -2,7 +2,7 @@ let conversationToMessages = require("../database/requests/conversationToMessage
 let messagesRequests = require("../database/requests/messagesRequests");
 let {message, getMessageFromJson} = require("../database/models/message");
 let conversationToUsers = require("../database/requests/conversationToUsers");
-let webSocketHandler = require("../api/webSocket");
+let webSocketHandler = require("../api/webSocketInitializer");
 
 
 async function sendMessageToGroup(messageJson, conversationId) {

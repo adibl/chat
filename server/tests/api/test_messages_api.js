@@ -7,7 +7,7 @@ let chaiHttp = require('chai-http');
 let server = require('../../app');
 let userManager = require('../../services/userServices');
 let conversationService = require("../../services/conversationServices");
-const User = require("../../database/models/user");
+let {Conversation} = require("../../database/models/conversation");
 const {expect} = chai;
 
 chai.use(chaiHttp);
@@ -20,7 +20,7 @@ describe('Messages', () => {
         await userManager.createUser("adi");
         await userManager.createUser("matan");
         await userManager.createUser("rotem");
-        let conversation = await conversationService.createConversation("null", "adi", ["rotem"], "private");
+        let conversation = await conversationService.createConversation(new Conversation(null, "adi", "personal"), ["rotem"]);
         conversationId = conversation.id;
         done();
     });

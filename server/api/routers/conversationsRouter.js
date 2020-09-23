@@ -1,16 +1,18 @@
 let express = require('express');
 let chatServices = require("../../services/conversationServices");
 let createError = require('http-errors');
+let {Conversation, getConversationFromJson} = require('../../database/models/conversation');
 
 const router = express.Router();
 
 router.post('/', async function (req, res, next) {
-    if (!(req.body.name && req.body.creator && req.body.members && req.body.type)) {
-        res.status(400).json("must send not empty name, creator, members and type");
+    let conversation = getConversationFromJson(req.body);
+    if (!conversation) {
+        res.status(400).json("conversation is invalid");
         return;
     }
     try {
-        let newConversation = await chatServices.createConversation(req.body.name, req.body.creator, req.body.members, req.body.type);
+        let newConversation = await chatServices.createConversation(conversation, req.body.members);
         if (newConversation !== null) {
             res.json(newConversation);
         }

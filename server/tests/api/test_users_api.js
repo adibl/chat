@@ -9,6 +9,7 @@ let server = require('../../app');
 let userManager = require('../../database/requests/usersReqeusts');
 let conversationManager = require("../../services/conversationServices");
 const User = require("../../database/models/user");
+const {Conversation} = require("../../database/models/conversation");
 const {expect} = chai;
 
 chai.use(chaiHttp);
@@ -77,7 +78,7 @@ describe('Users', () => {
         beforeEach(async (done) => {
             await userManager.clear();
             await userManager.add(new User("adi2"));
-            await conversationManager.createConversation("patriot", "adi2", [],"personal");
+            await conversationManager.createConversation(new Conversation(null, "adi2", "personal"),[]);
             done();
         });
 

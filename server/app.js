@@ -3,15 +3,13 @@ let usersRouter = require('./api/routers/usersRouter');
 let chatsRouter = require('./api/routers/conversationsRouter');
 let messagesRouter = require('./api/routers/messagesRouter');
 let morgan = require('morgan');
-let webSocketHandler = require('./api/webSocket');
+let webSocketHandler = require('./api/webSocketInitializer');
 const http = require("http");
 
 const app = express();
 
-//initialize a simple http server
 const server = http.createServer(app);
 
-//initialize the WebSocket server instance
 const io = require('socket.io')(server);
 
 
@@ -27,4 +25,4 @@ app.use('/messages', messagesRouter);
 server.listen(8080);
 console.log("listening on port 8080");
 
-module.exports = app; //for testing
+module.exports = app;
