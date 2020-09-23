@@ -1,6 +1,5 @@
 let chatsData = require("../database/requests/conversationsRequests");
 let userServices = require("./userServices");
-let conversation = require("../database/models/conversation");
 let conversationToUsers = require("../database/requests/conversationToUsers");
 let conversationToMessages = require("../database/requests/conversationToMessages");
 
@@ -27,18 +26,10 @@ async function getConversationMetadata(id) {
     return chatsData.get(id);
 }
 
-async function hasConversation(id) {
-    return chatsData.has(id);
-}
-
-async function remove(id) {
-    return chatsData.remove(id);
-}
-
 async function clear() {
     await chatsData.clear();
     await conversationToUsers.clear();
     return conversationToMessages.clear();
 }
 
-module.exports = {getConversationMetadata, createConversation, remove, clear, hasConversation};
+module.exports = {getConversationMetadata, createConversation, clear};

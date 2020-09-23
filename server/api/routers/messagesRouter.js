@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post('/:conversationId', async function (req, res, next) {
     try {
-        let message = await messageServices.sendMessage(req.body, req.params.conversationId);
+        let message = await messageServices.sendMessageToGroup(req.body, req.params.conversationId);
         res.status(200).json(message);
     }
     catch (e) {

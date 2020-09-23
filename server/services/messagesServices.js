@@ -18,4 +18,4 @@ async function sendMessageToGroup(messageJson, conversationId) {
     return message;
 }
 
-module.exports = {sendMessage: sendMessageToGroup};
+module.exports = {sendMessageToGroup};
