@@ -6,8 +6,6 @@ class userServices {
         this._conversationToUsers = conversationToUsers;
     }
 
-
-
         async createUser(name) {
             if (await this._usersManager.has(name)) {
                 return null;
