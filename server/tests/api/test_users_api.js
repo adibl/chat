@@ -7,6 +7,7 @@ let chaiHttp = require('chai-http');
 let request = require('requests');
 let server = require('../../app');
 let userManager = require('../../database/requests/usersReqeusts');
+let conversationManager = require("../../services/conversationServices");
 const User = require("../../database/models/user");
 const {expect} = chai;
 
@@ -76,6 +77,7 @@ describe('Users', () => {
         beforeEach(async (done) => {
             await userManager.clear();
             await userManager.add(new User("adi2"));
+            await conversationManager.createConversation("patriot", "adi2", [],"personal");
             done();
         });
 
@@ -85,6 +87,7 @@ describe('Users', () => {
                 .end((err, res) => {
                     expect(res).to.have.status(200);
                     expect(res.body.name).to.equals("adi2");
+                    expect(res.body.conversations).to.be.an('array');
                     done();
                 });
         });

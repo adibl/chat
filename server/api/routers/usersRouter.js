@@ -1,5 +1,6 @@
 let express = require('express');
 let userServices = require("./../../services/userServices");
+
 let createError = require('http-errors');
 
 const router = express.Router();
@@ -25,6 +26,7 @@ router.get('/:username', async function (req, res, next) {
         next(createError(404, "username don't exist"));
     }
     else {
+        user.conversations = await userServices.getUserConversations(req.params.username);
         res.json(user);
     }
 });
