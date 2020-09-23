@@ -19,7 +19,7 @@ class conversationServices {
 
         await this._chatsData.add(conversation);
         await this._conversationToUsers.add(conversation.id, [...members, conversation.creator]);
-        await this._conversationToMessages.add(conversation.id);
+        await this._conversationToMessages.create(conversation.id);
 
         return conversation;
     }

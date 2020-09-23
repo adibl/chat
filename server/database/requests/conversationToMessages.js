@@ -1,32 +1,20 @@
-class ConversationToMessages {
-    constructor() {
-        this._data = new Map();
-    }
+let BasicDataRequests = require('./basicDataRequests')
 
-    async get(id) {
-        return this._data.get(id);
-    }
+class ConversationToMessages extends BasicDataRequests {
 
-    async add(conversationId, message = null) {
-        if (message) {
-            this._data.set(conversationId, (this._data.get(conversationId) || []).push(message));
+    async add(conversationId, message) {
+        let messages = this._data.get(conversationId);
+        if (messages) {
+            messages.push(message);
         }
         else {
-            this._data.set(conversationId, []);
+            this._data.set(conversationId, [message]);
         }
 
     }
 
-    async has(id) {
-        return this._data.has(id);
-    }
-
-    async remove(id) {
-        return this._data.delete(id);
-    }
-
-    async clear() {
-        this._data.clear();
+    async create(conversationId) {
+        this._data.set(conversationId, []);
     }
 
 }
