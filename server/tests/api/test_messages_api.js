@@ -31,7 +31,7 @@ describe('Messages', () => {
         it('it should create new message', (done) => {
             chai.request(server)
                 .post(`/messages/${conversationId}`)
-                .send({"text": "hi", "sender": "adi"})
+                .send({"text": "hi", "sender": "rotem"})
                 .end((err, res) => {
                     expect(res.error).to.be.false;
                     expect(res).to.have.status(200);
