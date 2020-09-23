@@ -3,17 +3,18 @@ let User = require("../database/models/user");
 
 
 async function createUser(name) {
-        if (await usersManager.has(name))
-            return null;
-        else {
-            let newUser = new User(name);
-            await usersManager.add(newUser);
-            return newUser;
-        }
+    if (await usersManager.has(name)) {
+        return null;
+    }
+    else {
+        let newUser = new User(name);
+        await usersManager.add(newUser);
+        return newUser;
+    }
 }
 
 async function getUser(name) {
-    return usersManager.get(name)
+    return usersManager.get(name);
 }
 
 async function hasUser(name) {

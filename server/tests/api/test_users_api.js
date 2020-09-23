@@ -8,7 +8,7 @@ let request = require('requests');
 let server = require('../../app');
 let userManager = require('../../database/requests/usersReqeusts');
 const User = require("../../database/models/user");
-const { expect } = chai;
+const {expect} = chai;
 
 chai.use(chaiHttp);
 
@@ -69,7 +69,6 @@ describe('Users', () => {
                     done();
                 });
         });
-
     });
 
 
@@ -98,9 +97,7 @@ describe('Users', () => {
                     done();
                 });
         });
-
     });
-
 
     describe('DELETE /users/{username}', () => {
         beforeEach(async (done) => {
@@ -136,8 +133,5 @@ describe('Users', () => {
                     done();
                 });
         });
-
     });
-
-
 });

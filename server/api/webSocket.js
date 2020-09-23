@@ -1,7 +1,8 @@
-let socketConnections = require('./webSocket/connection')
+let socketConnections = require('./webSocket/connection');
 
 class WebSocketServices {
     static Instance;
+
     constructor(io) {
         this._io = io;
         io.on("connect", (ws) => {
@@ -22,7 +23,7 @@ class WebSocketServices {
 
     async sendMessage(conversationId, usernames, message) {
         let sockets = socketConnections.getConnections(usernames);
-        for(let socket of sockets) {
+        for (let socket of sockets) {
             await this._io.to(socket).emit(`message:${conversationId}`, JSON.stringify(message));
             console.log("send to " + socket);
         }

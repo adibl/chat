@@ -1,10 +1,10 @@
-const basicDataRequests = require("./basicDataRequests");
+const BasicDataRequests = require("./basicDataRequests");
 
-class conversationRequests extends basicDataRequests{
-     async add(chat) {
+class ConversationRequests extends BasicDataRequests {
+    async add(chat) {
         this._data.set(chat.id, chat);
     }
 }
 
-let data = new conversationRequests();
+let data = new ConversationRequests();
 module.exports = data;

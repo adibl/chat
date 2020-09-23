@@ -5,9 +5,8 @@ let conversationToUsers = require("../database/requests/conversationToUsers");
 let conversationToMessages = require("../database/requests/conversationToMessages");
 
 
-
 async function _testUsersExist(usernames) {
-    for(let user of usernames) {
+    for (let user of usernames) {
         if (!await userServices.hasUser(user)) {
             throw new RangeError(`user ${user} dont exist`);
         }
@@ -26,7 +25,7 @@ async function createConversation(name, creator, members, type) {
 }
 
 async function getConversationMetadata(id) {
-    return chatsData.get(id)
+    return chatsData.get(id);
 }
 
 async function hasConversation(id) {

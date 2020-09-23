@@ -1,4 +1,4 @@
-class conversationToUsers {
+class ConversationToUsers {
     constructor() {
         this._convToUsers = new Map();
         this._usersToConv = new Map();
@@ -13,11 +13,10 @@ class conversationToUsers {
     }
 
     async add(conversationId, usernames) {
-        for(let user of usernames) {
+        for (let user of usernames) {
             if (this._usersToConv.get(user)) {
                 this._usersToConv.get(user).push(conversationId);
-            }
-            else {
+            } else {
                 this._usersToConv.set(user, [conversationId]);
             }
 
@@ -30,27 +29,6 @@ class conversationToUsers {
         return this._convToUsers.set(conversationId, usernames);
     }
 
-    async hasUser(name) {
-        return this._usersToConv.has(name);
-    }
-
-    async hasConversation(id) {
-        return this._convToUsers.has(id);
-    }
-
-    async removeByConversationId(id) {
-        let userNames = this._convToUsers.get(id);
-        if (!userNames) {
-            return false;
-        }
-
-        for(let name of userNames) {
-            this._usersToConv.set(name, this._usersToConv.get(name).remove(id));
-        }
-
-        return this._convToUsers.remove(id);
-    }
-
     async clear() {
         this._convToUsers.clear();
         this._usersToConv.clear();
@@ -58,5 +36,5 @@ class conversationToUsers {
 
 }
 
-let data = new conversationToUsers();
+let data = new ConversationToUsers();
 module.exports = data;

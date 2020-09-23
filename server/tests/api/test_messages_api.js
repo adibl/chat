@@ -8,14 +8,14 @@ let server = require('../../app');
 let userManager = require('../../services/userServices');
 let conversationService = require("../../services/conversationServices");
 const User = require("../../database/models/user");
-const { expect } = chai;
+const {expect} = chai;
 
 chai.use(chaiHttp);
 
 describe('Messages', () => {
     let conversationId = null;
 
-    before( async (done) => {
+    before(async (done) => {
         await userManager.clear();
         await userManager.createUser("adi");
         await userManager.createUser("matan");
@@ -24,7 +24,6 @@ describe('Messages', () => {
         conversationId = conversation.id;
         done();
     });
-
 
     describe('POST /messages/:conversationId', () => {
 
@@ -39,8 +38,5 @@ describe('Messages', () => {
                     done();
                 });
         });
-
     });
-
-
 });

@@ -1,6 +1,6 @@
-const basicDataRequests = require("./basicDataRequests");
+const BasicDataRequests = require("./basicDataRequests");
 
-class messageRequests extends basicDataRequests{
+class MessageRequests extends BasicDataRequests {
 
     async add(message) {
         this._data.set(message.id, message);
@@ -8,5 +8,5 @@ class messageRequests extends basicDataRequests{
 
 }
 
-let data = new messageRequests();
+let data = new MessageRequests();
 module.exports = data;

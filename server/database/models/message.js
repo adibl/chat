@@ -4,7 +4,7 @@ class message {
     constructor(text, sender) {
         this.id = uuid.v4();
         this.text = text;
-        this.sender = sender
+        this.sender = sender;
     }
 }
 

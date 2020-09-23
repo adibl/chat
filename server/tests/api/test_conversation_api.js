@@ -8,7 +8,7 @@ let chatManager = require('../../database/requests/conversationsRequests');
 let conversationManager = require("../../services/conversationServices");
 const User = require("../../database/models/user");
 const conversation = require("../../database/models/conversation");
-const { expect } = chai;
+const {expect} = chai;
 let uuid = require('uuid');
 
 chai.use(chaiHttp);
@@ -60,11 +60,6 @@ describe('Chats', () => {
                     done();
                 });
         });
-
-
-
-
-
     });
 
     describe('GET /conversations/{conversationId}', () => {
@@ -98,6 +93,5 @@ describe('Chats', () => {
                     done();
                 });
         });
-        
     });
 });

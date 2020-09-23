@@ -1,5 +1,5 @@
-class conversationToMessages {
-    constructor(){
+class ConversationToMessages {
+    constructor() {
         this._data = new Map();
     }
 
@@ -31,5 +31,5 @@ class conversationToMessages {
 
 }
 
-let data = new conversationToMessages();
+let data = new ConversationToMessages();
 module.exports = data;

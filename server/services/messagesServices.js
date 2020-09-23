@@ -5,7 +5,6 @@ let conversationToUsers = require("../database/requests/conversationToUsers");
 let webSocketHandler = require("../api/webSocket");
 
 
-
 async function sendMessageToGroup(messageJson, conversationId) {
     let message = getMessageFromJson(messageJson);
 
@@ -15,7 +14,7 @@ async function sendMessageToGroup(messageJson, conversationId) {
     await messagesRequests.add(message);
     await conversationToMessages.add(conversationId, message);
     let users = await conversationToUsers.getByConversationId(conversationId);
-    await webSocketHandler.getInstance().sendMessage(conversationId, users, message)
+    await webSocketHandler.getInstance().sendMessage(conversationId, users, message);
     return message;
 }
 
