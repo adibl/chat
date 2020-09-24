@@ -16,10 +16,12 @@ export default function FormDialog() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({name: username.current.value})
-        })
-            .then((res) => {
+        }).then((res) => {
                 if (res.status === 200) {
                     setOpen(false);
+                }
+                else if (res.status === 409) {
+                    alert("name already exists");
                 }
                 else {
                     alert(res.status);

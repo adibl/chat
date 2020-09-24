@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Card from "@material-ui/core/Card";
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from "@material-ui/core/CardActions";
@@ -7,17 +7,20 @@ import AddIcon from '@material-ui/icons/Add';
 import style from '../UserDisplayStyle';
 
 function UserSelectionDisplay() {
-    let userData = [
-        {username: "adi",id: 1234},
-        {username: "roni", id: 1234}
-    ]
+    const [usersData, setUsersData] = useState([]);
+    useEffect(() => {
+        fetch('http://localhost:8080/users?index=0&limit=10', {
+            method: 'GET'
+        }).then((res) => res.json())
+            .then((data) => setUsersData(data.usernames));
+    })
 
     const classes = style();
     return (
         <div>
-            {userData.map((user) => {
+            {usersData.map((user) => {
                 return <Card className={classes.card}>
-                        <CardHeader title={user.username}/>
+                        <CardHeader title={user}/>
                     <CardActions>
                         <Button size="small">
                             <AddIcon/>
