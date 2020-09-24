@@ -13,7 +13,7 @@ function UserSelectionDisplay() {
             method: 'GET'
         }).then((res) => res.json())
             .then((data) => setUsersData(data.usernames));
-    })
+    }, [])
 
     const classes = style();
     return (
