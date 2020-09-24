@@ -18,8 +18,8 @@ function UserSelectionDisplay() {
     const classes = style();
     return (
         <div>
-            {usersData.map((user) => {
-                return <Card className={classes.card}>
+            {usersData.map((user, index) => {
+                return <Card key={index} className={classes.card}>
                         <CardHeader title={user}/>
                     <CardActions>
                         <Button size="small">

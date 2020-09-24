@@ -12,12 +12,8 @@ function App() {
             <Grid
                 container
                 direction="row"
-                spacing={3}
-            >
-                <Grid item xs={3}
-                      direction="column"
-                      justify="center"
-                      alignItems="center">
+                spacing={3}>
+                <Grid item xs={3}>
                     <UsersClickDisplay/>
 
                     <UserSelectionDisplay/>
@@ -26,7 +22,6 @@ function App() {
                     some text
                 </Grid>
             </Grid>
-
         </div>
     );
 }

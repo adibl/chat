@@ -7,13 +7,13 @@ import style from './UserDisplayStyle';
 function UsersClickDisplay() {
     let userData = [
         {username: "adi",id: 1234},
-        {username: "roni", id: 1234}
+        {username: "roni", id: 1235}
         ]
     const classes = style()
     return (
         <div>
-            {userData.map((user) => {
-                return <Card>
+            {userData.map((user, index) => {
+                return <Card key={index}>
                     <CardActionArea className={classes.card}>
                         <CardHeader title={user.username}/>
                     </CardActionArea>
