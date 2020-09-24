@@ -1,9 +1,9 @@
 
-class WebSocketInitializer {
+class WebSocketServices {
 
     constructor(io, connectionHandler) {
         this._io = io;
-        this._connectionHandler = connectionHandler
+        this._connectionHandler = connectionHandler;
         io.on("connect", (ws) => {
             console.log("connection");
             this._connectionHandler.addUser(ws);
@@ -22,4 +22,4 @@ class WebSocketInitializer {
     }
 }
 
-module.exports = WebSocketInitializer;
+module.exports = WebSocketServices;

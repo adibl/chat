@@ -13,4 +13,4 @@ module.exports = (app, userServices, messageServices, conversationServices) => {
     app.use('/users', usersRouter(userServices));
     app.use('/conversations', conversationRouter(conversationServices));
     app.use('/messages', messagesRouter(messageServices));
-}
+};

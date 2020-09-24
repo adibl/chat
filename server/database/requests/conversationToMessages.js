@@ -1,4 +1,4 @@
-let BasicDataRequests = require('./basicDataRequests')
+let BasicDataRequests = require('./basicDataRequests');
 
 class ConversationToMessages extends BasicDataRequests {
 

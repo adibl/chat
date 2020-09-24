@@ -2,12 +2,10 @@ process.env.NODE_ENV = 'test';
 
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let server = require('../../app');
-let servicesLoader = require('../../loaders/services');
-let webSocketLoader = require("../../loaders/webSocket");
-let {userServices, conversationServices, messageServices} = servicesLoader(webSocketLoader(server));
-const User = require("../../database/models/user");
-const {Conversation} = require("../../database/models/conversation");
+let server = require('../app');
+let servicesLoader = require('../loaders/services');
+let webSocketLoader = require("../loaders/webSocket");
+let {userServices, conversationServices} = servicesLoader(webSocketLoader(server));
 const {expect} = chai;
 
 chai.use(chaiHttp);
@@ -31,7 +29,7 @@ describe('Users', () => {
                     expect(res.body.usernames).to.be.length(2);
                     expect(res.body.usernames).to.be.eql(['adi', 'amir']);
                     done();
-                })
+                });
         });
 
         it('return empty because end is reached', (done) => {
@@ -124,7 +122,7 @@ describe('Users', () => {
         beforeEach(async (done) => {
             await userServices.clear();
             await userServices.createUser("adi2");
-            await conversationServices.createConversation({creator:"adi2", type:"personal"},[]);
+            await conversationServices.createConversation({creator: "adi2", type: "personal"}, []);
             done();
         });
 

@@ -14,7 +14,7 @@ describe("userServices", function() {
 
     afterEach(() => {
         sinon.reset();
-    })
+    });
 
     it("should crete new user", async (done) => {
         let getReturnValue = {username: "adi"};

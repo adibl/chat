@@ -1,5 +1,4 @@
 let express = require('express');
-let userServices = require("./../../services/userServices");
 
 let createError = require('http-errors');
 
@@ -10,7 +9,7 @@ function CreateRouter(userServices) {
         let index = req.query.index;
         let limit = req.query.limit;
         if (!isNaN(Number(index)) && !isNaN(Number(limit))) {
-            let users = await userServices.getUsernamesSorted(Number(index), Number(limit))
+            let users = await userServices.getUsernamesSorted(Number(index), Number(limit));
             res.json({usernames: users});
         }
 
@@ -21,11 +20,13 @@ function CreateRouter(userServices) {
     router.post('/', async function (req, res, next) {
         if (req.body.name === undefined || req.body.name === "") {
             res.status(400).json("must send not empty name");
-        } else {
+        }
+        else {
             let newUser = await userServices.createUser(req.body.name);
             if (newUser !== null) {
                 res.json(newUser);
-            } else {
+            }
+            else {
                 next(createError(409, "username already exists"));
             }
         }
@@ -35,7 +36,8 @@ function CreateRouter(userServices) {
         let user = await userServices.getUser(req.params.username);
         if (!user) {
             next(createError(404, "username don't exist"));
-        } else {
+        }
+        else {
             user.conversations = await userServices.getUserConversations(req.params.username);
             res.json(user);
         }
@@ -45,7 +47,8 @@ function CreateRouter(userServices) {
         let name = req.params.username;
         if (await userServices.remove(name)) {
             res.status(200).json(name);
-        } else {
+        }
+        else {
             next(createError(404, "username don't exist"));
         }
     });

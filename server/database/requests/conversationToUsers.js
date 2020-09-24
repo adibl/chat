@@ -16,7 +16,8 @@ class ConversationToUsers {
         for (let user of usernames) {
             if (this._usersToConv.get(user)) {
                 this._usersToConv.get(user).push(conversationId);
-            } else {
+            }
+            else {
                 this._usersToConv.set(user, [conversationId]);
             }
 

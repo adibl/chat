@@ -2,12 +2,11 @@ process.env.NODE_ENV = 'test';
 
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let server = require('../../app');
+let server = require('../app');
 
-let servicesLoader = require('../../loaders/services');
-let webSocketLoader = require("../../loaders/webSocket");
-let {userServices, conversationServices, messageServices} = servicesLoader(webSocketLoader(server));
-let {Conversation} = require("../../database/models/conversation");
+let servicesLoader = require('../loaders/services');
+let webSocketLoader = require("../loaders/webSocket");
+let {userServices, conversationServices} = servicesLoader(webSocketLoader(server));
 
 const {expect} = chai;
 

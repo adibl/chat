@@ -22,7 +22,7 @@ describe("conversationServices", function() {
 
     afterEach(() => {
         sinon.reset();
-    })
+    });
 
     it("clear should clear indexes", async (done) => {
 
@@ -40,7 +40,7 @@ describe("conversationServices", function() {
 
         let userServices = {
             hasUser: sinon.fake((username) => username !== "adi")
-        }
+        };
         let conversationServices = new conversationServicesFactory(chatsData, userServices, conversationToUsers, conversationToMessages);
 
         try {

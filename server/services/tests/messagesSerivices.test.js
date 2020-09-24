@@ -4,7 +4,7 @@ const expect = chai.expect;
 const sinon = require("sinon");
 
 describe("messagesServices", function() {
-    let message = {message: "data", sender: "adi"}
+    let message = {message: "data", sender: "adi"};
     let getMessageFromJson;
     let conversationToUsers;
     let conversationToMessages;
@@ -14,7 +14,7 @@ describe("messagesServices", function() {
     before(() => {
         getMessageFromJson = (message) => {
             return message;
-        }
+        };
 
         conversationToUsers = {
             getByConversationId: sinon.fake.returns(["adi", "mor"])
@@ -35,7 +35,7 @@ describe("messagesServices", function() {
 
     afterEach(() => {
         sinon.reset();
-    })
+    });
 
     it("should send message", async (done) => {
         let messagesServices = new messagesServicesFactory(conversationToMessages, messagesRequests,
@@ -51,7 +51,7 @@ describe("messagesServices", function() {
     });
 
     it("should fail due to invalid message", async (done) => {
-        let message = {message: "data", sender: "adi"}
+        let message = {message: "data", sender: "adi"};
 
         let getMessageFromJson = sinon.fake.returns(null);
 

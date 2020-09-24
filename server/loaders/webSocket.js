@@ -1,4 +1,4 @@
-let webSocketInitializer = require("../api/webSocketInitializer");
+let webSocketInitializer = require("../services/webSocketServices");
 let webSocketConnectionHandler = require("../api/webSocket/connection");
 
 function load(server) {

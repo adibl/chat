@@ -10,7 +10,8 @@ function CreateRouter(messageServices) {
         try {
             let message = await messageServices.sendMessageToGroup(req.body, req.params.conversationId);
             res.status(200).json(message);
-        } catch (e) {
+        }
+        catch (e) {
             if (e instanceof TypeError) {
                 next(createError(400, e));
             }
