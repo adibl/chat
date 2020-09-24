@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -8,13 +8,28 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default function FormDialog() {
     const [open, setOpen] = React.useState(true);
-
+    const username = useRef("");
     let handleClose = () => {
-        setOpen(false);
+        fetch('http://localhost:8080/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({name: username.current.value})
+        })
+            .then((res) => {
+                if (res.status === 200) {
+                    setOpen(false);
+                }
+                else {
+                    alert(res.status);
+                }
+            });
+
     };
 
     return (
-            <Dialog open={open} onClose={handleClose}>
+            <Dialog open={open}>
                 <DialogTitle id="form-dialog-title">login with username</DialogTitle>
                 <DialogContent>
                     <TextField
@@ -24,6 +39,7 @@ export default function FormDialog() {
                         required={true}
                         type="string"
                         fullWidth
+                        inputRef={username}
                     />
                 </DialogContent>
                 <DialogActions>
