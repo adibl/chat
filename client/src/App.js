@@ -1,14 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import UsersClickDisplay from "./usersDisplay/UsersClickDisplay";
 import UserSelectionDisplay from "./usersDisplay/UserSelectionDisplay/UserSelectionDisplay";
 import Grid from '@material-ui/core/Grid';
 import LogInDialog from "./usersDisplay/logInDialog/LogInDialog";
+import { UserProvider } from './usernameContex';
+
 
 function App() {
+    const [username, setUsername] = useState(null);
     return (
         <div className="App">
-            <LogInDialog/>
+            <UserProvider  value={username}>
+            <LogInDialog login={setUsername}/>
             <Grid
                 container
                 direction="row"
@@ -22,6 +26,7 @@ function App() {
                     some text
                 </Grid>
             </Grid>
+            </UserProvider>
         </div>
     );
 }

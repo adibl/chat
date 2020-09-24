@@ -6,7 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-export default function FormDialog() {
+export default function FormDialog(props) {
     const [open, setOpen] = React.useState(true);
     const username = useRef("");
     let handleClose = () => {
@@ -18,6 +18,7 @@ export default function FormDialog() {
             body: JSON.stringify({name: username.current.value})
         }).then((res) => {
                 if (res.status === 200) {
+                    props.login(username.current.value)
                     setOpen(false);
                 }
                 else if (res.status === 409) {

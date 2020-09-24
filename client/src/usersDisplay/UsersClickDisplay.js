@@ -1,21 +1,30 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardHeader from '@material-ui/core/CardHeader';
 import style from './UserDisplayStyle';
+import UserContext from '../usernameContex';
 
 function UsersClickDisplay() {
-    let userData = [
-        {username: "adi",id: 1234},
-        {username: "roni", id: 1235}
-        ]
+    const [conversationsData, setCpnversationsData] = useState([]);
+    const username = useContext(UserContext);
+
+    useEffect(() => {
+        if (username) {
+            fetch(`http://localhost:8080/users/${username}`, {
+                method: 'GET'
+            }).then((res) => res.json())
+                .then((data) => setCpnversationsData(data.conversations));
+        }
+
+    }, [username])
     const classes = style()
     return (
         <div>
-            {userData.map((user, index) => {
+            {conversationsData && conversationsData.map((user, index) => {
                 return <Card key={index}>
                     <CardActionArea className={classes.card}>
-                        <CardHeader title={user.username}/>
+                        <CardHeader title={user.id}/>
                     </CardActionArea>
 
                 </Card>
