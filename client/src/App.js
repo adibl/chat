@@ -3,10 +3,12 @@ import './App.css';
 import UsersClickDisplay from "./usersDisplay/UsersClickDisplay";
 import UserSelectionDisplay from "./usersDisplay/UserSelectionDisplay/UserSelectionDisplay";
 import Grid from '@material-ui/core/Grid';
+import LogInDialog from "./usersDisplay/logInDialog/LogInDialog";
 
 function App() {
     return (
         <div className="App">
+            <LogInDialog/>
             <Grid
                 container
                 direction="row"
