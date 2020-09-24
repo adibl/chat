@@ -14,7 +14,7 @@ chai.use(chaiHttp);
 
 describe('Conversation', () => {
     before(async (done) => {
-        await userServices.clear();
+         await userServices.clear();
         await userServices.createUser("adi");
         await userServices.createUser("matan");
         await userServices.createUser("rotem");
@@ -71,7 +71,7 @@ describe('Conversation', () => {
             done();
         });
 
-        it('it should create new conversation', (done) => {
+        it('it should get conversation conversation', (done) => {
             chai.request(server)
                 .get(`/conversations/${conversationId}`)
                 .end((err, res) => {

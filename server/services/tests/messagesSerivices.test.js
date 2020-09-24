@@ -44,9 +44,9 @@ describe("messagesServices", function() {
         expect(conversationToMessages.add.calledOnce).to.be.true;
         expect(messagesRequests.add.calledOnce).to.be.true;
         expect(webSocketHandler.sendMessage.calledOnce).to.be.true;
-        expect(webSocketHandler.sendMessage.firstCall.args[0]).to.be.equals("0000");
-        expect(webSocketHandler.sendMessage.firstCall.args[1]).to.be.eql(["adi", "mor"]);
-        expect(webSocketHandler.sendMessage.firstCall.args[2]).to.be.eql(message);
+        expect(webSocketHandler.sendMessage.firstCall.args[0]).to.be.eql(["adi", "mor"]);
+        expect(webSocketHandler.sendMessage.firstCall.args[1]).to.be.eql(message);
+        expect(webSocketHandler.sendMessage.firstCall.args[2]).to.be.undefined;
         done();
     });
 

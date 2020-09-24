@@ -12,7 +12,7 @@ let messageServicesFactory = require("../services/messagesServices");
 
 function load(webSocketHandler) {
     let userServices = new userServicesFactory(usersManager, User, conversationToUsers);
-    let conversationServices = new conversationServicesFactory(chatsData, userServices, conversationToUsers, conversationToMessages);
+    let conversationServices = new conversationServicesFactory(chatsData, userServices, conversationToUsers, conversationToMessages, webSocketHandler);
     let messageServices = new messageServicesFactory(conversationToMessages, messagesRequests, getMessageFromJson, conversationToUsers, webSocketHandler);
     return {userServices, conversationServices, messageServices}
 }

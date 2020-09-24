@@ -1,9 +1,10 @@
 class conversationServices {
-    constructor(chatsData, userServices, conversationToUsers, conversationToMessages) {
+    constructor(chatsData, userServices, conversationToUsers, conversationToMessages, webSocketHandler) {
         this._chatsData = chatsData;
         this._userServices = userServices;
         this._conversationToUsers = conversationToUsers;
         this._conversationToMessages = conversationToMessages;
+        this._webSocketHandler = webSocketHandler;
     }
 
     async _testUsersExist(usernames) {
@@ -20,6 +21,7 @@ class conversationServices {
         await this._chatsData.add(conversation);
         await this._conversationToUsers.add(conversation.id, [...members, conversation.creator]);
         await this._conversationToMessages.create(conversation.id);
+        await this._webSocketHandler.sendMessage([...members, conversation.creator], conversation.id, "newGroup");
 
         return conversation;
     }

@@ -10,10 +10,13 @@ class WebSocketInitializer {
         });
     }
 
-    async sendMessage(conversationId, usernames, message, type="message") {
+    async sendMessage(usernames, message, type="message") {
+        if (! message instanceof String) {
+            message = JSON.stringify(message);
+        }
         let sockets = this._connectionHandler.getConnections(usernames);
         for (let socket of sockets) {
-            await this._io.to(socket).emit(`${type}:${conversationId}`, JSON.stringify(message));
+            await this._io.to(socket).emit(type, message);
             console.log("send to " + socket);
         }
     }

@@ -17,7 +17,7 @@ class messagesServices {
         await this._conversationToMessages.add(conversationId, message);
         let users = await this._conversationToUsers.getByConversationId(conversationId);
         if (users) {
-            await this._webSocketHandler.sendMessage(conversationId, users, message);
+            await this._webSocketHandler.sendMessage(users, message);
         }
 
         return message;
