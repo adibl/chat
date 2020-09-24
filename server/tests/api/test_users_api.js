@@ -14,6 +14,54 @@ chai.use(chaiHttp);
 
 describe('Users', () => {
 
+    describe('get /users', () => {
+        before(async (done) => {
+            await userServices.clear();
+            await userServices.createUser('adi');
+            await userServices.createUser('mor');
+            await userServices.createUser('amir');
+            done();
+        });
+
+        it('get usernames', (done) => {
+            chai.request(server)
+                .get('/users?index=0&limit=2')
+                .end((err, res) => {
+                    expect(res).to.have.status(200);
+                    expect(res.body.usernames).to.be.length(2);
+                    expect(res.body.usernames).to.be.eql(['adi', 'amir']);
+                    done();
+                })
+        });
+
+        it('return empty because end is reached', (done) => {
+            chai.request(server)
+                .get('/users?index=10&limit=2')
+                .end((err, res) => {
+                    expect(res).to.have.status(200);
+                    expect(res.body.usernames).to.be.length(0);
+                    done();
+                });
+        });
+
+        it('return error because there is no index value', (done) => {
+            chai.request(server)
+                .get('/users?limit=2')
+                .end((err, res) => {
+                    expect(res).to.have.status(404);
+                    done();
+                });
+        });
+
+        it('return error because index is not a number', (done) => {
+            chai.request(server)
+                .get('/users?index=a&limit=2')
+                .end((err, res) => {
+                    expect(res).to.have.status(404);
+                    done();
+                });
+        });
+    });
 
     describe('POST /users', () => {
         beforeEach(async (done) => {

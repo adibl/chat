@@ -6,6 +6,18 @@ let createError = require('http-errors');
 function CreateRouter(userServices) {
     const router = express.Router();
 
+    router.get('/', async function (req, res, next) {
+        let index = req.query.index;
+        let limit = req.query.limit;
+        if (!isNaN(Number(index)) && !isNaN(Number(limit))) {
+            let users = await userServices.getUsernamesSorted(Number(index), Number(limit))
+            res.json({usernames: users});
+        }
+
+        next(createError(404, "must contain integers limit and index as url parameters"));
+    });
+
+
     router.post('/', async function (req, res, next) {
         if (req.body.name === undefined || req.body.name === "") {
             res.status(400).json("must send not empty name");

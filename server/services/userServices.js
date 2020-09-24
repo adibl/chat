@@ -20,6 +20,10 @@ class userServices {
             return this._usersManager.get(name);
         }
 
+        async getUsernamesSorted(index, limit) {
+            return this._usersManager.getUsernamesSorted(index, limit);
+        }
+
         async getUserConversations(name) {
             return await this._conversationToUsers.getByUsername(name);
         }
