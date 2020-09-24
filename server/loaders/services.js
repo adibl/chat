@@ -3,6 +3,7 @@ let conversationToUsers = require("../database/requests/conversationToUsers");
 let conversationToMessages = require("../database/requests/conversationToMessages");
 let messagesRequests = require("../database/requests/messagesRequests");
 let {message, getMessageFromJson} = require("../database/models/message");
+let {conversation, getConversationFromJson} = require("../database/models/conversation");
 let usersManager = require("../database/requests/usersReqeusts");
 let User = require("../database/models/user");
 
@@ -12,8 +13,10 @@ let messageServicesFactory = require("../services/messagesServices");
 
 function load(webSocketHandler) {
     let userServices = new userServicesFactory(usersManager, User, conversationToUsers);
-    let conversationServices = new conversationServicesFactory(chatsData, userServices, conversationToUsers, conversationToMessages, webSocketHandler);
-    let messageServices = new messageServicesFactory(conversationToMessages, messagesRequests, getMessageFromJson, conversationToUsers, webSocketHandler);
+    let conversationServices = new conversationServicesFactory(chatsData, userServices, conversationToUsers,
+        conversationToMessages, getConversationFromJson, webSocketHandler);
+    let messageServices = new messageServicesFactory(conversationToMessages, messagesRequests,
+        getMessageFromJson, conversationToUsers, webSocketHandler);
     return {userServices, conversationServices, messageServices}
 }
 

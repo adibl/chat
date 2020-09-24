@@ -124,7 +124,7 @@ describe('Users', () => {
         beforeEach(async (done) => {
             await userServices.clear();
             await userServices.createUser("adi2");
-            await conversationServices.createConversation(new Conversation(null, "adi2", "personal"),[]);
+            await conversationServices.createConversation({creator:"adi2", type:"personal"},[]);
             done();
         });
 

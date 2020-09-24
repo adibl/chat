@@ -10,7 +10,7 @@ class messagesServices {
     async sendMessageToGroup(messageJson, conversationId) {
         let message = this._getMessageFromJson(messageJson);
         if (!message) {
-            throw new RangeError("message must have text and sender");
+            throw new TypeError("message must have text and sender");
         }
 
         await this._messagesRequests.add(message);

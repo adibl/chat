@@ -1,17 +1,20 @@
 let uuid = require('uuid');
 
 class Conversation {
-    constructor(name, creator, type) {
+    constructor(creator, type, name = null) {
         this.id = uuid.v4();
-        this.name = name;
+        if (name) {
+            this.name = name;
+        }
+
         this.type = type;
         this.creator = creator;
     }
 }
 
 function getConversationFromJson(json) {
-    if (json.name && json.type && json.creator) {
-        return new Conversation(json.name, json.creator, json.type);
+    if (json.type && json.creator) {
+        return new Conversation(json.creator, json.type, json.name);
     }
 }
 

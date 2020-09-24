@@ -66,7 +66,7 @@ describe('Conversation', () => {
 
         beforeEach(async (done) => {
             await conversationServices.clear();
-            let conversation = await conversationServices.createConversation(new Conversation(null, "adi", "personal"), ["matan"]);
+            let conversation = await conversationServices.createConversation({creator:"adi", type:"personal"}, ["matan"]);
             conversationId = conversation.id;
             done();
         });

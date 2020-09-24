@@ -21,7 +21,7 @@ describe('Messages', () => {
         await userServices.createUser("adi");
         await userServices.createUser("matan");
         await userServices.createUser("rotem");
-        let conversation = await conversationServices.createConversation(new Conversation(null, "adi", "personal"), ["rotem"]);
+        let conversation = await conversationServices.createConversation({creator:"adi", type:"personal"}, ["rotem"]);
         conversationId = conversation.id;
         done();
     });

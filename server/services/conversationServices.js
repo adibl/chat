@@ -1,9 +1,11 @@
 class conversationServices {
-    constructor(chatsData, userServices, conversationToUsers, conversationToMessages, webSocketHandler) {
+    getMessageFromJson;
+    constructor(chatsData, userServices, conversationToUsers, conversationToMessages, getMessageFromJson, webSocketHandler) {
         this._chatsData = chatsData;
         this._userServices = userServices;
         this._conversationToUsers = conversationToUsers;
         this._conversationToMessages = conversationToMessages;
+        this._getMessageFromJson = getMessageFromJson;
         this._webSocketHandler = webSocketHandler;
     }
 
@@ -15,7 +17,12 @@ class conversationServices {
         }
     }
 
-    async createConversation(conversation, members) {
+    async createConversation(conversationJson, members) {
+        let conversation = this._getMessageFromJson(conversationJson);
+        if (!conversation) {
+            throw new TypeError("conversation object is invalid");
+        }
+
         await this._testUsersExist([...members, conversation.creator]);
 
         await this._chatsData.add(conversation);
