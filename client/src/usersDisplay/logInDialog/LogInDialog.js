@@ -22,7 +22,8 @@ export default function FormDialog(props) {
                     setOpen(false);
                 }
                 else if (res.status === 409) {
-                    alert("name already exists");
+                    props.login(username.current.value)
+                    setOpen(false);
                 }
                 else {
                     alert(res.status);

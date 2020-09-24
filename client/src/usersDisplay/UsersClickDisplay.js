@@ -6,7 +6,7 @@ import style from './UserDisplayStyle';
 import UserContext from '../usernameContex';
 
 function UsersClickDisplay() {
-    const [conversationsData, setCpnversationsData] = useState([]);
+    const [conversations, setConversations] = useState([]);
     const username = useContext(UserContext);
 
     useEffect(() => {
@@ -14,17 +14,18 @@ function UsersClickDisplay() {
             fetch(`http://localhost:8080/users/${username}`, {
                 method: 'GET'
             }).then((res) => res.json())
-                .then((data) => setCpnversationsData(data.conversations));
+                .then((data) => setConversations(data.conversations));
         }
 
     }, [username])
+
     const classes = style()
     return (
         <div>
-            {conversationsData && conversationsData.map((user, index) => {
+            {conversations && conversations.map((user, index) => {
                 return <Card key={index}>
                     <CardActionArea className={classes.card}>
-                        <CardHeader title={user.id}/>
+                        <CardHeader title={user}/>
                     </CardActionArea>
 
                 </Card>
