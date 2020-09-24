@@ -4,33 +4,40 @@ const expect = chai.expect;
 const sinon = require("sinon");
 
 describe("messagesServices", function() {
-
     let message = {message: "data", sender: "adi"}
+    let getMessageFromJson;
+    let conversationToUsers;
+    let conversationToMessages;
+    let messagesRequests;
+    let webSocketHandler;
 
-
-    let getMessageFromJson = (message) => {
-        return message;
-    }
-
-    let conversationToUsers = {
-        getByConversationId: (convId) => ["adi", "mor"]
-    };
-
-
-
-    it("should send message", async (done) => {
-        let conversationToMessages = {
-            add: sinon.spy()
-        };
-
-        let messagesRequests = {
-            add: sinon.spy()
-        };
-
-        let webSocketHandler = {
-            sendMessage: sinon.spy()
+    before(() => {
+        getMessageFromJson = (message) => {
+            return message;
         }
 
+        conversationToUsers = {
+            getByConversationId: sinon.fake.returns(["adi", "mor"])
+        };
+
+        conversationToMessages = {
+            add: sinon.spy()
+        };
+
+        messagesRequests = {
+            add: sinon.spy()
+        };
+
+        webSocketHandler = {
+            sendMessage: sinon.spy()
+        }
+    });
+
+    afterEach(() => {
+        sinon.reset();
+    })
+
+    it("should send message", async (done) => {
         let messagesServices = new messagesServicesFactory(conversationToMessages, messagesRequests,
             getMessageFromJson, conversationToUsers, webSocketHandler);
         expect((await messagesServices.sendMessageToGroup(message, "0000"))).to.be.eql(message);
@@ -46,9 +53,7 @@ describe("messagesServices", function() {
     it("should fail due to invalid message", async (done) => {
         let message = {message: "data", sender: "adi"}
 
-        let getMessageFromJson = (message) => {
-            return null;
-        }
+        let getMessageFromJson = sinon.fake.returns(null);
 
         let messagesServices = new messagesServicesFactory(null, null,
             getMessageFromJson, null, null);
@@ -64,20 +69,8 @@ describe("messagesServices", function() {
     it("should send message", async (done) => {
 
         let conversationToUsersReturnNull = {
-            getByConversationId: (convId) => null
+            getByConversationId: sinon.fake.returns(null)
         };
-
-        let conversationToMessages = {
-            add: sinon.stub()
-        };
-
-        let messagesRequests = {
-            add: sinon.stub()
-        };
-
-        let webSocketHandler = {
-            sendMessage: sinon.stub()
-        }
 
         let messagesServices = new messagesServicesFactory(conversationToMessages, messagesRequests,
             getMessageFromJson, conversationToUsersReturnNull, webSocketHandler);

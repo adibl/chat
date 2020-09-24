@@ -4,13 +4,20 @@ const expect = chai.expect;
 const sinon = require("sinon");
 
 describe("userServices", function() {
-
-    it("should crete new user", async (done) => {
-        let getReturnValue = {username: "adi"};
-        let userManager = {
+    let userManager;
+    before(() => {
+        userManager = {
             has: () => false,
             add: sinon.spy()
         }
+    });
+
+    afterEach(() => {
+        sinon.reset();
+    })
+
+    it("should crete new user", async (done) => {
+        let getReturnValue = {username: "adi"};
 
         class UserStab {
             constructor(username) {
@@ -27,10 +34,7 @@ describe("userServices", function() {
 
     it("should fail to create new user because user already exists", async (done) => {
         let getReturnValue = {username: "adi"};
-        let userManager = {
-            has: () => true,
-            add: sinon.spy()
-        }
+        userManager.has = () => true;
 
         let userServices = new userServicesClass(userManager, null, null);
         expect((await userServices.createUser("adi"))).to.be.null;
