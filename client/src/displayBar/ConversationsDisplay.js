@@ -1,25 +1,14 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React from 'react';
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardHeader from '@material-ui/core/CardHeader';
 import style from './UserDisplayStyle';
-import UserContext from '../usernameContex';
+import GetConversations from '../apiCalls/getConversations.js';
 
 function ConversationsDisplay() {
-    const [conversations, setConversations] = useState([]);
-    const username = useContext(UserContext);
+    const conversations = GetConversations();
 
-    useEffect(() => {
-        if (username) {
-            fetch(`http://localhost:8080/users/${username}`, {
-                method: 'GET'
-            }).then((res) => res.json())
-                .then((data) => setConversations(data.conversations));
-        }
-
-    }, [username])
-
-    const classes = style()
+    const classes = style();
     return (
         <div>
             {conversations && conversations.map((user, index) => {

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import Card from "@material-ui/core/Card";
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from "@material-ui/core/CardActions";
@@ -6,17 +6,11 @@ import Button from "@material-ui/core/Button";
 import AddIcon from '@material-ui/icons/Add';
 import style from './UserDisplayStyle';
 import UserContext from "../usernameContex";
+import GetUsers from "../apiCalls/getUsers";
 
 function UsersDisplay() {
-    const [usersData, setUsersData] = useState([]);
     const username = useContext(UserContext);
-
-    useEffect(() => {
-        fetch('http://localhost:8080/users?index=0&limit=10', {
-            method: 'GET'
-        }).then((res) => res.json())
-            .then((data) => setUsersData(data.usernames));
-    }, [])
+    const usersData = GetUsers();
 
     function createChat(userToChatWith) {
         fetch('http://localhost:8080/conversations', {
