@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import './App.css';
-import UsersClickDisplay from "./usersDisplay/UsersClickDisplay";
-import UserSelectionDisplay from "./usersDisplay/UserSelectionDisplay/UserSelectionDisplay";
+import ConversationsDisplay from "./displayBar/ConversationsDisplay";
+import UsersDisplay from "./displayBar/UsersDisplay";
 import Grid from '@material-ui/core/Grid';
-import LogInDialog from "./usersDisplay/logInDialog/LogInDialog";
+import LogInDialog from "./displayBar/logInDialog/LogInDialog";
 import { UserProvider } from './usernameContex';
 
 
@@ -18,9 +18,9 @@ function App() {
                 direction="row"
                 spacing={3}>
                 <Grid item xs={3}>
-                    <UsersClickDisplay/>
+                    <ConversationsDisplay/>
 
-                    <UserSelectionDisplay/>
+                    <UsersDisplay/>
                 </Grid>
                 <Grid item xs={6}>
                     some text

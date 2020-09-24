@@ -4,10 +4,10 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 import AddIcon from '@material-ui/icons/Add';
-import style from '../UserDisplayStyle';
-import UserContext from "../../usernameContex";
+import style from './UserDisplayStyle';
+import UserContext from "../usernameContex";
 
-function UserSelectionDisplay() {
+function UsersDisplay() {
     const [usersData, setUsersData] = useState([]);
     const username = useContext(UserContext);
 
@@ -47,4 +47,4 @@ function UserSelectionDisplay() {
 }
 
 
-export default UserSelectionDisplay;
+export default UsersDisplay;

@@ -5,7 +5,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import style from './UserDisplayStyle';
 import UserContext from '../usernameContex';
 
-function UsersClickDisplay() {
+function ConversationsDisplay() {
     const [conversations, setConversations] = useState([]);
     const username = useContext(UserContext);
 
@@ -35,4 +35,4 @@ function UsersClickDisplay() {
 }
 
 
-export default UsersClickDisplay;
+export default ConversationsDisplay;
