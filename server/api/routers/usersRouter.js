@@ -12,8 +12,9 @@ function CreateRouter(userServices) {
             let users = await userServices.getUsernamesSorted(Number(index), Number(limit));
             res.json({usernames: users});
         }
-
-        next(createError(404, "must contain integers limit and index as url parameters"));
+        else {
+            next(createError(404, "must contain integers limit and index as url parameters"));
+        }
     });
 
 
