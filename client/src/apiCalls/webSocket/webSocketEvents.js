@@ -1,26 +1,29 @@
 import io from 'socket.io-client';
 import config from "../config";
-import UserContext from "../../usernameContex";
-import React, {useContext, useEffect, useRef, useState} from "react";
 
 
-
-function useWebSocket(username) {
-    const socket = useRef(null);
-    useEffect(() => {
-        if (username) {
-            socket.current = io(config.url);
-            socket.current.emit('login', username);
-            return () => socket.current.disconnect();
-        }
-
-    }, [username]);
-
-    if (username) {
-        return socket.current;
+class webSocketSingeltone {
+    constructor() {
+        this.socket = io(config.url);
+        this.socketUsername = null;
     }
 
-    return null;
+    getSocket(username) {
+        if (this.socketUsername !== username) {
+            if (this.socket == null || this.socketUsername !== null) {
+                this.socket.close();
+                this.socket = io(config.url);
+            }
+
+            this.socket.emit('login', username);
+            this.socketUsername = username;
+        }
+
+        return this.socket;
+
+    }
 }
 
-export default useWebSocket;
+const webSocket = new webSocketSingeltone();
+
+export default webSocket;

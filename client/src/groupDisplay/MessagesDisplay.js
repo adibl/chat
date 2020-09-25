@@ -5,9 +5,9 @@ import usernameContext from '../usernameContex'
 
 function MessagesDisplay() {
     const username = useContext(usernameContext);
-    const socket = useWebSocket(username);
 
     useEffect(() => {
+        let socket = useWebSocket.getSocket(username);
         if (socket) {
             socket.on('message', (data) => {
                 alert(JSON.stringify(data));
@@ -16,7 +16,7 @@ function MessagesDisplay() {
             return () => socket.off('message');
         }
 
-    }, [socket]);
+    }, [username]);
 
     return (
         <Paper component="form" aria-autocomplete="inline">

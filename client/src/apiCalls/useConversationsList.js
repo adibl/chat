@@ -6,7 +6,6 @@ import useWebSocket from "./webSocket/webSocketEvents";
 function UseConversationsList() {
     const [conversations, setConversations] = useState([]);
     const username = useContext(UserContext);
-    const webSocket = useWebSocket(username);
 
     useEffect(() => {
         if (username) {
@@ -19,6 +18,7 @@ function UseConversationsList() {
     }, [username]);
 
     useEffect(() => {
+        let webSocket = useWebSocket.getSocket(username);
         if (webSocket) {
             webSocket.on('newGroup', (groupId) => {
                 setConversations(conversations => {
@@ -33,7 +33,7 @@ function UseConversationsList() {
 
             return () => webSocket.off('newGroup')
         }
-    }, [webSocket]);
+    }, [username]);
 
     return conversations;
 }
