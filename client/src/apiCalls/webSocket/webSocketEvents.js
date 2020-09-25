@@ -3,12 +3,16 @@ import config from "../config";
 import UserContext from "../../usernameContex";
 import {useContext, useEffect} from "react";
 
-const socket = io(config.url);
+let socket = io(config.url);
 
 function useWebSocket() {
     const username = useContext(UserContext);
     useEffect(() => {
         if (username) {
+            if (socket) {
+                socket.close();
+                socket = io(config.url);
+            }
             socket.emit('login', username);
         }
 

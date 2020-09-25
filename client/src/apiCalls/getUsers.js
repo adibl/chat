@@ -1,8 +1,10 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import config from './config';
+import UserContext from "../usernameContex";
 
 function GetUsers() {
     const [usersData, setUsersData] = useState([]);
+    const username = useContext(UserContext);
 
     useEffect(() => {
         fetch(`${config.url}/users?index=0&limit=10`, {
@@ -11,7 +13,7 @@ function GetUsers() {
             .then((data) => setUsersData(data.usernames));
     }, []);
 
-    return usersData;
+    return usersData.filter((user) => user !== username);
 }
 
 export default GetUsers;
