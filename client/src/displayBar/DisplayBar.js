@@ -4,7 +4,7 @@ import ConversationsDisplay from "./usersDisplay/ConversationsDisplay";
 import UsersDisplay from "./usersDisplay/UsersDisplay";
 
 
-function DisplayBar() {
+function DisplayBar(props) {
     return (
         <Grid
             container
@@ -12,7 +12,7 @@ function DisplayBar() {
             spacing={3}>
             <Grid item>
                 conversations
-                <ConversationsDisplay/>
+                <ConversationsDisplay onSelect={props.onSelect}/>
             </Grid>
             <Grid item>
                 other people in the app

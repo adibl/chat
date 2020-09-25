@@ -6,7 +6,7 @@ import useWebSocket from "./webSocket/webSocketEvents";
 function UseConversationsList() {
     const [conversations, setConversations] = useState([]);
     const username = useContext(UserContext);
-    const webSocket = useWebSocket();
+    const webSocket = useWebSocket(username);
 
     useEffect(() => {
         if (username) {

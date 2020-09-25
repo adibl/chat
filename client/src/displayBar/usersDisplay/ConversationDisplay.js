@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardHeader from '@material-ui/core/CardHeader';
@@ -14,7 +14,7 @@ function ConversationDisplay(props) {
         <div>
             {conversation &&
             <Card key={props.index}>
-                <CardActionArea className={classes.card}>
+                <CardActionArea className={classes.card} onClick={props.onclick}>
                     <CardHeader title={conversation.members.filter((user) => user !== username)[0]}/>
                 </CardActionArea>
 
