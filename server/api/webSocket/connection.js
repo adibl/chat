@@ -18,8 +18,10 @@ class SocketConnections {
         socket.on('disconnect', () => {
             let index = this._users.findIndex((user) => user.socketIds.has(socket.id));
             let user = this._users[index];
-            user.socketIds.delete(socket.id);
-            console.log(`user ${user.username} logged out`);
+            if (user) {
+                user.socketIds.delete(socket.id);
+                console.log(`user ${user.username} logged out`);
+            }
         });
     }
 
