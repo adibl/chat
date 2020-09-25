@@ -1,4 +1,4 @@
-class BasicDataRequests {
+class BasicData {
     constructor() {
         this._data = new Map();
     }
@@ -21,4 +21,4 @@ class BasicDataRequests {
 
 }
 
-module.exports = BasicDataRequests;
+module.exports = BasicData;

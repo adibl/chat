@@ -1,4 +1,4 @@
-const BasicDataRequests = require("./basicDataRequests");
+const BasicDataRequests = require("./basicData");
 
 class UsersRequests extends BasicDataRequests {
     async add(user) {

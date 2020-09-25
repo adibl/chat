@@ -1,4 +1,4 @@
-const BasicDataRequests = require("./basicDataRequests");
+const BasicDataRequests = require("./basicData");
 
 class ConversationRequests extends BasicDataRequests {
     async add(chat) {

@@ -1,8 +1,8 @@
 let express = require('express');
 const http = require("http");
 let routersLoader = require('./loaders/routerLoader');
-let servicesLoader = require('./loaders/services');
-let webSocketLoader = require("./loaders/webSocket");
+let servicesLoader = require('./loaders/servicesLoader');
+let webSocketLoader = require("./loaders/webSocketLoader");
 
 const app = express();
 const server = http.createServer(app);

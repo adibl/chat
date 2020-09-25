@@ -1,10 +1,10 @@
-let chatsData = require("../database/requests/conversationsRequests");
+let chatsData = require("../database/requests/conversations");
 let conversationToUsers = require("../database/requests/conversationToUsers");
 let conversationToMessages = require("../database/requests/conversationToMessages");
-let messagesRequests = require("../database/requests/messagesRequests");
+let messagesRequests = require("../database/requests/messages");
 let {getMessageFromJson} = require("../database/models/message");
 let {getConversationFromJson} = require("../database/models/conversation");
-let usersManager = require("../database/requests/usersReqeusts");
+let usersManager = require("../database/requests/users");
 let User = require("../database/models/user");
 
 let userServicesFactory = require("../services/userServices");

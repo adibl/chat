@@ -4,8 +4,8 @@ let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../app');
 
-let servicesLoader = require('../loaders/services');
-let webSocketLoader = require("../loaders/webSocket");
+let servicesLoader = require('../loaders/servicesLoader');
+let webSocketLoader = require("../loaders/webSocketLoader");
 let {userServices, conversationServices} = servicesLoader(webSocketLoader(server));
 
 const {expect} = chai;
