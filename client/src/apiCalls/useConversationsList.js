@@ -3,7 +3,7 @@ import config from './config';
 import UserContext from "../usernameContex";
 import useWebSocket from "./webSocket/webSocketEvents";
 
-function GetConversations() {
+function UseConversationsList() {
     const [conversations, setConversations] = useState([]);
     const username = useContext(UserContext);
     const webSocket = useWebSocket();
@@ -23,19 +23,19 @@ function GetConversations() {
             webSocket.on('newGroup', (groupId) => {
                 setConversations(conversations => {
                     if (conversations) {
-                        conversations.push(groupId);
-                        return conversations;
+                        return [...conversations, groupId];
                     }
                     else {
                         return [groupId];
                     }
                 });
             });
-        }
 
+            return () => webSocket.off('newGroup')
+        }
     }, [webSocket]);
 
     return conversations;
 }
 
-export default GetConversations;
+export default UseConversationsList;

@@ -1,7 +1,7 @@
 import config from './config';
 import {useEffect, useState} from "react";
 
-function GetConversation(conversationId) {
+function useConversation(conversationId) {
     const [conversation, setConversation] = useState(null);
     useEffect(() => {
         fetch(`${config.url}/conversations/${conversationId}`, {
@@ -12,4 +12,4 @@ function GetConversation(conversationId) {
     return conversation;
 }
 
-export default GetConversation;
+export default useConversation;

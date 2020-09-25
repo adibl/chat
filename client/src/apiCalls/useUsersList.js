@@ -2,7 +2,7 @@ import {useContext, useEffect, useState} from "react";
 import config from './config';
 import UserContext from "../usernameContex";
 
-function GetUsers() {
+function UseUsersList() {
     const [usersData, setUsersData] = useState([]);
     const username = useContext(UserContext);
 
@@ -16,4 +16,4 @@ function GetUsers() {
     return usersData.filter((user) => user !== username);
 }
 
-export default GetUsers;
+export default UseUsersList;

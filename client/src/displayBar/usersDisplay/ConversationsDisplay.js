@@ -1,10 +1,10 @@
 import React from 'react';
 import style from './UserDisplayStyle';
-import GetConversations from '../../apiCalls/getConversations.js';
-import ConversationDisplay from "./conversationDisplay";
+import UseConversationsList from '../../apiCalls/useConversationsList.js';
+import ConversationDisplay from "./ConversationDisplay";
 
 function ConversationsDisplay() {
-    const conversations = GetConversations();
+    const conversations = UseConversationsList();
     return (
         <div>
             {conversations && conversations.map((convId, index) => {

@@ -6,11 +6,11 @@ import Button from "@material-ui/core/Button";
 import AddIcon from '@material-ui/icons/Add';
 import style from './UserDisplayStyle';
 import UserContext from "../../usernameContex";
-import GetUsers from "../../apiCalls/getUsers";
+import UseUsersList from "../../apiCalls/useUsersList";
 
 function UsersDisplay() {
     const username = useContext(UserContext);
-    const usersData = GetUsers();
+    const usersData = UseUsersList();
 
     function createChat(userToChatWith) {
         fetch('http://localhost:8080/conversations', {
