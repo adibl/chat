@@ -77,7 +77,7 @@ describe('Conversation', () => {
                     expect(res.error).to.be.false;
                     expect(res).to.have.status(200);
                     expect(res.body.creator).to.equals("adi");
-                    expect(res.body.members).to.equals(undefined);
+                    expect(res.body.members).to.eql(["matan", "adi"]);
                     expect(res.body.type).to.equals("personal");
                     done();
                 });

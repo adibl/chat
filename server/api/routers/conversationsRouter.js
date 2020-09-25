@@ -1,6 +1,5 @@
 let express = require('express');
 let createError = require('http-errors');
-let {Conversation, getConversationFromJson} = require('../../database/models/conversation');
 
 function CreateRouter(conversationServices) {
     const router = express.Router();

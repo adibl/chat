@@ -1,5 +1,4 @@
 class conversationServices {
-    getMessageFromJson;
     constructor(chatsData, userServices, conversationToUsers, conversationToMessages, getMessageFromJson, webSocketHandler) {
         this._chatsData = chatsData;
         this._userServices = userServices;
@@ -34,7 +33,12 @@ class conversationServices {
     }
 
     async getConversationMetadata(id) {
-        return this._chatsData.get(id);
+        let conversation = await this._chatsData.get(id);
+        if (conversation) {
+            conversation.members = await this._conversationToUsers.getByConversationId(id);
+        }
+
+        return conversation;
     }
 
     async clear() {
