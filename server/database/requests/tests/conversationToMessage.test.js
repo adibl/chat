@@ -1,8 +1,13 @@
-let conversationToMessage = require('../conversationToMessages');
+let conversationToMessageClass = require('../conversationToMessages');
 const chai = require("chai");
 const expect = chai.expect;
 
 describe("ConversationToMessages", function() {
+    let conversationToMessage;
+    before(() => {
+        conversationToMessage = new conversationToMessageClass();
+    });
+
     beforeEach(async (done) => {
         await conversationToMessage.clear();
         done();

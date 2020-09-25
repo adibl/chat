@@ -1,22 +1,17 @@
-let chatsData = require("../database/requests/conversations");
-let conversationToUsers = require("../database/requests/conversationToUsers");
-let conversationToMessages = require("../database/requests/conversationToMessages");
-let messagesRequests = require("../database/requests/messages");
 let {getMessageFromJson} = require("../database/models/message");
 let {getConversationFromJson} = require("../database/models/conversation");
-let usersManager = require("../database/requests/users");
 let User = require("../database/models/user");
 
 let userServicesFactory = require("../services/userServices");
 let conversationServicesFactory = require("../services/conversationServices");
 let messageServicesFactory = require("../services/messagesServices");
 
-function load(webSocketHandler) {
-    let userServices = new userServicesFactory(usersManager, User, conversationToUsers);
-    let conversationServices = new conversationServicesFactory(chatsData, userServices, conversationToUsers,
-        conversationToMessages, getConversationFromJson, webSocketHandler);
-    let messageServices = new messageServicesFactory(conversationToMessages, messagesRequests,
-        getMessageFromJson, conversationToUsers, webSocketHandler);
+function load(database, webSocketHandler) {
+    let userServices = new userServicesFactory(database.usersRequests, User, database.conversationToUsersRequests);
+    let conversationServices = new conversationServicesFactory(database.conversationRequests, userServices, database.conversationToUsersRequests,
+        database.conversationToMessagesRequests, getConversationFromJson, webSocketHandler);
+    let messageServices = new messageServicesFactory(database.conversationToMessagesRequests, database.messagesRequests,
+        getMessageFromJson, database.conversationToUsersRequests, webSocketHandler);
     return {userServices, conversationServices, messageServices}
 }
 

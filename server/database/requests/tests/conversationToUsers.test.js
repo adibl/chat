@@ -1,8 +1,13 @@
-let conversationToUsers = require('../conversationToUsers');
+let conversationToUsersClass = require('../conversationToUsers');
 const chai = require("chai");
 const expect = chai.expect;
 
 describe("conversationToUsers", function() {
+    let conversationToUsers;
+    before(() => {
+        conversationToUsers = new conversationToUsersClass();
+    });
+
     beforeEach(async (done) => {
         await conversationToUsers.clear();
         done();

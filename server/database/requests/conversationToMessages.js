@@ -19,5 +19,4 @@ class ConversationToMessages extends BasicDataRequests {
 
 }
 
-let data = new ConversationToMessages();
-module.exports = data;
+module.exports = ConversationToMessages;

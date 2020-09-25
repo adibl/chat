@@ -37,5 +37,4 @@ class ConversationToUsers {
 
 }
 
-let data = new ConversationToUsers();
-module.exports = data;
+module.exports = ConversationToUsers;

@@ -10,5 +10,4 @@ class UsersRequests extends BasicDataRequests {
     }
 }
 
-let data = new UsersRequests();
-module.exports = data;
+module.exports = UsersRequests;

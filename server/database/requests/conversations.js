@@ -6,5 +6,4 @@ class ConversationRequests extends BasicDataRequests {
     }
 }
 
-let data = new ConversationRequests();
-module.exports = data;
+module.exports = ConversationRequests;

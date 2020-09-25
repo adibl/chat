@@ -5,7 +5,8 @@ let chaiHttp = require('chai-http');
 let server = require('../app');
 let servicesLoader = require('../loaders/servicesLoader');
 let webSocketLoader = require("../loaders/webSocketLoader");
-let {userServices, conversationServices} = servicesLoader(webSocketLoader(server));
+const databaseLoader = require("../loaders/databseLoader");
+let {userServices, conversationServices} = servicesLoader(databaseLoader.load(), webSocketLoader(server));
 const {expect} = chai;
 
 chai.use(chaiHttp);

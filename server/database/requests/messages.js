@@ -8,5 +8,4 @@ class MessageRequests extends BasicDataRequests {
 
 }
 
-let data = new MessageRequests();
-module.exports = data;
+module.exports = MessageRequests;
