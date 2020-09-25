@@ -1,25 +1,24 @@
 import io from 'socket.io-client';
 import config from "../config";
 import UserContext from "../../usernameContex";
-import {useContext, useEffect} from "react";
+import {useContext, useEffect, useRef} from "react";
 
-let socket = io(config.url);
+
 
 function useWebSocket() {
+    const socket = useRef(null);
     const username = useContext(UserContext);
     useEffect(() => {
+        socket.current = io(config.url);
         if (username) {
-            if (socket) {
-                socket.close();
-                socket = io(config.url);
-            }
-            socket.emit('login', username);
+            socket.current.emit('login', username);
         }
 
+        return () => socket.current.disconnect();
     }, [username]);
 
     if (username) {
-        return socket;
+        return socket.current;
     }
 
     return null;

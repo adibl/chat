@@ -18,8 +18,9 @@ function UsersDisplay() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({creator: username, type: "personal", members: [userToChatWith]})
-        }).then((res) => res.json());
+            body: JSON.stringify({"creator": username, "type": "personal", "members": [userToChatWith]})
+        }).then((res) => res.json())
+            .catch((err) => alert(err));
 
     }
 

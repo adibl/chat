@@ -18,11 +18,11 @@ export default function FormDialog(props) {
             body: JSON.stringify({name: username.current.value})
         }).then((res) => {
                 if (res.status === 200) {
-                    props.login(username.current.value)
+                    props.login(username.current.value);
                     setOpen(false);
                 }
                 else if (res.status === 409) {
-                    props.login(username.current.value)
+                    props.login(username.current.value);
                     setOpen(false);
                 }
                 else {
