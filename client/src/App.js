@@ -25,7 +25,7 @@ function App() {
 
                     spacing={3}>
                     <Grid item xs={3}>
-                        <DialogBar onSelect={setCurrentConversationId}/>
+                        <DialogBar onSelect={setCurrentConversationId} conversation={currentConversationId}/>
                     </Grid>
                     <Grid
                         item

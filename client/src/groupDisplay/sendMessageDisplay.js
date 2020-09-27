@@ -35,7 +35,7 @@ function SendMessageDisplay(props) {
             fullWidth
             inputRef={text}
         />
-        <IconButton color="primary" aria-label="directions" onClick={Send}>
+        <IconButton color="primary" aria-label="send message" onClick={Send}>
             <SendIcon />
         </IconButton>
     </ButtonGroup>

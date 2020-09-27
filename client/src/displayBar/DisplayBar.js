@@ -12,7 +12,7 @@ function DisplayBar(props) {
             spacing={3}>
             <Grid item>
                 conversations
-                <ConversationsDisplay onSelect={props.onSelect}/>
+                <ConversationsDisplay onSelect={props.onSelect}  conversation={props.conversation}/>
             </Grid>
             <Grid item>
                 other people in the app
