@@ -2,6 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import ConversationsDisplay from "./usersDisplay/ConversationsDisplay";
 import UsersDisplay from "./usersDisplay/UsersDisplay";
+import Typography from "@material-ui/core/Typography";
 
 
 function DisplayBar(props) {
@@ -11,11 +12,15 @@ function DisplayBar(props) {
             direction="column"
             spacing={3}>
             <Grid item>
-                conversations
+                <Typography variant="h6" component="h6">
+                    conversations
+                </Typography>
                 <ConversationsDisplay onSelect={props.onSelect}  conversation={props.conversation}/>
             </Grid>
             <Grid item>
-                other people in the app
+                <Typography variant="h6" component="h6">
+                    other people in the app
+                </Typography>
                 <UsersDisplay/>
             </Grid>
         </Grid>
