@@ -20,7 +20,7 @@ function SendMessageDisplay(props) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({"sender": username, "text": text.current.value})
-            }).then(r => alert(r.status));
+            }).then(text.current.value = "");
         }
 
     }

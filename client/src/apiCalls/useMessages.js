@@ -1,7 +1,6 @@
 import {useContext, useEffect, useState} from "react";
 import UserContext from "../usernameContex";
 import webSocket from "./webSocket/webSocketEvents";
-import update from 'immutability-helper';
 
 function useMessages() {
     const [messagesData, setMessagesData] = useState(new Map());
@@ -9,18 +8,19 @@ function useMessages() {
 
     useEffect(() => {
         let socket = webSocket.getSocket(username);
-        if (socket) {
-            socket.on('message', (data) => {
-                setMessagesData((messages) => {
-                    let messagesInThisId = messages.get(data.conversationId);
+        if (socket && username) {
+            socket.on('message', (message) => {
+                setMessagesData((messageState) => {
+                    let id = message.conversationId;
+                    let messagesInThisId = messageState.get(id);
                     if (messagesInThisId) {
-                        messagesInThisId.push(data);
+                        messagesInThisId.push(message);
                     }
                     else {
-                        messagesInThisId = [data];
+                        messagesInThisId = [message];
                     }
 
-                    return update(messages, { [data.conversationId]: {$set: messagesInThisId} });
+                    return new Map(messageState.set(id, messagesInThisId));
                 });
             });
 
