@@ -12,11 +12,11 @@ function App() {
     const [username, setUsername] = useState(null);
     const [currentConversationId, setCurrentConversationId] = useState(null);
     return (
-        <div className="Strech">
+        <div className="Stretch">
             <UserProvider value={username}>
                 <LogInDialog login={setUsername}/>
                 <Grid
-                    className="Strech"
+                    className="Stretch"
                     container
                     direction="row"
                     justify={"space-between"}
