@@ -1,7 +1,7 @@
 import {useContext, useEffect, useState} from "react";
 import config from './config';
 import UserContext from "../usernameContex";
-import useWebSocket from "./webSocket/webSocketEvents";
+import useWebSocket from "./webSocketEvents";
 
 function UseConversationsList() {
     const [conversations, setConversations] = useState([]);

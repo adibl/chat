@@ -1,8 +1,8 @@
 import io from 'socket.io-client';
-import config from "../config";
+import config from "./config";
 
 
-class webSocketSingeltone {
+class webSocketSingleton {
     constructor() {
         this.socket = io(config.url);
         this.socketUsername = null;
@@ -24,6 +24,6 @@ class webSocketSingeltone {
     }
 }
 
-const webSocket = new webSocketSingeltone();
+const webSocket = new webSocketSingleton();
 
 export default webSocket;

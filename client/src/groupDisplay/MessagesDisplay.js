@@ -1,6 +1,6 @@
 import React from 'react';
 import useMessages from "../apiCalls/useMessages";
-import SingleMessageDisplay from "./singleMessageDisplay";
+import SingleMessageDisplay from "./SingleMessageDisplay";
 
 function MessagesDisplay(props) {
     const messages = useMessages();

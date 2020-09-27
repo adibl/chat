@@ -4,7 +4,7 @@ import DialogBar from './displayBar/DisplayBar';
 import Grid from '@material-ui/core/Grid';
 import LogInDialog from "./logInDialog/LogInDialog";
 import {UserProvider} from './usernameContex';
-import SendMessageDisplay from "./groupDisplay/sendMessageDisplay";
+import SendMessageDisplay from "./groupDisplay/SendMessageDisplay";
 import MessagesDisplay from "./groupDisplay/MessagesDisplay";
 
 

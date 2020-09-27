@@ -6,7 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-export default function FormDialog(props) {
+export default function LoginDialog(props) {
     const [open, setOpen] = React.useState(true);
     const username = useRef("");
     let handleClose = () => {

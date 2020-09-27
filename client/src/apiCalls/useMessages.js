@@ -1,6 +1,6 @@
 import {useContext, useEffect, useState} from "react";
 import UserContext from "../usernameContex";
-import webSocket from "./webSocket/webSocketEvents";
+import webSocket from "./webSocketEvents";
 
 function useMessages() {
     const [messagesData, setMessagesData] = useState(new Map());
