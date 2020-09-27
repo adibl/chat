@@ -13,29 +13,34 @@ function App() {
     const [username, setUsername] = useState(null);
     const [currentConversationId, setCurrentConversationId] = useState(null);
     return (
-        <div className="App">
+        <div className="Strech">
             <UserProvider value={username}>
                 <LogInDialog login={setUsername}/>
                 <Grid
+                    className="Strech"
                     container
                     direction="row"
+                    justify={"space-between"}
+                    alignItems="stretch"
+
                     spacing={3}>
                     <Grid item xs={3}>
                         <DialogBar onSelect={setCurrentConversationId}/>
                     </Grid>
-                        <Grid
-                            item
-                            xs={6}
-                            container
-                            direction="column"
-                            spacing={3}>
-
-                            <Grid item alignItems={"stretch"}>
-                                <SendMessageDisplay conversation={currentConversationId}/>
-                            </Grid>
-                            <Grid item alignItems={"stretch"}>
-                                <MessagesDisplay conversation={currentConversationId}/>
-                            </Grid>
+                    <Grid
+                        item
+                        xs={9}
+                        container
+                        direction="column"
+                        justify={"space-between"}
+                        alignItems="stretch"
+                        spacing={3}>
+                        <Grid item>
+                            <MessagesDisplay conversation={currentConversationId}/>
+                        </Grid>
+                        <Grid item>
+                            <SendMessageDisplay conversation={currentConversationId}/>
+                        </Grid>
                     </Grid>
                 </Grid>
             </UserProvider>
