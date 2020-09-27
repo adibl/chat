@@ -1,26 +1,22 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import Paper from "@material-ui/core/Paper";
-import useWebSocket from "../apiCalls/webSocket/webSocketEvents";
 import usernameContext from '../usernameContex'
+import useMessages from "../apiCalls/useMessages";
+import Card from "@material-ui/core/Card";
 
-function MessagesDisplay() {
+function MessagesDisplay(props) {
     const username = useContext(usernameContext);
-
-    useEffect(() => {
-        let socket = useWebSocket.getSocket(username);
-        if (socket) {
-            socket.on('message', (data) => {
-                alert(JSON.stringify(data));
-            });
-
-            return () => socket.off('message');
-        }
-
-    }, [username]);
+    const messages = useMessages();
 
     return (
-        <Paper component="form" aria-autocomplete="inline">
-            some messages
+        <Paper component="form">
+            {messages.has(props.conversation) &&
+            messages.get(props.conversation).map((message) => {
+               return <Card>
+                   {message.text}
+               </Card>
+            })
+            }
         </Paper>
     );
 }

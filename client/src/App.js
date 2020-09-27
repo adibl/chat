@@ -25,7 +25,7 @@ function App() {
                 <Grid item xs={6}>
                     some text
                     <SendMessageDisplay conversation={currentConversationId}/>
-                    <MessagesDisplay/>
+                    <MessagesDisplay conversation={currentConversationId}/>
                 </Grid>
             </Grid>
             </UserProvider>
