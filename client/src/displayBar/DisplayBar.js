@@ -1,4 +1,4 @@
-import React, {} from 'react';
+import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import ConversationsDisplay from "./usersDisplay/ConversationsDisplay";
 import UsersDisplay from "./usersDisplay/UsersDisplay";

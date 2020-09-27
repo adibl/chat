@@ -1,12 +1,8 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
-import Paper from "@material-ui/core/Paper";
-import usernameContext from '../usernameContex'
+import React from 'react';
 import useMessages from "../apiCalls/useMessages";
-import Card from "@material-ui/core/Card";
 import SingleMessageDisplay from "./singleMessageDisplay";
 
 function MessagesDisplay(props) {
-    const username = useContext(usernameContext);
     const messages = useMessages();
 
     return (

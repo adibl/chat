@@ -1,12 +1,9 @@
-import React, {useContext, useRef, useState} from 'react';
-import Paper from "@material-ui/core/Paper";
+import React, {useContext, useRef} from 'react';
 import IconButton from "@material-ui/core/IconButton";
-import InputBase from "@material-ui/core/InputBase";
-import Divider from "@material-ui/core/Divider";
 import SendIcon from '@material-ui/icons/Send';
 import TextField from "@material-ui/core/TextField";
 import config from "../apiCalls/config";
-import usernameContext from '../usernameContex'
+import usernameContext from '../usernameContex';
 import {ButtonGroup} from "@material-ui/core";
 
 function SendMessageDisplay(props) {

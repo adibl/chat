@@ -5,7 +5,6 @@ import CardHeader from '@material-ui/core/CardHeader';
 import style from './UserDisplayStyle';
 import useConversation from "../../apiCalls/useConversation";
 import UserContext from "../../usernameContex";
-import {CardContent} from "@material-ui/core";
 
 function ConversationDisplay(props) {
     const username = useContext(UserContext);

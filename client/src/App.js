@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
 import './App.css';
-import DialogBar from './displayBar/DisplayBar'
+import DialogBar from './displayBar/DisplayBar';
 import Grid from '@material-ui/core/Grid';
 import LogInDialog from "./logInDialog/LogInDialog";
-import { UserProvider } from './usernameContex';
+import {UserProvider} from './usernameContex';
 import SendMessageDisplay from "./groupDisplay/sendMessageDisplay";
 import MessagesDisplay from "./groupDisplay/MessagesDisplay";
-import Box from "@material-ui/core/Box";
 
 
 function App() {
