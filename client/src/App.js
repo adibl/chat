@@ -6,6 +6,7 @@ import LogInDialog from "./logInDialog/LogInDialog";
 import { UserProvider } from './usernameContex';
 import SendMessageDisplay from "./groupDisplay/sendMessageDisplay";
 import MessagesDisplay from "./groupDisplay/MessagesDisplay";
+import Box from "@material-ui/core/Box";
 
 
 function App() {
@@ -14,20 +15,29 @@ function App() {
     return (
         <div className="App">
             <UserProvider value={username}>
-            <LogInDialog login={setUsername}/>
-            <Grid
-                container
-                direction="row"
-                spacing={3}>
-                <Grid item xs={3}>
-                    <DialogBar onSelect={setCurrentConversationId}/>
+                <LogInDialog login={setUsername}/>
+                <Grid
+                    container
+                    direction="row"
+                    spacing={3}>
+                    <Grid item xs={3}>
+                        <DialogBar onSelect={setCurrentConversationId}/>
+                    </Grid>
+                        <Grid
+                            item
+                            xs={6}
+                            container
+                            direction="column"
+                            spacing={3}>
+
+                            <Grid item alignItems={"stretch"}>
+                                <SendMessageDisplay conversation={currentConversationId}/>
+                            </Grid>
+                            <Grid item alignItems={"stretch"}>
+                                <MessagesDisplay conversation={currentConversationId}/>
+                            </Grid>
+                    </Grid>
                 </Grid>
-                <Grid item xs={6}>
-                    some text
-                    <SendMessageDisplay conversation={currentConversationId}/>
-                    <MessagesDisplay conversation={currentConversationId}/>
-                </Grid>
-            </Grid>
             </UserProvider>
         </div>
     );

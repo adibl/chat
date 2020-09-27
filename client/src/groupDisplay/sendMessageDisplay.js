@@ -7,6 +7,7 @@ import SendIcon from '@material-ui/icons/Send';
 import TextField from "@material-ui/core/TextField";
 import config from "../apiCalls/config";
 import usernameContext from '../usernameContex'
+import {ButtonGroup} from "@material-ui/core";
 
 function SendMessageDisplay(props) {
     const text = useRef("");
@@ -24,21 +25,20 @@ function SendMessageDisplay(props) {
 
     }
     return (
-        <Paper component="form" aria-autocomplete="inline">
-            <IconButton aria-label="menu">
-            </IconButton>
-            <TextField
-                autoFocus
-                margin="dense"
-                type="string"
-                fullWidth
-                inputRef={text}
-            />
-            <Divider orientation="vertical" />
-            <IconButton color="primary" aria-label="directions" onClick={Send}>
-                <SendIcon />
-            </IconButton>
-        </Paper>
+    <ButtonGroup>
+        <IconButton aria-label="menu">
+        </IconButton>
+        <TextField
+            autoFocus
+            margin="dense"
+            type="string"
+            fullWidth
+            inputRef={text}
+        />
+        <IconButton color="primary" aria-label="directions" onClick={Send}>
+            <SendIcon />
+        </IconButton>
+    </ButtonGroup>
     );
 }
 
