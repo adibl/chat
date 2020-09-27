@@ -7,10 +7,12 @@ import AddIcon from '@material-ui/icons/Add';
 import style from './UserDisplayStyle';
 import UserContext from "../../usernameContex";
 import UseUsersList from "../../apiCalls/useUsersList";
+import RefreshIcon from '@material-ui/icons/Refresh';
+import {IconButton} from "@material-ui/core";
 
 function UsersDisplay() {
     const username = useContext(UserContext);
-    const usersData = UseUsersList();
+    const [usersData, refresh] = UseUsersList();
 
     function createChat(userToChatWith) {
         fetch('http://localhost:8080/conversations', {
@@ -27,6 +29,9 @@ function UsersDisplay() {
     const classes = style();
     return (
         <div>
+            <IconButton onClick={refresh}>
+                <RefreshIcon/>
+            </IconButton>
             {usersData.map((user, index) => {
                 return <Card key={index} className={classes.card}>
                         <CardHeader title={user}/>
