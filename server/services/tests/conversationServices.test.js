@@ -1,5 +1,6 @@
 let conversationServicesFactory = require('../conversationServices');
 const chai = require("chai");
+chai.use(require('chai-as-promised'));
 const expect = chai.expect;
 const sinon = require("sinon");
 
@@ -60,12 +61,7 @@ describe("conversationServices", function() {
     it("create conversation fail due to undefined members", async () => {
         let conversationServices = new conversationServicesFactory(conversationRequests, userServices,
             conversationToUsers, conversationToMessages, webSocket);
-        try {
-            await conversationServices.createConversation({name: "rotem"});
-        }
-        catch (error) {
-            expect(error).to.be.an('Error');
-        }
+        await expect(conversationServices.createConversation({name: "rotem"})).to.be.rejectedWith(Error);
     });
 
     it("create conversation fail because user dont exist", async () => {
@@ -75,12 +71,8 @@ describe("conversationServices", function() {
         let conversationServices = new conversationServicesFactory(conversationRequests, userServices,
             conversationToUsers, conversationToMessages, webSocket);
 
-        try {
-            await conversationServices.createConversation({name: "rotem"}, ["mor", "adi"]);
-        }
-        catch (error) {
-            expect(error).to.be.an('Error');
-        }
+            await expect(conversationServices.createConversation({name: "rotem"}, ["mor", "adi"]))
+                .to.be.rejectedWith(Error);
     });
 
     it("get conversation should work", async () => {
