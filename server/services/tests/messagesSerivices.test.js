@@ -1,5 +1,6 @@
 let messagesServicesFactory = require('../messagesServices');
 const chai = require("chai");
+chai.use(require('chai-as-promised'));
 const expect = chai.expect;
 const sinon = require("sinon");
 
@@ -40,27 +41,15 @@ describe("messagesServices", function() {
         expect(conversationToMessages.add.calledOnce).to.be.true;
         expect(messagesRequests.add.calledOnce).to.be.true;
         expect(webSocketHandler.sendMessage.calledOnce).to.be.true;
-        expect(webSocketHandler.sendMessage.firstCall.args[0]).to.be.eql(["adi", "mor"]);
-        expect(webSocketHandler.sendMessage.firstCall.args[1]).to.be.eql(message);
-        expect(webSocketHandler.sendMessage.firstCall.args[2]).to.be.undefined;
     });
 
-    it("should fail due to invalid message", async () => {
-        let message = {message: "data", sender: "adi"};
-
-        let getMessageFromJson = sinon.fake.returns(null);
-
-        let messagesServices = new messagesServicesFactory(null, null,
-            getMessageFromJson, null, null);
-        try {
-            await messagesServices.sendMessageToGroup(message, "0000");
-        }
-        catch (error) {
-            expect(error).to.be.an('Error');
-        }
+    it("should fail due to null message", async () => {
+        let messagesServices = new messagesServicesFactory(conversationToMessages, messagesRequests,
+        conversationToUsers, webSocketHandler);
+        await expect(messagesServices.sendMessageToGroup(null, "0000")).to.be.rejectedWith(Error)
     });
 
-    it("should send message", async () => {
+    it("should fail because no users in group", async () => {
 
         let conversationToUsersReturnNull = {
             getByConversationId: sinon.fake.returns(null)
@@ -68,7 +57,6 @@ describe("messagesServices", function() {
 
         let messagesServices = new messagesServicesFactory(conversationToMessages, messagesRequests,
             conversationToUsersReturnNull, webSocketHandler);
-        expect((await messagesServices.sendMessageToGroup(message, "0000"))).to.be.eql(message);
-        expect(webSocketHandler.sendMessage.notCalled).to.be.true;
+        await expect(messagesServices.sendMessageToGroup(message, "0000")).to.be.rejectedWith(Error)
     });
 });

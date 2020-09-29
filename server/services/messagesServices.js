@@ -18,6 +18,9 @@ class messagesServices {
             message.conversationId = conversationId;
             await this._webSocketHandler.sendMessage(users, message);
         }
+        else {
+            throw new TypeError('group dont have participants');
+        }
 
         return message;
     }
