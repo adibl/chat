@@ -5,8 +5,8 @@ const logger = require("../loaders/loggerLoader");
 
 function load(server, database) {
     const io = require('socket.io')(server);
-    new webSocketConnectionHandler(database.usernameToSocketIds, logger);
-    return new webSocketInitializer(io, database.usernameToSocketIds, logger);
+    let socketConnections = new webSocketConnectionHandler(database.usernameToSocketIds, logger);
+    return new webSocketInitializer(io, socketConnections, database.usernameToSocketIds, logger);
 }
 
 module.exports = load;

@@ -1,11 +1,13 @@
 
 class WebSocketServices {
 
-    constructor(io, usernamesToSocketIds, logger) {
+    constructor(io, socketConnection, usernamesToSocketIds, logger) {
         this._io = io;
+        this._socketConnection = socketConnection;
         this._usernamesToSocketIds = usernamesToSocketIds;
         this._logger = logger;
         io.on("connect", (ws) => {
+            this._socketConnection.addUser(ws);
             this._logger.info("connection");
         });
     }

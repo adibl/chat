@@ -8,13 +8,13 @@ class usernameToSocketIds extends BasicDataRequests {
             this._data.set(username, user.add(socket));
         }
         else {
-            this._data.set(username, new Set(socket));
+            this._data.set(username, new Set([socket]));
 
         }
     }
 
     async removeSocket(socket) {
-        this._data.forEach((username, sockets) => {
+        this._data.forEach((sockets, username) => {
             sockets.delete(socket);
             return username;
         })
