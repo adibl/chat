@@ -1,9 +1,10 @@
 let webSocketInitializer = require("../services/webSocketServices");
 let webSocketConnectionHandler = require("../api/webSocket/connection");
 
-function load(server) {
+function load(server, database) {
     const io = require('socket.io')(server);
-    return new webSocketInitializer(io, new webSocketConnectionHandler());
+    new webSocketConnectionHandler(database.usernameToSocketIds);
+    return new webSocketInitializer(io, database.usernameToSocketIds);
 }
 
 module.exports = load;

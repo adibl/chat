@@ -8,7 +8,9 @@ let uuid = require('uuid');
 let servicesLoader = require('../loaders/servicesLoader');
 let webSocketLoader = require("../loaders/webSocketLoader");
 const databaseLoader = require("../loaders/databseLoader");
-let {userServices, conversationServices} = servicesLoader(databaseLoader.load(),webSocketLoader(server));
+let database = databaseLoader.load();
+let webSocket =  webSocketLoader(server, database);
+let {userServices, conversationServices} = servicesLoader(database,webSocket);
 
 chai.use(chaiHttp);
 

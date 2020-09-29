@@ -8,8 +8,9 @@ let databaseLoader = require('./loaders/databseLoader');
 const app = express();
 const server = http.createServer(app);
 
-let webSocket =  webSocketLoader(server);
-let {userServices, conversationServices, messageServices} = servicesLoader(databaseLoader.load(),webSocket);
+let database = databaseLoader.load();
+let webSocket =  webSocketLoader(server, database);
+let {userServices, conversationServices, messageServices} = servicesLoader(database, webSocket);
 routersLoader(app, userServices, messageServices, conversationServices);
 
 server.listen(8080, '0.0.0.0');
