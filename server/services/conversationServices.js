@@ -10,14 +10,14 @@ class conversationServices {
     async _testUsersExist(usernames) {
         for (let user of usernames) {
             if (!await this._userServices.hasUser(user)) {
-                throw new RangeError(`user ${user} dont exist`);
+                throw new TypeError(`user ${user} dont exist`);
             }
         }
     }
 
     async createConversation(conversation, members) {
         if (!members || !conversation) {
-            throw new RangeError('conversation must have members');
+            throw new RangeError('conversation or members dont exist');
         }
         await this._testUsersExist([...members, conversation.creator]);
 

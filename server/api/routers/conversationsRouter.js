@@ -13,10 +13,10 @@ function CreateRouter(conversationServices) {
         }
         catch (err) {
             if (err instanceof RangeError) {
-                next(createError(409, err));
+                next(createError(400, err));
             }
             else if (err instanceof TypeError) {
-                next(createError(400, err));
+                next(createError(404, err));
             }
 
             next(createError(500, err));

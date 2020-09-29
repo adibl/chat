@@ -29,15 +29,15 @@ class userServices {
         }
 
         async hasUser(name) {
-            return this._usersManager.has(name);
+            return await this._usersManager.has(name);
         }
 
         async remove(name) {
-            return this._usersManager.remove(name);
+            return await this._usersManager.remove(name);
         }
 
         async clear() {
-            return this._usersManager.clear();
+            return await this._usersManager.clear();
         }
 }
 

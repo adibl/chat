@@ -49,7 +49,7 @@ describe('Conversation', () => {
                 .post('/conversations')
                 .send({"name": "newChat", "creator": "adi", "members": ["matan", "DontExist"], "type": "group"})
                 .end((err, res) => {
-                    expect(res).to.have.status(409);
+                    expect(res).to.have.status(404);
                     done();
                 });
         });
