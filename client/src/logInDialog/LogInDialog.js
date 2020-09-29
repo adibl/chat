@@ -5,12 +5,13 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import config from "../apiCalls/config";
 
 export default function LoginDialog(props) {
     const [open, setOpen] = React.useState(true);
     const username = useRef("");
     let handleClose = () => {
-        fetch('http://localhost:8080/users', {
+        fetch(`${config.url}/users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

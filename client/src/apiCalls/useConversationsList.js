@@ -22,12 +22,7 @@ function UseConversationsList() {
         if (webSocket) {
             webSocket.on('newGroup', (groupId) => {
                 setConversations(conversations => {
-                    if (conversations) {
-                        return [...conversations, groupId];
-                    }
-                    else {
-                        return [groupId];
-                    }
+                    return [...conversations, groupId];
                 });
             });
 

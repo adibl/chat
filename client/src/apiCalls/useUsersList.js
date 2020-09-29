@@ -2,8 +2,6 @@ import {useContext, useEffect, useState} from "react";
 import config from './config';
 import UserContext from "../usernameContex";
 
-
-
 function UseUsersList() {
     const [usersData, setUsersData] = useState([]);
     const username = useContext(UserContext);

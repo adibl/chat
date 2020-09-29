@@ -9,13 +9,14 @@ import UserContext from "../../usernameContex";
 import UseUsersList from "../../apiCalls/useUsersList";
 import RefreshIcon from '@material-ui/icons/Refresh';
 import {IconButton} from "@material-ui/core";
+import config from "../../apiCalls/config";
 
 function UsersDisplay() {
     const username = useContext(UserContext);
     const [usersData, refresh] = UseUsersList();
 
     function createChat(userToChatWith) {
-        fetch('http://localhost:8080/conversations', {
+        fetch(`${config.url}/conversations`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

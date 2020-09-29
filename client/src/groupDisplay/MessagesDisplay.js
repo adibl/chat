@@ -10,8 +10,7 @@ function MessagesDisplay(props) {
             {messages.has(props.conversation) &&
             messages.get(props.conversation).map((message) => {
                return <SingleMessageDisplay message={message}/>
-            })
-            }
+            })}
             </React.Fragment>
     );
 }
