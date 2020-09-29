@@ -1,11 +1,12 @@
 
 class WebSocketServices {
 
-    constructor(io, usernamesToSocketIds) {
+    constructor(io, usernamesToSocketIds, logger) {
         this._io = io;
         this._usernamesToSocketIds = usernamesToSocketIds;
+        this._logger = logger;
         io.on("connect", (ws) => {
-            console.log("connection");
+            this._logger.info("connection");
         });
     }
 
@@ -18,7 +19,7 @@ class WebSocketServices {
             if (sockets) {
                 for (let socket of sockets) {
                     await this._io.to(socket).emit(type, message);
-                    console.log("send to " + socket);
+                    this._logger.info("send to " + socket);
                 }
             }
         }

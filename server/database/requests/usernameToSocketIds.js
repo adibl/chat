@@ -16,6 +16,7 @@ class usernameToSocketIds extends BasicDataRequests {
     async removeSocket(socket) {
         this._data.forEach((username, sockets) => {
             sockets.delete(socket);
+            return username;
         })
     }
 
