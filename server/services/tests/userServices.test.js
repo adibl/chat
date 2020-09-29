@@ -17,9 +17,7 @@ describe("userServices", function() {
         sinon.reset();
     });
 
-    it("should crete new user", async (done) => {
-        let getReturnValue = {username: "adi"};
-
+    it("should crete new user", async () => {
         class UserStab {
             constructor(username) {
                 this.name = username
@@ -30,6 +28,5 @@ describe("userServices", function() {
         expect((await userServices.createOrGetUser(new User("adi")))).to.be.eql({name: "adi"});
         expect(userManager.add.calledOnce).to.be.true;
         expect(userManager.add.firstCall.args[0]).to.contain({name: "adi"});
-        done();
     });
 });

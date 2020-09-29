@@ -2,7 +2,6 @@
 class userServices {
     constructor(usersManager, User, conversationToUsers) {
         this._usersManager = usersManager;
-        this._user = User;
         this._conversationToUsers = conversationToUsers;
     }
 
@@ -16,11 +15,11 @@ class userServices {
         }
 
         async getUser(name) {
-            return this._usersManager.get(name);
+            return await this._usersManager.get(name);
         }
 
         async getUsernamesSorted(index, limit) {
-            return this._usersManager.getUsernamesSorted(index, limit);
+            return await this._usersManager.getUsernamesSorted(index, limit);
         }
 
         async getUserConversations(name) {

@@ -24,7 +24,7 @@ describe("conversationServices", function() {
         sinon.reset();
     });
 
-    it("clear should clear indexes", async (done) => {
+    it("clear should clear indexes", async () => {
 
         let conversationServices = new conversationServicesFactory(chatsData, null, conversationToUsers, conversationToMessages);
 
@@ -32,11 +32,10 @@ describe("conversationServices", function() {
         expect(chatsData.clear.calledOnce).to.be.true;
         expect(conversationToUsers.clear.calledOnce).to.be.true;
         expect(conversationToMessages.clear.calledOnce).to.be.true;
-        done();
     });
 
 
-    it("clear should fail create conversation because user dont exist", async (done) => {
+    it("clear should fail create conversation because user dont exist", async () => {
 
         let userServices = {
             hasUser: sinon.fake((username) => username !== "adi")
@@ -48,7 +47,6 @@ describe("conversationServices", function() {
         }
         catch (error) {
             expect(error).to.be.an('Error');
-            done()
         }
     });
 });

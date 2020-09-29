@@ -33,7 +33,7 @@ describe("messagesServices", function() {
         sinon.reset();
     });
 
-    it("should send message", async (done) => {
+    it("should send message", async () => {
         let messagesServices = new messagesServicesFactory(conversationToMessages, messagesRequests,
             conversationToUsers, webSocketHandler);
         expect((await messagesServices.sendMessageToGroup(message, "0000"))).to.be.eql(message);
@@ -43,10 +43,9 @@ describe("messagesServices", function() {
         expect(webSocketHandler.sendMessage.firstCall.args[0]).to.be.eql(["adi", "mor"]);
         expect(webSocketHandler.sendMessage.firstCall.args[1]).to.be.eql(message);
         expect(webSocketHandler.sendMessage.firstCall.args[2]).to.be.undefined;
-        done();
     });
 
-    it("should fail due to invalid message", async (done) => {
+    it("should fail due to invalid message", async () => {
         let message = {message: "data", sender: "adi"};
 
         let getMessageFromJson = sinon.fake.returns(null);
@@ -58,11 +57,10 @@ describe("messagesServices", function() {
         }
         catch (error) {
             expect(error).to.be.an('Error');
-            done()
         }
     });
 
-    it("should send message", async (done) => {
+    it("should send message", async () => {
 
         let conversationToUsersReturnNull = {
             getByConversationId: sinon.fake.returns(null)
@@ -72,6 +70,5 @@ describe("messagesServices", function() {
             conversationToUsersReturnNull, webSocketHandler);
         expect((await messagesServices.sendMessageToGroup(message, "0000"))).to.be.eql(message);
         expect(webSocketHandler.sendMessage.notCalled).to.be.true;
-        done();
     });
 });
