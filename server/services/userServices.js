@@ -39,8 +39,6 @@ class userServices {
         async clear() {
             return this._usersManager.clear();
         }
-
-
 }
 
 module.exports = userServices;

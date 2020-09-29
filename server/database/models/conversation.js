@@ -1,12 +1,9 @@
 let uuid = require('uuid');
 
 class Conversation {
-    constructor(creator, type, name = null) {
+    constructor(creator, type, name) {
         this.id = uuid.v4();
-        if (name) {
-            this.name = name;
-        }
-
+        this.name = name;
         this.type = type;
         this.creator = creator;
     }

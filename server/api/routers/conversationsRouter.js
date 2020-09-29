@@ -27,7 +27,7 @@ function CreateRouter(conversationServices) {
     });
 
     router.get('/:conversationId', async function (req, res, next) {
-        let conversationData = await conversationServices.getConversationMetadata(req.params.conversationId);
+        let conversationData = await conversationServices.getConversation(req.params.conversationId);
         if (conversationData) {
             res.json(conversationData);
         }

@@ -12,7 +12,7 @@ let webSocket =  webSocketLoader(server);
 let {userServices, conversationServices, messageServices} = servicesLoader(databaseLoader.load(),webSocket);
 routersLoader(app, userServices, messageServices, conversationServices);
 
-server.listen(8080);
+server.listen(8080, '0.0.0.0');
 console.log("listening on port 8080");
 
 module.exports = server;

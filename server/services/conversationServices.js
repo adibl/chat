@@ -1,6 +1,6 @@
 class conversationServices {
-    constructor(chatsData, userServices, conversationToUsers, conversationToMessages, getMessageFromJson, webSocketHandler) {
-        this._chatsData = chatsData;
+    constructor(conversationRequests, userServices, conversationToUsers, conversationToMessages, getMessageFromJson, webSocketHandler) {
+        this._conversationRequests = conversationRequests;
         this._userServices = userServices;
         this._conversationToUsers = conversationToUsers;
         this._conversationToMessages = conversationToMessages;
@@ -24,7 +24,7 @@ class conversationServices {
 
         await this._testUsersExist([...members, conversation.creator]);
 
-        await this._chatsData.add(conversation);
+        await this._conversationRequests.add(conversation);
         await this._conversationToUsers.add(conversation.id, [...members, conversation.creator]);
         await this._conversationToMessages.create(conversation.id);
         await this._webSocketHandler.sendMessage([...members, conversation.creator], conversation.id, "newGroup");
@@ -32,8 +32,8 @@ class conversationServices {
         return conversation;
     }
 
-    async getConversationMetadata(id) {
-        let conversation = await this._chatsData.get(id);
+    async getConversation(id) {
+        let conversation = await this._conversationRequests.get(id);
         if (conversation) {
             conversation.members = await this._conversationToUsers.getByConversationId(id);
         }
@@ -42,7 +42,7 @@ class conversationServices {
     }
 
     async clear() {
-        await this._chatsData.clear();
+        await this._conversationRequests.clear();
         await this._conversationToUsers.clear();
         return this._conversationToMessages.clear();
     }

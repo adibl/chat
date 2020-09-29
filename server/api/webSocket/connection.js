@@ -5,8 +5,9 @@ class SocketConnections {
 
     addUser(socket) {
         socket.on('login', (username) => {
-            if (this._users.find((user) => user.username === username)) {
-                this._users.find((user) => user.username === username).socketIds.add(socket.id);
+            let foundUsers = this._users.find((user) => user.username === username);
+            if (foundUsers !== null) {
+                foundUsers.socketIds.add(socket.id);
             }
             else {
                 this._users.push({username: username, socketIds: new Set([socket.id])});
@@ -16,8 +17,7 @@ class SocketConnections {
         });
 
         socket.on('disconnect', () => {
-            let index = this._users.findIndex((user) => user.socketIds.has(socket.id));
-            let user = this._users[index];
+            let user = this._users.findIndex((user) => user.socketIds.has(socket.id));
             if (user) {
                 user.socketIds.delete(socket.id);
                 console.log(`user ${user.username} logged out`);
