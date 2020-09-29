@@ -1,38 +1,24 @@
 class ConversationToUsers {
     constructor() {
-        this._convToUsers = new Map();
-        this._usersToConv = new Map();
+        this._convToUsers = [];
     }
 
     async getByConversationId(id) {
-        return this._convToUsers.get(id);
+        return this._convToUsers.filter((obj) => obj.convId === id).map((obj) => obj.userId);
     }
 
     async getByUsername(name) {
-        return this._usersToConv.get(name);
+        return this._convToUsers.filter((obj) => obj.userId === name).map((obj) => obj.convId);
     }
 
     async add(conversationId, usernames) {
-        for (let user of usernames) {
-            if (this._usersToConv.get(user)) {
-                this._usersToConv.get(user).push(conversationId);
-            }
-            else {
-                this._usersToConv.set(user, [conversationId]);
-            }
-
+        for(let username of usernames) {
+            this._convToUsers.push({userId: username, convId: conversationId});
         }
-
-        if (this._convToUsers.has(conversationId)) {
-            return this._convToUsers.set(conversationId, this._convToUsers.get(conversationId).concat(usernames));
-        }
-
-        return this._convToUsers.set(conversationId, usernames);
     }
 
     async clear() {
-        this._convToUsers.clear();
-        this._usersToConv.clear();
+        this._convToUsers = [];
     }
 
 }

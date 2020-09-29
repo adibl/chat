@@ -31,14 +31,4 @@ describe("userServices", function() {
         expect(userManager.add.firstCall.args[0]).to.contain({name: "adi"});
         done();
     });
-
-    it("should fail to create new user because user already exists", async (done) => {
-        let getReturnValue = {username: "adi"};
-        userManager.has = () => true;
-
-        let userServices = new userServicesClass(userManager, null, null);
-        expect((await userServices.createOrGetUser("adi"))).to.be.null;
-        expect(userManager.add.notCalled).to.be.true;
-        done();
-    });
 });
