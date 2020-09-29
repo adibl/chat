@@ -19,9 +19,9 @@ describe('Users', () => {
     describe('get /users', () => {
         before(async (done) => {
             await userServices.clear();
-            await userServices.createOrGetUser(new User('adi2'));
-            await userServices.createOrGetUser(new User('mor'));
-            await userServices.createOrGetUser(new User('amir'));
+            await userServices.createOrGetUser('adi2');
+            await userServices.createOrGetUser('mor');
+            await userServices.createOrGetUser('amir');
             done();
         });
 
@@ -68,7 +68,7 @@ describe('Users', () => {
     describe('POST /users', () => {
         beforeEach(async (done) => {
             await userServices.clear();
-            await userServices.createOrGetUser(new User('moran'));
+            await userServices.createOrGetUser('moran');
             done();
         });
 
@@ -108,7 +108,7 @@ describe('Users', () => {
     describe('GET /users/{username}', () => {
         beforeEach(async (done) => {
             await userServices.clear();
-            await userServices.createOrGetUser(new User("adi2"));
+            await userServices.createOrGetUser("adi2");
             await conversationServices.createConversation({creator: "adi2", type: "personal"}, []);
             done();
         });
@@ -137,7 +137,7 @@ describe('Users', () => {
     describe('DELETE /users/{username}', () => {
         beforeEach(async (done) => {
             await userServices.clear();
-            await userServices.createOrGetUser(new User("moran"));
+            await userServices.createOrGetUser("moran");
             done();
         });
 

@@ -24,8 +24,7 @@ function CreateRouter(userServices) {
             res.status(400).json("must send not empty name");
         }
         else {
-            let user = Object.assign(new User(), req.body);
-            let newUser = await userServices.createOrGetUser(user);
+            let newUser = await userServices.createOrGetUser(req.body.name);
             res.json(newUser);
         }
     });

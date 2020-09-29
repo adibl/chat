@@ -2,15 +2,17 @@
 class userServices {
     constructor(usersManager, User, conversationToUsers) {
         this._usersManager = usersManager;
+        this._user = User;
         this._conversationToUsers = conversationToUsers;
     }
 
-        async createOrGetUser(user) {
-            if (await this._usersManager.has(user.name)) {
-                return this._usersManager.get(user.name);
+        async createOrGetUser(name) {
+            if (await this._usersManager.has(name)) {
+                return this._usersManager.get(name);
             } else {
-                await this._usersManager.add(user);
-                return user;
+                let newUser = new this._user(name);
+                await this._usersManager.add(newUser);
+                return newUser;
             }
         }
 

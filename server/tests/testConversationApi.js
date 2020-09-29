@@ -19,9 +19,9 @@ chai.use(chaiHttp);
 describe('Conversation', () => {
     before(async (done) => {
          await userServices.clear();
-        await userServices.createOrGetUser(new User("adi"));
-        await userServices.createOrGetUser(new User("matan"));
-        await userServices.createOrGetUser(new User("rotem"));
+        await userServices.createOrGetUser("adi");
+        await userServices.createOrGetUser("matan");
+        await userServices.createOrGetUser("rotem");
         done();
     });
 

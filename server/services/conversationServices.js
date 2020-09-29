@@ -16,6 +16,9 @@ class conversationServices {
     }
 
     async createConversation(conversation, members) {
+        if (!members || !conversation) {
+            throw new RangeError('conversation must have members');
+        }
         await this._testUsersExist([...members, conversation.creator]);
 
         await this._conversationRequests.add(conversation);
@@ -30,12 +33,11 @@ class conversationServices {
         let conversation = await this._conversationRequests.get(id);
         if (conversation) {
             conversation.members = await this._conversationToUsers.getByConversationId(id);
+            return conversation;
         }
         else {
             throw new RangeError(`conversation  with id:${id} dont exist`);
         }
-
-        return conversation;
     }
 
     async clear() {
@@ -44,6 +46,5 @@ class conversationServices {
         return this._conversationToMessages.clear();
     }
 }
-
 
 module.exports = conversationServices;
