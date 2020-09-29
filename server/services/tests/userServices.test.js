@@ -2,6 +2,7 @@ let userServicesClass = require('../userServices');
 const chai = require("chai");
 const expect = chai.expect;
 const sinon = require("sinon");
+const User = require("../../database/models/user");
 
 describe("userServices", function() {
     let userManager;
@@ -26,7 +27,7 @@ describe("userServices", function() {
         }
 
         let userServices = new userServicesClass(userManager, UserStab, null);
-        expect((await userServices.createOrGetUser("adi"))).to.be.eql({name: "adi"});
+        expect((await userServices.createOrGetUser(new User("adi")))).to.be.eql({name: "adi"});
         expect(userManager.add.calledOnce).to.be.true;
         expect(userManager.add.firstCall.args[0]).to.contain({name: "adi"});
         done();

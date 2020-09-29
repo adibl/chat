@@ -5,16 +5,12 @@ const sinon = require("sinon");
 
 describe("messagesServices", function() {
     let message = {message: "data", sender: "adi"};
-    let getMessageFromJson;
     let conversationToUsers;
     let conversationToMessages;
     let messagesRequests;
     let webSocketHandler;
 
     before(() => {
-        getMessageFromJson = (message) => {
-            return message;
-        };
 
         conversationToUsers = {
             getByConversationId: sinon.fake.returns(["adi", "mor"])
@@ -39,7 +35,7 @@ describe("messagesServices", function() {
 
     it("should send message", async (done) => {
         let messagesServices = new messagesServicesFactory(conversationToMessages, messagesRequests,
-            getMessageFromJson, conversationToUsers, webSocketHandler);
+            conversationToUsers, webSocketHandler);
         expect((await messagesServices.sendMessageToGroup(message, "0000"))).to.be.eql(message);
         expect(conversationToMessages.add.calledOnce).to.be.true;
         expect(messagesRequests.add.calledOnce).to.be.true;
@@ -73,7 +69,7 @@ describe("messagesServices", function() {
         };
 
         let messagesServices = new messagesServicesFactory(conversationToMessages, messagesRequests,
-            getMessageFromJson, conversationToUsersReturnNull, webSocketHandler);
+            conversationToUsersReturnNull, webSocketHandler);
         expect((await messagesServices.sendMessageToGroup(message, "0000"))).to.be.eql(message);
         expect(webSocketHandler.sendMessage.notCalled).to.be.true;
         done();

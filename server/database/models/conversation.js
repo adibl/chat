@@ -1,8 +1,8 @@
-let uuid = require('uuid');
+const generateId = require("../../services/IdService");
 
 class Conversation {
     constructor(creator, type, name) {
-        this.id = uuid.v4();
+        this.id = generateId();
         this.name = name;
         this.type = type;
         this.creator = creator;
