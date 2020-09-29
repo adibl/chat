@@ -1,5 +1,6 @@
 let express = require('express');
 let createError = require('http-errors');
+const Message = require("../../database/models/message");
 
 function CreateRouter(messageServices) {
 
@@ -8,7 +9,8 @@ function CreateRouter(messageServices) {
 
     router.post('/:conversationId', async function (req, res, next) {
         try {
-            let message = await messageServices.sendMessageToGroup(req.body, req.params.conversationId);
+            let messageToSend = Object.assign(new Message(), req.body);
+            let message = await messageServices.sendMessageToGroup(messageToSend, req.params.conversationId);
             res.status(200).json(message);
         }
         catch (e) {

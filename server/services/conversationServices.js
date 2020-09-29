@@ -1,10 +1,9 @@
 class conversationServices {
-    constructor(conversationRequests, userServices, conversationToUsers, conversationToMessages, getConversationFromJson, webSocketHandler) {
+    constructor(conversationRequests, userServices, conversationToUsers, conversationToMessages, webSocketHandler) {
         this._conversationRequests = conversationRequests;
         this._userServices = userServices;
         this._conversationToUsers = conversationToUsers;
         this._conversationToMessages = conversationToMessages;
-        this._getConversationFromJson = getConversationFromJson;
         this._webSocketHandler = webSocketHandler;
     }
 
@@ -16,9 +15,7 @@ class conversationServices {
         }
     }
 
-    async createConversation(conversationJson, members) {
-        let conversation = this._getConversationFromJson(conversationJson);
-
+    async createConversation(conversation, members) {
         await this._testUsersExist([...members, conversation.creator]);
 
         await this._conversationRequests.add(conversation);

@@ -9,13 +9,4 @@ class Conversation {
     }
 }
 
-function getConversationFromJson(json) {
-    if (json.type && json.creator) {
-        return new Conversation(json.creator, json.type, json.name);
-    }
-    else {
-        throw new TypeError("conversation object is invalid");
-    }
-}
-
-module.exports = {Conversation, getConversationFromJson};
+module.exports = Conversation;

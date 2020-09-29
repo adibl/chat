@@ -7,6 +7,7 @@ let server = require('../app');
 let servicesLoader = require('../loaders/servicesLoader');
 let webSocketLoader = require("../loaders/webSocketLoader");
 const databaseLoader = require("../loaders/databseLoader");
+const User = require("../database/models/user");
 let database = databaseLoader.load();
 let webSocket =  webSocketLoader(server, database);
 let {userServices, conversationServices} = servicesLoader(database,webSocket);
@@ -20,9 +21,9 @@ describe('Messages', () => {
 
     before(async (done) => {
         await userServices.clear();
-        await userServices.createOrGetUser("adi");
-        await userServices.createOrGetUser("matan");
-        await userServices.createOrGetUser("rotem");
+        await userServices.createOrGetUser(new User("adi"));
+        await userServices.createOrGetUser(new User("matan"));
+        await userServices.createOrGetUser(new User("rotem"));
         let conversation = await conversationServices.createConversation({creator:"adi", type:"personal"}, ["rotem"]);
         conversationId = conversation.id;
         done();

@@ -6,13 +6,12 @@ class userServices {
         this._conversationToUsers = conversationToUsers;
     }
 
-        async createOrGetUser(name) {
-            if (await this._usersManager.has(name)) {
-                return this._usersManager.get(name);
+        async createOrGetUser(user) {
+            if (await this._usersManager.has(user.name)) {
+                return this._usersManager.get(user.name);
             } else {
-                let newUser = new this._user(name);
-                await this._usersManager.add(newUser);
-                return newUser;
+                await this._usersManager.add(user);
+                return user;
             }
         }
 

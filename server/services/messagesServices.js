@@ -1,14 +1,12 @@
 class messagesServices {
-    constructor(conversationToMessages, messagesRequests, getMessageFromJson, conversationToUsers, webSocketHandler) {
+    constructor(conversationToMessages, messagesRequests, conversationToUsers, webSocketHandler) {
         this._conversationToMessages = conversationToMessages;
         this._messagesRequests = messagesRequests;
-        this._getMessageFromJson = getMessageFromJson;
         this._conversationToUsers = conversationToUsers;
         this._webSocketHandler = webSocketHandler;
     }
 
-    async sendMessageToGroup(messageJson, conversationId) {
-        let message = this._getMessageFromJson(messageJson);
+    async sendMessageToGroup(message, conversationId) {
         if (!message) {
             throw new TypeError("message must have text and sender");
         }

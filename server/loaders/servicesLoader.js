@@ -1,5 +1,3 @@
-let {getMessageFromJson} = require("../database/models/message");
-let {getConversationFromJson} = require("../database/models/conversation");
 let User = require("../database/models/user");
 
 let userServicesClass = require("../services/userServices");
@@ -9,9 +7,9 @@ let messageServicesClass = require("../services/messagesServices");
 function load(database, webSocketHandler) {
     let userServices = new userServicesClass(database.usersRequests, User, database.conversationToUsersRequests);
     let conversationServices = new conversationServicesClass(database.conversationRequests, userServices, database.conversationToUsersRequests,
-        database.conversationToMessagesRequests, getConversationFromJson, webSocketHandler);
+        database.conversationToMessagesRequests, webSocketHandler);
     let messageServices = new messageServicesClass(database.conversationToMessagesRequests, database.messagesRequests,
-        getMessageFromJson, database.conversationToUsersRequests, webSocketHandler);
+        database.conversationToUsersRequests, webSocketHandler);
     return {userServices, conversationServices, messageServices}
 }
 

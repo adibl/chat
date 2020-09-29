@@ -1,12 +1,14 @@
 let express = require('express');
 let createError = require('http-errors');
+const Conversation = require("../../database/models/conversation");
 
 function CreateRouter(conversationServices) {
     const router = express.Router();
 
     router.post('/', async function (req, res, next) {
         try {
-            let newConversation = await conversationServices.createConversation(req.body, req.body.members);
+            let conversation = Object.assign(new Conversation(), req.body);
+            let newConversation = await conversationServices.createConversation(conversation, req.body.members);
             res.json(newConversation);
         }
         catch (err) {
@@ -25,7 +27,6 @@ function CreateRouter(conversationServices) {
         try {
             let conversationData = await conversationServices.getConversation(req.params.conversationId);
             res.json(conversationData);
-
         }
         catch (err) {
             next(createError(404, err));

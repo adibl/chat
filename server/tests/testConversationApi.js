@@ -8,6 +8,8 @@ let uuid = require('uuid');
 let servicesLoader = require('../loaders/servicesLoader');
 let webSocketLoader = require("../loaders/webSocketLoader");
 const databaseLoader = require("../loaders/databseLoader");
+const Conversation = require("../database/models/conversation");
+const User = require("../database/models/user");
 let database = databaseLoader.load();
 let webSocket =  webSocketLoader(server, database);
 let {userServices, conversationServices} = servicesLoader(database,webSocket);
@@ -17,9 +19,9 @@ chai.use(chaiHttp);
 describe('Conversation', () => {
     before(async (done) => {
          await userServices.clear();
-        await userServices.createOrGetUser("adi");
-        await userServices.createOrGetUser("matan");
-        await userServices.createOrGetUser("rotem");
+        await userServices.createOrGetUser(new User("adi"));
+        await userServices.createOrGetUser(new User("matan"));
+        await userServices.createOrGetUser(new User("rotem"));
         done();
     });
 
@@ -68,12 +70,12 @@ describe('Conversation', () => {
 
         beforeEach(async (done) => {
             await conversationServices.clear();
-            let conversation = await conversationServices.createConversation({creator:"adi", type:"personal"}, ["matan"]);
+            let conversation = await conversationServices.createConversation(new Conversation("adi", "personal"), ["matan"]);
             conversationId = conversation.id;
             done();
         });
 
-        it('it should get conversation conversation', (done) => {
+        it('it should get conversation', (done) => {
             chai.request(server)
                 .get(`/conversations/${conversationId}`)
                 .end((err, res) => {
