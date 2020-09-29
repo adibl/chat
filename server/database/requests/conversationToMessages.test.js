@@ -1,4 +1,4 @@
-let conversationToMessageClass = require('../conversationToMessages');
+let conversationToMessageClass = require('./conversationToMessages');
 const chai = require("chai");
 const expect = chai.expect;
 

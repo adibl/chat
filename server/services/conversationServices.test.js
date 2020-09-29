@@ -1,4 +1,4 @@
-let conversationServicesFactory = require('../conversationServices');
+let conversationServicesFactory = require('./conversationServices');
 const chai = require("chai");
 chai.use(require('chai-as-promised'));
 const expect = chai.expect;

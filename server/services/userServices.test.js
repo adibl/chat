@@ -1,8 +1,8 @@
-let userServicesClass = require('../userServices');
+let userServicesClass = require('./userServices');
 const chai = require("chai");
 const expect = chai.expect;
 const sinon = require("sinon");
-const User = require("../../database/models/user");
+const User = require("../database/models/user");
 
 describe("userServices", function() {
     let userManager;
