@@ -26,7 +26,7 @@ describe("userServices", function() {
         }
 
         let userServices = new userServicesClass(userManager, UserStab, null);
-        expect((await userServices.createUser("adi"))).to.be.eql({name: "adi"});
+        expect((await userServices.createOrGetUser("adi"))).to.be.eql({name: "adi"});
         expect(userManager.add.calledOnce).to.be.true;
         expect(userManager.add.firstCall.args[0]).to.contain({name: "adi"});
         done();
@@ -37,7 +37,7 @@ describe("userServices", function() {
         userManager.has = () => true;
 
         let userServices = new userServicesClass(userManager, null, null);
-        expect((await userServices.createUser("adi"))).to.be.null;
+        expect((await userServices.createOrGetUser("adi"))).to.be.null;
         expect(userManager.add.notCalled).to.be.true;
         done();
     });

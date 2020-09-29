@@ -18,9 +18,9 @@ describe('Users', () => {
     describe('get /users', () => {
         before(async (done) => {
             await userServices.clear();
-            await userServices.createUser('adi');
-            await userServices.createUser('mor');
-            await userServices.createUser('amir');
+            await userServices.createOrGetUser('adi');
+            await userServices.createOrGetUser('mor');
+            await userServices.createOrGetUser('amir');
             done();
         });
 
@@ -81,24 +81,6 @@ describe('Users', () => {
                 });
         });
 
-        it('it should fail to create 2 users with the same name', (done) => {
-            let requester = chai.request(server).keepOpen();
-
-            Promise.all([
-                requester
-                    .post('/users')
-                    .send({"name": "adi"}),
-                requester
-                    .post('/users')
-                    .send({"name": "adi"}),
-            ]).then(responses => {
-                let statusCodes = responses.map((response) => response.statusCode);
-                expect(statusCodes).to.contain(200);
-                expect(statusCodes).to.contain(409);
-                done();
-            }).catch((err) => console.error(err));
-        });
-
         it('it should fail to create user without a name', (done) => {
             chai.request(server)
                 .post('/users')
@@ -124,7 +106,7 @@ describe('Users', () => {
     describe('GET /users/{username}', () => {
         beforeEach(async (done) => {
             await userServices.clear();
-            await userServices.createUser("adi2");
+            await userServices.createOrGetUser("adi2");
             await conversationServices.createConversation({creator: "adi2", type: "personal"}, []);
             done();
         });
@@ -153,7 +135,7 @@ describe('Users', () => {
     describe('DELETE /users/{username}', () => {
         beforeEach(async (done) => {
             await userServices.clear();
-            await userServices.createUser("moran");
+            await userServices.createOrGetUser("moran");
             done();
         });
 

@@ -12,6 +12,9 @@ function getMessageFromJson(json) {
     if (json.sender && json.text) {
         return new message(json.text, json.sender);
     }
+    else {
+        throw new TypeError("message object is invalid");
+    }
 }
 
 module.exports = {message, getMessageFromJson};

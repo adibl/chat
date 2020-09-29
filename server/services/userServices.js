@@ -6,9 +6,9 @@ class userServices {
         this._conversationToUsers = conversationToUsers;
     }
 
-        async createUser(name) {
+        async createOrGetUser(name) {
             if (await this._usersManager.has(name)) {
-                return null;
+                return this._usersManager.get(name);
             } else {
                 let newUser = new this._user(name);
                 await this._usersManager.add(newUser);

@@ -1,10 +1,10 @@
 class conversationServices {
-    constructor(conversationRequests, userServices, conversationToUsers, conversationToMessages, getMessageFromJson, webSocketHandler) {
+    constructor(conversationRequests, userServices, conversationToUsers, conversationToMessages, getConversationFromJson, webSocketHandler) {
         this._conversationRequests = conversationRequests;
         this._userServices = userServices;
         this._conversationToUsers = conversationToUsers;
         this._conversationToMessages = conversationToMessages;
-        this._getMessageFromJson = getMessageFromJson;
+        this._getConversationFromJson = getConversationFromJson;
         this._webSocketHandler = webSocketHandler;
     }
 
@@ -17,10 +17,7 @@ class conversationServices {
     }
 
     async createConversation(conversationJson, members) {
-        let conversation = this._getMessageFromJson(conversationJson);
-        if (!conversation) {
-            throw new TypeError("conversation object is invalid");
-        }
+        let conversation = this._getConversationFromJson(conversationJson);
 
         await this._testUsersExist([...members, conversation.creator]);
 
@@ -36,6 +33,9 @@ class conversationServices {
         let conversation = await this._conversationRequests.get(id);
         if (conversation) {
             conversation.members = await this._conversationToUsers.getByConversationId(id);
+        }
+        else {
+            throw new RangeError(`conversation  with id:${id} dont exist`);
         }
 
         return conversation;

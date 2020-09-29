@@ -23,13 +23,8 @@ function CreateRouter(userServices) {
             res.status(400).json("must send not empty name");
         }
         else {
-            let newUser = await userServices.createUser(req.body.name);
-            if (newUser !== null) {
-                res.json(newUser);
-            }
-            else {
-                next(createError(409, "username already exists"));
-            }
+            let newUser = await userServices.createOrGetUser(req.body.name);
+            res.json(newUser);
         }
     });
 

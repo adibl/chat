@@ -7,12 +7,7 @@ function CreateRouter(conversationServices) {
     router.post('/', async function (req, res, next) {
         try {
             let newConversation = await conversationServices.createConversation(req.body, req.body.members);
-            if (newConversation !== null) {
-                res.json(newConversation);
-            }
-            else {
-                next(createError(409, "one of the users dont exist"));
-            }
+            res.json(newConversation);
         }
         catch (err) {
             if (err instanceof RangeError) {
@@ -27,12 +22,13 @@ function CreateRouter(conversationServices) {
     });
 
     router.get('/:conversationId', async function (req, res, next) {
-        let conversationData = await conversationServices.getConversation(req.params.conversationId);
-        if (conversationData) {
+        try {
+            let conversationData = await conversationServices.getConversation(req.params.conversationId);
             res.json(conversationData);
+
         }
-        else {
-            next(createError(404, `conversation ${req.params.conversationId} not found`));
+        catch (err) {
+            next(createError(404, err));
         }
     });
 
