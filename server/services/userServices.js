@@ -8,12 +8,12 @@ class userServices {
         async createOrGetUser(name) {
         let user = await this._userModel.findOne({ name: name });
             if (user) {
-                return user;
+                return user.toJSON();
             }
             else {
                 let newUser = new this._userModel({name: name});
                 await newUser.save();
-                return newUser;
+                return newUser.toJSON();
             }
         }
 

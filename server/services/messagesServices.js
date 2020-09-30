@@ -1,7 +1,7 @@
 class messagesServices {
-    constructor(conversationToMessages, messagesRequests, conversationToUsers, webSocketHandler) {
+    constructor(conversationToMessages, Message, conversationToUsers, webSocketHandler) {
         this._conversationToMessages = conversationToMessages;
-        this._messages = messagesRequests;
+        this._messages = Message;
         this._conversationToUsers = conversationToUsers;
         this._webSocketHandler = webSocketHandler;
     }
@@ -23,7 +23,7 @@ class messagesServices {
             throw new TypeError('group dont have participants');
         }
 
-        return message;
+        return message.toJSON();
     }
 }
 

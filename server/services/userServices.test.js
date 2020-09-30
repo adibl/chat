@@ -5,7 +5,7 @@ const sinon = require("sinon");
 const User = require("../database/models/user");
 
 describe("userServices", function() {
-    let userManager;
+    let mongooseModel = function () {};
     class UsersMock {
         constructor(name) {
             this.name = name;
@@ -13,10 +13,10 @@ describe("userServices", function() {
     }
 
     before(() => {
-        userManager = {
-            has: () => false,
-            add: sinon.spy()
-        }
+        mongooseModel.find = sinon.spy();
+        mongooseModel.findOne = sinon.fake.returns({name: "adi"});
+        mongooseModel.lean = sinon.spy();
+        mongooseModel.prototype.save = sinon.spy();
     });
 
     afterEach(() => {
@@ -24,21 +24,21 @@ describe("userServices", function() {
     });
 
     it("should crete new user", async () => {
-        let userServices = new userServicesClass(userManager, UsersMock);
-        expect((await userServices.createOrGetUser("adi"))).to.be.eql({name: "adi"});
-        expect(userManager.add.calledOnce).to.be.true;
-        expect(userManager.add.firstCall.args[0]).to.contain({name: "adi"});
+        mongooseModel.findOne = sinon.fake.returns(null);
+        mongooseModel.prototype.toJSON = sinon.fake.returns({name: "adi2"});
+
+        let userServices = new userServicesClass(mongooseModel, UsersMock);
+        expect((await userServices.createOrGetUser("adi2"))).to.be.eql({name: "adi2"});
+        expect(mongooseModel.findOne.calledOnce).to.be.true;
+        expect(mongooseModel.prototype.save.calledOnce).to.be.true;
     });
 
 
     it("should return existing user", async () => {
-        userManager = {
-            has: sinon.spy(() => true),
-            get: sinon.spy(() => ({name: "adi"}))
-        };
+        mongooseModel.prototype.toJSON = sinon.fake.returns({name: "adi"});
 
-        let userServices = new userServicesClass(userManager, UsersMock);
+        let userServices = new userServicesClass(mongooseModel, UsersMock);
         expect((await userServices.createOrGetUser("adi"))).to.be.eql({name: "adi"});
-        expect(userManager.has.calledOnce).to.be.true;
+        expect(mongooseModel.prototype.save.calledOnce).to.be.true;
     });
 });
