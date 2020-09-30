@@ -18,40 +18,40 @@ export default function LoginDialog(props) {
             },
             body: JSON.stringify({name: username.current.value})
         }).then((res) => {
-                if (res.status === 200) {
-                    props.login(username.current.value);
-                    setOpen(false);
-                }
-                else if (res.status === 409) {
-                    props.login(username.current.value);
-                    setOpen(false);
-                }
-                else {
-                    alert(res.status);
-                }
-            });
+            if (res.status === 200) {
+                props.login(username.current.value);
+                setOpen(false);
+            }
+            else if (res.status === 409) {
+                props.login(username.current.value);
+                setOpen(false);
+            }
+            else {
+                alert(res.status);
+            }
+        });
 
     };
 
     return (
-            <Dialog open={open}>
-                <DialogTitle id="form-dialog-title">login with username</DialogTitle>
-                <DialogContent>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        label="Username"
-                        required={true}
-                        type="string"
-                        fullWidth
-                        inputRef={username}
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        LogIn
-                    </Button>
-                </DialogActions>
-            </Dialog>
+        <Dialog open={open}>
+            <DialogTitle id="form-dialog-title">login with username</DialogTitle>
+            <DialogContent>
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    label="Username"
+                    required={true}
+                    type="string"
+                    fullWidth
+                    inputRef={username}
+                />
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                    LogIn
+                </Button>
+            </DialogActions>
+        </Dialog>
     );
 }

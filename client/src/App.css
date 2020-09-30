@@ -1,12 +1,12 @@
 .Stretch {
-  position: fixed;
-  text-align: center;
-  height: 100%;
-  width: 100%;
+    position: fixed;
+    text-align: center;
+    height: 100%;
+    width: 100%;
 }
 
 div#root {
-  position: fixed;
-  height: 100%; /* remove this line to see div.app is no more 100% height */
-  width: 100%;
+    position: fixed;
+    height: 100%; /* remove this line to see div.app is no more 100% height */
+    width: 100%;
 }

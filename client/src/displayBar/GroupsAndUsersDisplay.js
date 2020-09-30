@@ -15,7 +15,7 @@ function GroupsAndUsersDisplay(props) {
                 <Typography variant="h6" component="h6">
                     conversations
                 </Typography>
-                <ConversationsDisplay onSelect={props.onSelect}  conversation={props.conversation}/>
+                <ConversationsDisplay onSelect={props.onSelect} conversation={props.conversation}/>
             </Grid>
             <Grid item>
                 <Typography variant="h6" component="h6">

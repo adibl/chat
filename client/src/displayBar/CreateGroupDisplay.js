@@ -10,8 +10,6 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
-import RefreshIcon from "@material-ui/icons/Refresh";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
 import UserMultiSelect from "./usersDisplay/usersMultiSelection";
 
 export default function CreateGroupDisplay(props) {
@@ -26,7 +24,12 @@ export default function CreateGroupDisplay(props) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({"creator": username,"name": groupNameRef.current.value, "type": "group", "members": checked})
+            body: JSON.stringify({
+                "creator": username,
+                "name": groupNameRef.current.value,
+                "type": "group",
+                "members": checked
+            })
         }).then(() => clean())
             .then(() => props.onEnd())
             .catch((err) => alert(err));

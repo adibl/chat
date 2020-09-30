@@ -14,7 +14,8 @@ export default function UserMultiSelect(props) {
 
         if (currentIndex === -1) {
             newChecked.push(user);
-        } else {
+        }
+        else {
             newChecked.splice(currentIndex, 1);
         }
 
@@ -35,7 +36,7 @@ export default function UserMultiSelect(props) {
                             checked={props.checked.indexOf(user) !== -1}
                         />
                     </ListItemSecondaryAction>
-                </ListItem>
+                </ListItem>;
             })}
         </List>
     );

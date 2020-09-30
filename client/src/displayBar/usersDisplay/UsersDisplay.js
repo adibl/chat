@@ -35,13 +35,13 @@ function UsersDisplay() {
             </IconButton>
             {usersData.map((user, index) => {
                 return <Card key={index} className={classes.card}>
-                        <CardHeader title={user}/>
+                    <CardHeader title={user}/>
                     <CardActions>
                         <Button size="small" onClick={() => createChat(user)}>
                             <AddIcon/>
                         </Button>
                     </CardActions>
-                </Card>
+                </Card>;
             })}
         </div>
     );

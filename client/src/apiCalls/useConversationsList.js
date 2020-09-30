@@ -26,7 +26,7 @@ function UseConversationsList() {
                 });
             });
 
-            return () => webSocket.off('newGroup')
+            return () => webSocket.off('newGroup');
         }
     }, [username]);
 

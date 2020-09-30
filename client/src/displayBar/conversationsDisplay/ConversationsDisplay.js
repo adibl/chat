@@ -8,7 +8,7 @@ function ConversationsDisplay(props) {
         <div>
             {conversations && conversations.map((convId, index) => {
                 return <ConversationDisplay index={index} id={convId} onclick={() => props.onSelect(convId)}
-                    isSelected={props.conversation === convId} />
+                                            isSelected={props.conversation === convId}/>;
             })}
         </div>
     );

@@ -9,6 +9,7 @@ import {ButtonGroup} from "@material-ui/core";
 function SendMessageDisplay(props) {
     const text = useRef("");
     const username = useContext(usernameContext);
+
     function Send() {
         if (props.conversation && text.current) {
             fetch(`${config.url}/messages/${props.conversation}`, {
@@ -21,21 +22,22 @@ function SendMessageDisplay(props) {
         }
 
     }
+
     return (
-    <ButtonGroup>
-        <IconButton aria-label="menu">
-        </IconButton>
-        <TextField
-            autoFocus
-            margin="dense"
-            type="string"
-            fullWidth
-            inputRef={text}
-        />
-        <IconButton color="primary" aria-label="send message" onClick={Send}>
-            <SendIcon />
-        </IconButton>
-    </ButtonGroup>
+        <ButtonGroup>
+            <IconButton aria-label="menu">
+            </IconButton>
+            <TextField
+                autoFocus
+                margin="dense"
+                type="string"
+                fullWidth
+                inputRef={text}
+            />
+            <IconButton color="primary" aria-label="send message" onClick={Send}>
+                <SendIcon/>
+            </IconButton>
+        </ButtonGroup>
     );
 }
 

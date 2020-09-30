@@ -6,17 +6,17 @@ import Box from "@material-ui/core/Box";
 
 function SingleMessageDisplay(props) {
     return (
-        <Box item width={1/3}>
-        <Card>
-            <CardContent>
-                <Typography variant="h7" component="h7">
-                    {props.message.sender}
-                </Typography>
-                <Typography variant="h6" component="h6">
-                    {props.message.text}
-                </Typography>
-            </CardContent>
-        </Card>
+        <Box item width={1 / 3}>
+            <Card>
+                <CardContent>
+                    <Typography variant="h7" component="h7">
+                        {props.message.sender}
+                    </Typography>
+                    <Typography variant="h6" component="h6">
+                        {props.message.text}
+                    </Typography>
+                </CardContent>
+            </Card>
         </Box>
     );
 }

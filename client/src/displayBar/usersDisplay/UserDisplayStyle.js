@@ -4,7 +4,7 @@ const useStyles = makeStyles({
     card: {
         display: "flex",
         justifyContent: "space-between",
-        fontSize:'0.7em'
+        fontSize: '0.7em'
     }
 });
 
