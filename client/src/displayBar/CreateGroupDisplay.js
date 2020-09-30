@@ -1,4 +1,4 @@
-import React, {useContext, useRef} from 'react';
+import React, {useContext, useEffect, useRef} from 'react';
 import Button from "@material-ui/core/Button";
 import useUsersList from "../apiCalls/useUsersList";
 import TextField from "@material-ui/core/TextField";
@@ -37,18 +37,17 @@ export default function CreateGroupDisplay(props) {
         groupNameRef.current.value = '';
     }
 
+    useEffect(() => {
+        refresh();
+    }, [props.isDisplayed]);
+
     return (
         <Card key={props.index}>
             <CardHeader
                 action={
-                    <ButtonGroup>
-                        <IconButton onClick={props.onEnd} size={"medium"}>
-                            <ArrowBackIcon/>
-                        </IconButton>
-                        <IconButton onClick={refresh}>
-                            <RefreshIcon/>
-                        </IconButton>
-                    </ButtonGroup>
+                    <IconButton onClick={props.onEnd} size={"medium"}>
+                        <ArrowBackIcon/>
+                    </IconButton>
                 }
                 title="Create Group"
             />

@@ -17,7 +17,7 @@ function UseUsersList() {
             .then((data) => setUsersData(data.usernames));
     }
 
-    return [usersData.filter((user) => user !== username), () => getUsers()];
+    return [usersData.filter((user) => user !== username), getUsers];
 }
 
 export default UseUsersList;

@@ -15,7 +15,7 @@ export default function SideBarSwitcher(props) {
                     <GroupsAndUsersDisplay onSelect={props.onSelect} conversation={props.conversation}/>
                 </div>
                 <div hidden={value !== 1}>
-                    <CreateGroupDisplay onEnd={() => setValue(0)}/>
+                    <CreateGroupDisplay onEnd={() => setValue(0)} isDisplayed={value === 1}/>
                 </div>
         </React.Fragment>
     );
