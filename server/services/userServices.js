@@ -6,8 +6,8 @@ class userServices {
     }
 
         async createOrGetUser(name) {
-        let user = await this._userModel.find({ name: name });
-            if (user.length > 0) {
+        let user = await this._userModel.findOne({ name: name });
+            if (user) {
                 return user;
             }
             else {
@@ -31,8 +31,7 @@ class userServices {
         }
 
         async hasUser(name) {
-            let users = await this._userModel.find({ name: name }).lean();
-            return users.length > 0;
+            return this._userModel.findOne({name: name});
         }
 
         async remove(name) {
