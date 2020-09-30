@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardHeader from '@material-ui/core/CardHeader';
-import style from './UserDisplayStyle';
+import style from '../usersDisplay/UserDisplayStyle';
 import useConversation from "../../apiCalls/useConversation";
 import UserContext from "../../usernameContex";
 

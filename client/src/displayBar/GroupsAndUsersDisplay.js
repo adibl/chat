@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import ConversationsDisplay from "./usersDisplay/ConversationsDisplay";
+import ConversationsDisplay from "./conversationsDisplay/ConversationsDisplay";
 import UsersDisplay from "./usersDisplay/UsersDisplay";
 import Typography from "@material-ui/core/Typography";
 
