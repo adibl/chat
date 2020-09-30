@@ -29,6 +29,10 @@ describe('Messages', () => {
         done();
     });
 
+    after(async () => {
+        await userServices.clear();
+    });
+
     describe('POST /messages/:conversationId', () => {
 
         it('it should create new message', (done) => {

@@ -17,19 +17,18 @@ let {userServices, conversationServices} = servicesLoader(database,webSocket);
 chai.use(chaiHttp);
 
 describe('Conversation', () => {
-    before(async (done) => {
-         await userServices.clear();
+    before(async () => {
+        await userServices.clear();
         await userServices.createOrGetUser("adi");
         await userServices.createOrGetUser("matan");
         await userServices.createOrGetUser("rotem");
-        done();
+    });
+
+    after(async () => {
+        await userServices.clear();
     });
 
     describe('POST /conversations', () => {
-        after(async (done) => {
-            await conversationServices.clear();
-            done();
-        });
 
         it('it should create new conversation', (done) => {
             chai.request(server)

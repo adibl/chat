@@ -15,6 +15,9 @@ const {expect} = chai;
 chai.use(chaiHttp);
 
 describe('Users', () => {
+    after(async () => {
+        await userServices.clear();
+    });
 
     describe('get /users', () => {
         before(async (done) => {
@@ -24,6 +27,8 @@ describe('Users', () => {
             await userServices.createOrGetUser('amir');
             done();
         });
+
+
 
         it('get usernames', (done) => {
             chai.request(server)
