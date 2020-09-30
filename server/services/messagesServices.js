@@ -6,11 +6,12 @@ class messagesServices {
         this._webSocketHandler = webSocketHandler;
     }
 
-    async sendMessageToGroup(message, conversationId) {
-        if (!message) {
+    async sendMessageToGroup(messageJson, conversationId) {
+        if (!messageJson) {
             throw new TypeError("message must have text and sender");
         }
 
+        let message = await new this._messages(messageJson);
         await message.save();
         await this._conversationToMessages.add(conversationId, message);
         let users = await this._conversationToUsers.getByConversationId(conversationId);
