@@ -7,7 +7,7 @@ import {UserProvider} from './usernameContex';
 import SendMessageDisplay from "./groupDisplay/SendMessageDisplay";
 import MessagesDisplay from "./groupDisplay/MessagesDisplay";
 import CreateGroupDisplay from "./displayBar/createGroupDisplay";
-import FullWidthTabs from "./displayBar/displayBarSwitcher";
+import SideBarSwitcher from "./displayBar/displayBarSwitcher";
 
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
 
                     spacing={3}>
                     <Grid item xs={3}>
-                        <FullWidthTabs onSelect={setCurrentConversationId} conversation={currentConversationId}/>
+                        <SideBarSwitcher onSelect={setCurrentConversationId} conversation={currentConversationId}/>
                     </Grid>
                     <Grid
                         item

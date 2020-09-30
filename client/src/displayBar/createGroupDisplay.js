@@ -1,5 +1,4 @@
 import React, {useContext, useRef} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
@@ -10,8 +9,20 @@ import useUsersList from "../apiCalls/useUsersList";
 import TextField from "@material-ui/core/TextField";
 import config from "../apiCalls/config";
 import UserContext from "../usernameContex";
+import style from "./usersDisplay/UserDisplayStyle";
+import Typography from "@material-ui/core/Typography";
+import {IconButton} from "@material-ui/core";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Divider from "@material-ui/core/Divider";
+import RefreshIcon from "@material-ui/icons/Refresh";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 
 export default function CreateGroupDisplay(props) {
+    const classes = style();
     const username = useContext(UserContext);
     const groupNameRef = useRef(null);
     const [usersData, refresh] = useUsersList();
@@ -37,33 +48,62 @@ export default function CreateGroupDisplay(props) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({"creator": username,"name": groupNameRef.current.value, "type": "group", "members": checked})
-        }).then((res) => props.onEnd())
+        }).then(() => clean())
+            .then(() => props.onEnd())
             .catch((err) => alert(err));
     }
+
+    function clean() {
+        setChecked([]);
+        groupNameRef.current.value = '';
+    }
+
     return (
-        <React.Fragment>
-            <TextField
-                label="group name"
-                type="string"
-                inputRef={groupNameRef}
+        <Card key={props.index}>
+            <CardHeader
+                action={
+                    <ButtonGroup>
+                        <IconButton onClick={props.onEnd} size={"medium"}>
+                            <ArrowBackIcon/>
+                        </IconButton>
+                        <IconButton onClick={refresh}>
+                            <RefreshIcon/>
+                        </IconButton>
+                    </ButtonGroup>
+                }
+                title="Create Group"
             />
-            <List dense>
-                {usersData.map((user, index) => {
-                    return <ListItem key={index}>
-                        <ListItemText primary={user} />
-                        <ListItemSecondaryAction>
-                            <Checkbox
-                                edge="end"
-                                onChange={handleToggle(user)}
-                                checked={checked.indexOf(user) !== -1}
-                            />
-                        </ListItemSecondaryAction>
-                    </ListItem>
-                })}
-            </List>
-            <Button onClick={createGroup}>
-                Create Group
-            </Button>
-        </React.Fragment>
+            <CardContent>
+                <TextField
+                    className={classes.card}
+                    required={true}
+                    label="group name"
+                    type="string"
+                    inputRef={groupNameRef}
+                />
+                <List dense>
+                    {usersData.map((user, index) => {
+                        return <ListItem key={index} className={classes.card}>
+                            <Typography variant="h5" component="h5">
+                                <ListItemText primary={user} disableTypography={true}/>
+                            </Typography>
+                            <ListItemSecondaryAction>
+                                <Checkbox
+                                    edge="end"
+                                    onChange={handleToggle(user)}
+                                    checked={checked.indexOf(user) !== -1}
+                                />
+                            </ListItemSecondaryAction>
+                        </ListItem>
+
+                    })}
+                </List>
+            </CardContent>
+            <CardActions>
+                <Button onClick={createGroup} size={"medium"}>
+                    Create Group
+                </Button>
+            </CardActions>
+        </Card>
     );
 }

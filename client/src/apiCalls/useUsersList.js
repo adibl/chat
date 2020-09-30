@@ -11,7 +11,7 @@ function UseUsersList() {
     }, []);
 
     function getUsers() {
-        fetch(`${config.url}/users?index=0&limit=10`, {
+        fetch(`${config.url}/users?index=0&limit=50`, {
             method: 'GET'
         }).then((res) => res.json())
             .then((data) => setUsersData(data.usernames));

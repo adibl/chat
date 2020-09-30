@@ -27,7 +27,6 @@ function ConversationDisplay(props) {
                 <CardActionArea className={classes.card} onClick={props.onclick}>
                     <CardHeader title={groupName}/>
                 </CardActionArea>
-
             </Card>
             }
         </div>

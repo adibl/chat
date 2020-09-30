@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import ConversationsDisplay from "./usersDisplay/ConversationsDisplay";
 import UsersDisplay from "./usersDisplay/UsersDisplay";
 import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
 
 
 function DisplayBar(props) {
