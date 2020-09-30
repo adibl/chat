@@ -11,12 +11,21 @@ function ConversationDisplay(props) {
     const conversation = useConversation(props.id);
     const classes = style();
     let color = props.isSelected ? "#DCDCDC" : "white";
+    let groupName = "loading...";
+    if (conversation) {
+        if (conversation.type === 'personal')
+            groupName = conversation.members.filter((user) => user !== username)[0];
+        else {
+            groupName = conversation.name;
+        }
+    }
+
     return (
         <div>
             {conversation &&
             <Card key={props.index} style={{backgroundColor: color}}>
                 <CardActionArea className={classes.card} onClick={props.onclick}>
-                    <CardHeader title={conversation.members.filter((user) => user !== username)[0]}/>
+                    <CardHeader title={groupName}/>
                 </CardActionArea>
 
             </Card>
