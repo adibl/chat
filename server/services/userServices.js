@@ -1,27 +1,29 @@
 
 class userServices {
-    constructor(usersManager, User, conversationToUsers) {
-        this._usersManager = usersManager;
-        this._user = User;
+    constructor(UserModel, conversationToUsers) {
+        this._userModel = UserModel;
         this._conversationToUsers = conversationToUsers;
     }
 
         async createOrGetUser(name) {
-            if (await this._usersManager.has(name)) {
-                return this._usersManager.get(name);
-            } else {
-                let newUser = new this._user(name);
-                await this._usersManager.add(newUser);
+        let user = await this._userModel.find({ name: name });
+            if (user.length > 0) {
+                return user;
+            }
+            else {
+                let newUser = new this._userModel({name: name});
+                await newUser.save();
                 return newUser;
             }
         }
 
         async getUser(name) {
-            return await this._usersManager.get(name);
+            return await this._userModel.findOne({ name: name }).lean();
         }
 
         async getUsernamesSorted(index, limit) {
-            return await this._usersManager.getUsernamesSorted(index, limit);
+            let users = await this._userModel.find({}).limit(limit).skip(index).sort('name').lean();
+            return users.map(obj => obj.name);
         }
 
         async getUserConversations(name) {
@@ -29,15 +31,16 @@ class userServices {
         }
 
         async hasUser(name) {
-            return await this._usersManager.has(name);
+            let users = await this._userModel.find({ name: name }).lean();
+            return users.length > 0;
         }
 
         async remove(name) {
-            return await this._usersManager.remove(name);
+            return (await this._userModel.deleteOne({name: name})).deletedCount === 1;
         }
 
         async clear() {
-            return await this._usersManager.clear();
+            return await this._userModel.deleteMany({});
         }
 }
 
