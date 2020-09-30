@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
 import './App.css';
-import DialogBar from './displayBar/DisplayBar';
 import Grid from '@material-ui/core/Grid';
 import LogInDialog from "./logInDialog/LogInDialog";
 import {UserProvider} from './usernameContex';
 import SendMessageDisplay from "./groupDisplay/SendMessageDisplay";
 import MessagesDisplay from "./groupDisplay/MessagesDisplay";
-import CreateGroupDisplay from "./displayBar/createGroupDisplay";
-import SideBarSwitcher from "./displayBar/displayBarSwitcher";
+import SideBarSwitcher from "./displayBar/BarSwitcher";
 
 
 function App() {
@@ -23,7 +21,6 @@ function App() {
                     direction="row"
                     justify={"space-between"}
                     alignItems="stretch"
-
                     spacing={3}>
                     <Grid item xs={3}>
                         <SideBarSwitcher onSelect={setCurrentConversationId} conversation={currentConversationId}/>

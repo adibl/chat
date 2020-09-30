@@ -9,7 +9,6 @@ import useUsersList from "../apiCalls/useUsersList";
 import TextField from "@material-ui/core/TextField";
 import config from "../apiCalls/config";
 import UserContext from "../usernameContex";
-import style from "./usersDisplay/UserDisplayStyle";
 import Typography from "@material-ui/core/Typography";
 import {IconButton} from "@material-ui/core";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
@@ -17,12 +16,10 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
-import Divider from "@material-ui/core/Divider";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 
 export default function CreateGroupDisplay(props) {
-    const classes = style();
     const username = useContext(UserContext);
     const groupNameRef = useRef(null);
     const [usersData, refresh] = useUsersList();
@@ -75,7 +72,6 @@ export default function CreateGroupDisplay(props) {
             />
             <CardContent>
                 <TextField
-                    className={classes.card}
                     required={true}
                     label="group name"
                     type="string"
@@ -83,7 +79,7 @@ export default function CreateGroupDisplay(props) {
                 />
                 <List dense>
                     {usersData.map((user, index) => {
-                        return <ListItem key={index} className={classes.card}>
+                        return <ListItem key={index}>
                             <Typography variant="h5" component="h5">
                                 <ListItemText primary={user} disableTypography={true}/>
                             </Typography>
