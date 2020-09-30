@@ -1,7 +1,7 @@
 class messagesServices {
     constructor(conversationToMessages, messagesRequests, conversationToUsers, webSocketHandler) {
         this._conversationToMessages = conversationToMessages;
-        this._messagesRequests = messagesRequests;
+        this._messages = messagesRequests;
         this._conversationToUsers = conversationToUsers;
         this._webSocketHandler = webSocketHandler;
     }
@@ -11,7 +11,7 @@ class messagesServices {
             throw new TypeError("message must have text and sender");
         }
 
-        await this._messagesRequests.add(message);
+        await message.save();
         await this._conversationToMessages.add(conversationId, message);
         let users = await this._conversationToUsers.getByConversationId(conversationId);
         if (users) {

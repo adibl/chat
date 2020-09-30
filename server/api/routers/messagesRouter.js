@@ -9,7 +9,7 @@ function CreateRouter(messageServices) {
 
     router.post('/:conversationId', async function (req, res, next) {
         try {
-            let messageToSend = Object.assign(new Message(), req.body);
+            let messageToSend = new Message(req.body);
             let message = await messageServices.sendMessageToGroup(messageToSend, req.params.conversationId);
             res.status(200).json(message);
         }

@@ -1,7 +1,6 @@
 let ConversationRequests = require('../database/requests/conversations');
 let ConversationToMessagesRequests = require('../database/requests/conversationToMessages');
 let ConversationToUsersRequests = require('../database/requests/conversationToUsers');
-let MessagesRequests = require('../database/requests/messages');
 let UsernameToSocketIdsRequests = require('../database/requests/usernameToSocketIds');
 const logger = require("../loaders/loggerLoader");
 
@@ -24,10 +23,9 @@ class DatabaseLoader {
             let conversationRequests = new ConversationRequests();
             let conversationToMessagesRequests = new ConversationToMessagesRequests();
             let conversationToUsersRequests = new ConversationToUsersRequests();
-            let messagesRequests = new MessagesRequests();
             let usernameToSocketIds = new UsernameToSocketIdsRequests();
             this.loaded = {conversationRequests, conversationToMessagesRequests, conversationToUsersRequests,
-                messagesRequests, usernameToSocketIds};
+                usernameToSocketIds};
         }
 
         return this.loaded;
