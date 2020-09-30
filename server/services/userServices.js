@@ -22,7 +22,7 @@ class userServices {
         }
 
         async getUsernamesSorted(index, limit) {
-            let users = await this._userModel.find({}).limit(limit).skip(index).sort('name').lean();
+            let users = await this._userModel.find({}, 'name', { skip: index, limit: limit }).sort('name').lean();
             return users.map(obj => obj.name);
         }
 
