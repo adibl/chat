@@ -28,6 +28,19 @@ class messagesServices {
 
         return message;
     }
+
+    async getMessages(conversationId, index, limit) {
+
+        let messages = await this._convToMessageModel.find({convId: conversationId}).sort('created_at').skip(index).limit(limit);
+        let messagesIds = messages.map(obj => obj.messageId);
+        return await this._messages.find().where('_id').in(messagesIds).lean();
+    }
+
+    clean() {
+        this._messages.deleteMany({});
+        this._convToMessageModel.deleteMany({});
+        this._conversationToUsers.deleteMany({});
+    }
 }
 
 
