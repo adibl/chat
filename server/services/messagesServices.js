@@ -37,7 +37,6 @@ class messagesServices {
 
         let query = {convId: conversationId};
         if (lastId) {
-            //index - limit because we need from the last message limit backwards.
             query.messageId = {$lt: lastId};
         }
 
