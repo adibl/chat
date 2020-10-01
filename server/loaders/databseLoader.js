@@ -10,10 +10,10 @@ class DatabaseLoader {
             const mongoose = require('mongoose');
             let conn = mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true, useUnifiedTopology: true })
                 .then(() => {
-                    logger.info("Connected to the database!");
+                    logger.info("Connected to the databaseModels!");
                 })
                 .catch(err => {
-                    logger.error("Cannot connect to the database!", err);
+                    logger.error("Cannot connect to the databaseModels!", err);
                     process.exit();
                 });
         }

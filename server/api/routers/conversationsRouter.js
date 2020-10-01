@@ -1,6 +1,6 @@
 let express = require('express');
 let createError = require('http-errors');
-const Conversation = require("../../database/models/conversation");
+const Conversation = require("../../databaseModels/conversation");
 
 function CreateRouter(conversationServices) {
     const router = express.Router();

@@ -1,6 +1,6 @@
 let webSocketInitializer = require("../services/webSocketServices");
 let webSocketConnectionHandler = require("../api/webSocket/connection");
-let UsernameToSockets = require('../database/models/userToSokcet');
+let UsernameToSockets = require('../databaseModels/userToSokcet');
 const logger = require("../loaders/loggerLoader");
 
 

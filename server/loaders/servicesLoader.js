@@ -1,12 +1,12 @@
-let User = require("../database/models/user");
+let User = require("../databaseModels/user");
 
 let userServicesClass = require("../services/userServices");
 let conversationServicesClass = require("../services/conversationServices");
 let messageServicesClass = require("../services/messagesServices");
-let Messages = require('../database/models/message');
-let Conversaion =require('../database/models/conversation');
-let ConvToMessage = require('../database/models/converdationToMessages');
-let ConvToUser = require('../database/models/convToUser');
+let Messages = require('../databaseModels/message');
+let Conversaion =require('../databaseModels/conversation');
+let ConvToMessage = require('../databaseModels/converdationToMessages');
+let ConvToUser = require('../databaseModels/convToUser');
 
 
 function load(database, webSocketHandler) {
