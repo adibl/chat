@@ -1,4 +1,3 @@
-let UsernameToSocketIdsRequests = require('../database/requests/usernameToSocketIds');
 const logger = require("../loaders/loggerLoader");
 
 class DatabaseLoader {
