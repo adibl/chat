@@ -12,8 +12,8 @@ class SocketConnections {
         });
 
         socket.on('disconnect', async () => {
-            let username = await this._usersToSocketIds.findOneAndDelete({socketId: socket.id});
-            this._logger.info(`user ${username.username} logged out`);
+            let user = await this._usersToSocketIds.findOneAndDelete({socketId: socket.id}).lean();
+            this._logger.info(`user ${user.username} logged out`);
         });
     }
 
