@@ -28,18 +28,9 @@ function App() {
                     </Grid>
                     <Grid
                         item
-                        xs={9}
-                        container
-                        direction="column"
-                        justify={"space-between"}
-                        alignItems="stretch"
-                        spacing={3}>
-                        <Grid item>
+                        xs={9}>
                             <MessagesDisplay conversation={currentConversationId}/>
-                        </Grid>
-                        <Grid item>
                             <SendMessageDisplay conversation={currentConversationId}/>
-                        </Grid>
                     </Grid>
                 </Grid>
             </UserProvider>
