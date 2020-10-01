@@ -18,9 +18,8 @@ class DatabaseLoader {
                     logger.error("Cannot connect to the database!", err);
                     process.exit();
                 });
-            let conversationToUsersRequests = new ConversationToUsersRequests();
             let usernameToSocketIds = new UsernameToSocketIdsRequests();
-            this.loaded = {conversationToUsersRequests,
+            this.loaded = {
                 usernameToSocketIds};
         }
 

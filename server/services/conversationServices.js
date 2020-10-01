@@ -23,7 +23,10 @@ class conversationServices {
         let mongooseConv = await new this._conversationModel(conversationJson);
         mongooseConv.save();
         let conversation = mongooseConv.toJSON();
-        await this._conversationToUsers.add(conversation.id.toString(), [...members, conversation.creator]);
+        for(let user of [...members, conversation.creator]) {
+            await this._conversationToUsers.create({convId: conversation.id, username:user});
+        }
+
         await this._webSocketHandler.sendMessage([...members, conversation.creator], conversation.id.toString(), "newGroup");
 
         return conversation;
@@ -32,7 +35,8 @@ class conversationServices {
     async getConversation(id) {
         let conversation = await this._conversationModel.findById(id).lean();
         if (conversation) {
-            conversation.members = await this._conversationToUsers.getByConversationId(id.toString());
+            conversation.members = await this._conversationToUsers.find({convId: id}, 'username -_id').lean();
+            conversation.members = conversation.members.map(obj => obj.username);
             return conversation;
         }
         else {
@@ -42,7 +46,7 @@ class conversationServices {
 
     async clear() {
         await this._conversationModel.deleteMany({});
-        await this._conversationToUsers.clear();
+        await this._conversationToUsers.deleteMany({});
     }
 }
 

@@ -5,6 +5,6 @@ const schema = new mongoose.Schema({
     messageId: {type: 'ObjectId',required: true},
 });
 
-const Conversation = mongoose.model('convToMessage', schema);
+const ConvToMessage = mongoose.model('convToMessage', schema);
 
-module.exports = Conversation;
+module.exports = ConvToMessage;

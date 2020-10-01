@@ -1,8 +1,8 @@
 
 class userServices {
-    constructor(UserModel, conversationToUsers) {
+    constructor(UserModel, convToUsersModel) {
         this._userModel = UserModel;
-        this._conversationToUsers = conversationToUsers;
+        this._convToUsersModel = convToUsersModel;
     }
 
         async createOrGetUser(name) {
@@ -27,7 +27,7 @@ class userServices {
         }
 
         async getUserConversations(name) {
-            return await this._conversationToUsers.getByUsername(name);
+            return await this._convToUsersModel.find({username: name}, 'name -_id');
         }
 
         async hasUser(name) {

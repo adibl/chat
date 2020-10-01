@@ -6,13 +6,14 @@ let messageServicesClass = require("../services/messagesServices");
 let Messages = require('../database/models/message');
 let Conversaion =require('../database/models/conversation');
 let ConvToMessage = require('../database/models/converdationToMessages');
+let ConvToUser = require('../database/models/convToUser');
 
 function load(database, webSocketHandler) {
-    let userServices = new userServicesClass(User, database.conversationToUsersRequests);
-    let conversationServices = new conversationServicesClass(Conversaion, userServices, database.conversationToUsersRequests,
+    let userServices = new userServicesClass(User, ConvToUser);
+    let conversationServices = new conversationServicesClass(Conversaion, userServices, ConvToUser,
         webSocketHandler);
     let messageServices = new messageServicesClass(ConvToMessage, Messages,
-        database.conversationToUsersRequests, webSocketHandler);
+        ConvToUser, webSocketHandler);
     return {userServices, conversationServices, messageServices}
 }
 
