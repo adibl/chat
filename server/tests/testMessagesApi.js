@@ -71,10 +71,17 @@ describe('Messages', () => {
         });
 
         describe('GET /messages/:conversationId', () => {
+            let message;
+
             before(async () => {
-                await mongoose.connection.db.dropCollection('convtomessages');
-                await mongoose.connection.db.dropCollection('messages');
-                await messageServices.sendMessageToGroup({text: "first", sender: "adi"}, conversationId);
+                try {
+                    await mongoose.connection.db.dropCollection('convtomessages');
+                    await mongoose.connection.db.dropCollection('messages');
+                }
+                catch (e) {
+                }
+
+                message = await messageServices.sendMessageToGroup({text: "first", sender: "adi"}, conversationId);
                 await messageServices.sendMessageToGroup({text: "second", sender: "adi"}, conversationId);
             });
 
