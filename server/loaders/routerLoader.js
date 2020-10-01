@@ -15,8 +15,6 @@ module.exports = (app, userServices, messageServices, conversationServices) => {
             logger.info(`${req.method} ${url} - ${res.statusCode}`);
         });
         next();
-
-
     });
 
 
