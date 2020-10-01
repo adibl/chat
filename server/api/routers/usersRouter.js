@@ -1,7 +1,6 @@
 let express = require('express');
-
 let createError = require('http-errors');
-const User = require("../../database/models/user");
+let mongoose = require('mongoose');
 
 function CreateRouter(userServices) {
     const router = express.Router();
@@ -20,12 +19,16 @@ function CreateRouter(userServices) {
 
 
     router.post('/', async function (req, res, next) {
-        if (req.body.name === undefined || req.body.name === "") {
-            res.status(400).json("must send not empty name");
-        }
-        else {
+        try {
             let newUser = await userServices.createOrGetUser(req.body.name);
             res.json(newUser);
+        }
+        catch (e) {
+            if(e instanceof mongoose.Error.ValidationError) {
+                next(createError(400), e)
+            }
+
+            next(createError(500, e));
         }
     });
 

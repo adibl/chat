@@ -16,7 +16,7 @@ function CreateRouter(messageServices) {
                 next(createError(400, e));
             }
             else if(e instanceof mongoose.Error.ValidationError) {
-                next(createError(404), e)
+                next(createError(400), e)
             }
 
             next(createError(500, e));

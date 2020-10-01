@@ -52,7 +52,7 @@ describe('Messages', () => {
                 .post(`/messages/${conversationId}`)
                 .send({"text": "hi"})
                 .end((err, res) => {
-                    expect(res).to.have.status(404);
+                    expect(res).to.have.status(400);
                     done();
                 });
         });
