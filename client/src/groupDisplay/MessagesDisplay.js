@@ -13,7 +13,7 @@ function MessagesDisplay(props) {
 
     useEffect(() => {
         if (props.conversation) {
-            getHistoryMessages(props.conversation, 10);
+            getMore();
         }
     }, [props.conversation]);
 
