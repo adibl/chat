@@ -8,16 +8,15 @@ var mongoose = require('mongoose');
 
 describe("messagesServices", function() {
     let message = {text: "data", sender: "adi"};
-    let conversationToUsers;
+    let conversationToUsers = function () {};
     let conversationToMessages = function () {};
     let webSocketHandler;
     let mongooseModel = function () {};
 
     before(() => {
-
-        conversationToUsers = {
-            getByConversationId: sinon.fake.returns(["adi", "mor"])
-        };
+        conversationToUsers.create = sinon.spy();
+        let lean2 = {lean: sinon.fake.returns([{username:"adi"}, {username:"mor"}])};
+        conversationToUsers.find = () => lean2;
 
         conversationToMessages.prototype.save = sinon.spy();
 

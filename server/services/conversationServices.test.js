@@ -3,23 +3,26 @@ const chai = require("chai");
 chai.use(require('chai-as-promised'));
 const expect = chai.expect;
 const sinon = require("sinon");
+const mongoose = require('mongoose');
+
+
 
 describe("conversationServices", function() {
     let conversationModel = function () {};
-    let conversationToUsers;
+    let conversationToUsers  = function () {};
     let userServices;
     let webSocket;
 
     before(() => {
         conversationModel.deleteMany = sinon.spy();
-        conversationModel.lean = sinon.spy((obj) => obj);
+        let lean = {lean: sinon.fake.returns({"creator": "adi", "name":"group"})};
+        conversationModel.findById = () => lean;
         conversationModel.prototype.save = sinon.spy();
         conversationModel.prototype.toJSON = sinon.fake.returns({creator: "rotem", id: "123"});
 
-        conversationToUsers = {
-            add : sinon.spy(() => ['adi', 'mor']),
-            clear: sinon.spy()
-        };
+        conversationToUsers.create = sinon.spy();
+        let lean2 = {lean: sinon.fake.returns([{username:"adi"}, {username:"mor"}])};
+        conversationToUsers.find = () => lean2;
 
         userServices = {
             hasUser: sinon.spy(() => true)
@@ -33,17 +36,6 @@ describe("conversationServices", function() {
     afterEach(() => {
         sinon.reset();
     });
-
-    it("clear should clear indexes", async () => {
-
-        let conversationServices = new conversationServicesFactory(conversationModel, null,
-            conversationToUsers, webSocket);
-
-        await conversationServices.clear();
-        expect(conversationModel.deleteMany.calledOnce).to.be.true;
-        expect(conversationToUsers.clear.calledOnce).to.be.true;
-    });
-
 
     it("should create conversation", async () => {
         let conversationServices = new conversationServicesFactory(conversationModel, userServices,
@@ -71,8 +63,7 @@ describe("conversationServices", function() {
     });
 
     it("get conversation should work", async () => {
-        let lean = {lean: sinon.fake.returns({"creator": "adi", "name":"group"})};
-        conversationModel.findById = () => lean;
+
 
         conversationToUsers.getByConversationId = () => ['adi', 'mor'];
         let conversationServices = new conversationServicesFactory(conversationModel, userServices,
