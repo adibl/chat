@@ -1,6 +1,6 @@
 class messagesServices {
-    constructor(conversationToMessages, Message, conversationToUsers, webSocketHandler) {
-        this._conversationToMessages = conversationToMessages;
+    constructor(convToMessageModel, Message, conversationToUsers, webSocketHandler) {
+        this._convToMessageModel = convToMessageModel;
         this._messages = Message;
         this._conversationToUsers = conversationToUsers;
         this._webSocketHandler = webSocketHandler;
@@ -14,7 +14,8 @@ class messagesServices {
         let Mongoosemessage = await new this._messages(messageJson);
         await Mongoosemessage.save();
         let message = Mongoosemessage.toJSON();
-        await this._conversationToMessages.add(conversationId, message);
+        let convToMessage = await new this._convToMessageModel({convId: conversationId, messageId: Mongoosemessage.id});
+        await convToMessage.save();
         let users = await this._conversationToUsers.getByConversationId(conversationId);
         if (users) {
             message.conversationId = conversationId;
