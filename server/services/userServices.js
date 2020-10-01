@@ -38,10 +38,6 @@ class userServices {
         async remove(name) {
             return (await this._userModel.deleteOne({name: name})).deletedCount === 1;
         }
-
-        async clear() {
-            return await this._userModel.deleteMany({});
-        }
 }
 
 module.exports = userServices;

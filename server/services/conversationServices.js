@@ -43,11 +43,6 @@ class conversationServices {
             throw new RangeError(`conversation  with id:${id} dont exist`);
         }
     }
-
-    async clear() {
-        await this._conversationModel.deleteMany({});
-        await this._conversationToUsers.deleteMany({});
-    }
 }
 
 module.exports = conversationServices;

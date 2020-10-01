@@ -36,11 +36,6 @@ class messagesServices {
         return await this._messages.find().where('_id').in(messagesIds).lean();
     }
 
-    clean() {
-        this._messages.deleteMany({});
-        this._convToMessageModel.deleteMany({});
-        this._conversationToUsers.deleteMany({});
-    }
 }
 
 

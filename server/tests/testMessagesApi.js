@@ -3,6 +3,7 @@ process.env.NODE_ENV = 'test';
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../app');
+let mongoose = require('mongoose');
 
 let servicesLoader = require('../loaders/servicesLoader');
 let webSocketLoader = require("../loaders/webSocketLoader");
@@ -19,7 +20,13 @@ describe('Messages', () => {
     let conversationId = null;
 
     before(async (done) => {
-        await userServices.clear();
+        try {
+            await mongoose.connection.db.dropCollection('users');
+            await mongoose.connection.db.dropCollection('conversations');
+            await mongoose.connection.db.dropCollection('convtousers');
+        }
+        catch (e) {
+        }
         await userServices.createOrGetUser("adi");
         await userServices.createOrGetUser("matan");
         await userServices.createOrGetUser("rotem");
@@ -29,7 +36,14 @@ describe('Messages', () => {
     });
 
     after(async () => {
-        await userServices.clear();
+        try {
+            await mongoose.connection.db.dropCollection('users');
+            await mongoose.connection.db.dropCollection('conversations');
+            await mongoose.connection.db.dropCollection('convtousers');
+        }
+        catch (e) {
+        }
+
     });
 
     describe('POST /messages/:conversationId', () => {
@@ -58,12 +72,15 @@ describe('Messages', () => {
 
         describe('GET /messages/:conversationId', () => {
             before(async () => {
+                await mongoose.connection.db.dropCollection('convtomessages');
+                await mongoose.connection.db.dropCollection('messages');
                 await messageServices.sendMessageToGroup({text: "first", sender: "adi"}, conversationId);
                 await messageServices.sendMessageToGroup({text: "second", sender: "adi"}, conversationId);
             });
 
             after(async () => {
-                await messageServices.clean();
+                await mongoose.connection.db.dropCollection('convtomessages');
+                await mongoose.connection.db.dropCollection('messages');
             });
 
             it('it should get first message', (done) => {

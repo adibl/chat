@@ -3,6 +3,7 @@ process.env.NODE_ENV = 'test';
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../app');
+let mongoose = require('mongoose');
 let servicesLoader = require('../loaders/servicesLoader');
 let webSocketLoader = require("../loaders/webSocketLoader");
 const databaseLoader = require("../loaders/databseLoader");
@@ -14,20 +15,18 @@ const {expect} = chai;
 chai.use(chaiHttp);
 
 describe('Users', () => {
+    before(async () => {
+        await userServices.createOrGetUser('adi2');
+        await userServices.createOrGetUser('mor');
+        await userServices.createOrGetUser('amir');
+    });
+
+
     after(async () => {
-        await userServices.clear();
+        await mongoose.connection.db.dropCollection('users');
     });
 
     describe('get /users', () => {
-        before(async (done) => {
-            await userServices.clear();
-            await userServices.createOrGetUser('adi2');
-            await userServices.createOrGetUser('mor');
-            await userServices.createOrGetUser('amir');
-            done();
-        });
-
-
 
         it('get usernames', (done) => {
             chai.request(server)
@@ -70,19 +69,14 @@ describe('Users', () => {
     });
 
     describe('POST /users', () => {
-        beforeEach(async (done) => {
-            await userServices.clear();
-            await userServices.createOrGetUser('moran');
-            done();
-        });
 
         it('it should create new user', (done) => {
             chai.request(server)
                 .post('/users')
-                .send({"name": "adi"})
+                .send({"name": "moti"})
                 .end((err, res) => {
                     expect(res).to.have.status(200);
-                    expect(res.body.name).to.equals("adi");
+                    expect(res.body.name).to.equals("moti");
                     done();
                 });
         });
@@ -110,11 +104,8 @@ describe('Users', () => {
 
 
     describe('GET /users/{username}', () => {
-        beforeEach(async (done) => {
-            await userServices.clear();
-            await userServices.createOrGetUser("adi2");
+        before(async () => {
             await conversationServices.createConversation({creator: "adi2", type: "personal"}, []);
-            done();
         });
 
         it('it should get adi user', (done) => {
@@ -139,18 +130,16 @@ describe('Users', () => {
     });
 
     describe('DELETE /users/{username}', () => {
-        beforeEach(async (done) => {
-            await userServices.clear();
-            await userServices.createOrGetUser("moran");
-            done();
+        before(async () => {
+            await userServices.createOrGetUser('tomer');
         });
 
-        it('it should delete moran user', (done) => {
+        it('it should delete tomer user', (done) => {
             chai.request(server)
-                .delete('/users/moran')
+                .delete('/users/tomer')
                 .end((err, res) => {
                     expect(res).to.have.status(200);
-                    expect(res.body).to.equals("moran");
+                    expect(res.body).to.equals("tomer");
                     done();
                 });
         });

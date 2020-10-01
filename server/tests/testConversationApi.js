@@ -5,6 +5,7 @@ let chaiHttp = require('chai-http');
 let server = require('../app');
 let {expect} = chai;
 let uuid = require('uuid');
+let mongoose = require('mongoose');
 let servicesLoader = require('../loaders/servicesLoader');
 let webSocketLoader = require("../loaders/webSocketLoader");
 const databaseLoader = require("../loaders/databseLoader");
@@ -16,14 +17,13 @@ chai.use(chaiHttp);
 
 describe('Conversation', () => {
     before(async () => {
-        await userServices.clear();
         await userServices.createOrGetUser("adi");
         await userServices.createOrGetUser("matan");
         await userServices.createOrGetUser("rotem");
     });
 
     after(async () => {
-        await userServices.clear();
+        await mongoose.connection.db.dropCollection('conversations');
     });
 
     describe('POST /conversations', () => {
@@ -65,8 +65,7 @@ describe('Conversation', () => {
     describe('GET /conversations/{conversationId}', () => {
         let conversationId = null;
 
-        beforeEach(async (done) => {
-            await conversationServices.clear();
+        before(async (done) => {
             let conversation = await conversationServices.createConversation({creator: "adi", type:"personal"}, ["matan"]);
             conversationId = conversation.id;
             done();

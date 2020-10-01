@@ -5,6 +5,8 @@ const schema = new mongoose.Schema({
     sender: {type: 'string',required: true}
 }, { timestamps: { createdAt: 'created_at' } });
 
+schema.index({"created_at": 1});
+
 const Message = mongoose.model('Messages', schema);
 
 schema.set('toJSON', {
