@@ -9,7 +9,7 @@ var mongoose = require('mongoose');
 describe("messagesServices", function() {
     let message = {text: "data", sender: "adi"};
     let conversationToUsers;
-    let conversationToMessages;
+    let conversationToMessages = function () {};
     let webSocketHandler;
     let mongooseModel = function () {};
 
@@ -19,9 +19,7 @@ describe("messagesServices", function() {
             getByConversationId: sinon.fake.returns(["adi", "mor"])
         };
 
-        conversationToMessages = {
-            add: sinon.spy()
-        };
+        conversationToMessages.prototype.save = sinon.spy();
 
 
         webSocketHandler = {
@@ -40,7 +38,7 @@ describe("messagesServices", function() {
         let messagesServices = new messagesServicesFactory(conversationToMessages, mongooseModel,
             conversationToUsers, webSocketHandler);
         expect((await messagesServices.sendMessageToGroup(message, "0000"))).to.be.eql(message);
-        expect(conversationToMessages.add.calledOnce).to.be.true;
+        expect( conversationToMessages.prototype.save.calledOnce).to.be.true;
         expect(mongooseModel.prototype.save.calledOnce).to.be.true;
         expect(webSocketHandler.sendMessage.calledOnce).to.be.true;
     });

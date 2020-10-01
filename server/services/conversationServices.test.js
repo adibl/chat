@@ -7,7 +7,6 @@ const sinon = require("sinon");
 describe("conversationServices", function() {
     let conversationModel = function () {};
     let conversationToUsers;
-    let conversationToMessages;
     let userServices;
     let webSocket;
 
@@ -19,10 +18,6 @@ describe("conversationServices", function() {
 
         conversationToUsers = {
             add : sinon.spy(() => ['adi', 'mor']),
-            clear: sinon.spy()
-        };
-        conversationToMessages = {
-            create: sinon.spy(() => []),
             clear: sinon.spy()
         };
 
@@ -42,18 +37,17 @@ describe("conversationServices", function() {
     it("clear should clear indexes", async () => {
 
         let conversationServices = new conversationServicesFactory(conversationModel, null,
-            conversationToUsers, conversationToMessages, webSocket);
+            conversationToUsers, webSocket);
 
         await conversationServices.clear();
         expect(conversationModel.deleteMany.calledOnce).to.be.true;
         expect(conversationToUsers.clear.calledOnce).to.be.true;
-        expect(conversationToMessages.clear.calledOnce).to.be.true;
     });
 
 
     it("should create conversation", async () => {
         let conversationServices = new conversationServicesFactory(conversationModel, userServices,
-            conversationToUsers, conversationToMessages, webSocket);
+            conversationToUsers, webSocket);
 
         let conversation = await conversationServices.createConversation({name: "rotem"}, ["mor", "adi"]);
         expect(conversation).to.be.eql({creator: "rotem", id: "123"});
@@ -61,7 +55,7 @@ describe("conversationServices", function() {
 
     it("create conversation fail due to undefined members", async () => {
         let conversationServices = new conversationServicesFactory(conversationModel, userServices,
-            conversationToUsers, conversationToMessages, webSocket);
+            conversationToUsers, webSocket);
         await expect(conversationServices.createConversation({name: "rotem"})).to.be.rejectedWith(Error);
     });
 
@@ -70,7 +64,7 @@ describe("conversationServices", function() {
             hasUser: sinon.fake((username) => username !== "adi")
         };
         let conversationServices = new conversationServicesFactory(conversationModel, userServices,
-            conversationToUsers, conversationToMessages, webSocket);
+            conversationToUsers, webSocket);
 
             await expect(conversationServices.createConversation({name: "rotem"}, ["mor", "adi"]))
                 .to.be.rejectedWith(Error);
@@ -82,7 +76,7 @@ describe("conversationServices", function() {
 
         conversationToUsers.getByConversationId = () => ['adi', 'mor'];
         let conversationServices = new conversationServicesFactory(conversationModel, userServices,
-            conversationToUsers, conversationToMessages, webSocket);
+            conversationToUsers, webSocket);
 
         let conversation = await conversationServices.getConversation("123456");
         expect(conversation).to.be.eql({"creator": "adi", "name":"group", "members": ['adi', 'mor']});
@@ -90,7 +84,7 @@ describe("conversationServices", function() {
 
     it("get conversation fail, conversation dont exist", async () => {
         let conversationServices = new conversationServicesFactory(conversationModel, userServices,
-            conversationToUsers, conversationToMessages, webSocket);
+            conversationToUsers, webSocket);
 
         try {
             await conversationServices.getConversation("123456");
