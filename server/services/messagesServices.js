@@ -17,6 +17,10 @@ class messagesServices {
         let convToMessage = await new this._convToMessageModel({convId: conversationId, messageId: Mongoosemessage.id});
         await convToMessage.save();
         let users = await this._conversationToUsers.find({convId: conversationId}, 'username -_id').lean();
+        if (!users) {
+            throw new TypeError("conversation id is incorrect");
+        }
+
         users = users.map(obj => obj.username);
         if (users) {
             message.conversationId = conversationId;

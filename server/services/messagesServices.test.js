@@ -45,17 +45,23 @@ describe("messagesServices", function() {
     it("should fail due to null message", async () => {
         let messagesServices = new messagesServicesFactory(conversationToMessages, mongooseModel,
         conversationToUsers, webSocketHandler);
-        await expect(messagesServices.sendMessageToGroup(null, "0000")).to.be.rejectedWith(Error)
+        await expect(messagesServices.sendMessageToGroup(null, "0000")).to.be.rejectedWith(Error);
     });
 
     it("should fail because no users in group", async () => {
 
-        let conversationToUsersReturnNull = {
-            getByConversationId: sinon.fake.returns(null)
-        };
+        let lean2 = {lean: sinon.fake.returns(null)};
+        conversationToUsers.find = () => lean2;
 
         let messagesServices = new messagesServicesFactory(conversationToMessages, mongooseModel,
-            conversationToUsersReturnNull, webSocketHandler);
-        await expect(messagesServices.sendMessageToGroup(message, "0000")).to.be.rejectedWith(Error)
+            conversationToUsers, webSocketHandler);
+        await expect(messagesServices.sendMessageToGroup(message, "0000")).to.be.rejectedWith(Error);
+    });
+
+    it("should fail because incorrect group id", async () => {
+
+        let messagesServices = new messagesServicesFactory(conversationToMessages, mongooseModel,
+            conversationToUsers, webSocketHandler);
+        await expect(messagesServices.sendMessageToGroup(message, "1111")).to.be.rejectedWith(Error);
     });
 });

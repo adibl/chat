@@ -63,8 +63,6 @@ describe("conversationServices", function() {
     });
 
     it("get conversation should work", async () => {
-
-
         conversationToUsers.getByConversationId = () => ['adi', 'mor'];
         let conversationServices = new conversationServicesFactory(conversationModel, userServices,
             conversationToUsers, webSocket);
@@ -74,14 +72,12 @@ describe("conversationServices", function() {
     });
 
     it("get conversation fail, conversation dont exist", async () => {
+        let lean = {lean: sinon.fake.returns(null)};
+        conversationModel.findById = () => lean;
+
         let conversationServices = new conversationServicesFactory(conversationModel, userServices,
             conversationToUsers, webSocket);
 
-        try {
-            await conversationServices.getConversation("123456");
-        }
-        catch (error) {
-            expect(error).to.be.an('Error');
-        }
+        await expect(conversationServices.getConversation("123456")).to.be.rejectedWith(Error);
     });
 });
