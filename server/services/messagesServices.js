@@ -11,8 +11,9 @@ class messagesServices {
             throw new TypeError("message must have text and sender");
         }
 
-        let message = await new this._messages(messageJson);
-        await message.save();
+        let Mongoosemessage = await new this._messages(messageJson);
+        await Mongoosemessage.save();
+        let message = Mongoosemessage.toJSON();
         await this._conversationToMessages.add(conversationId, message);
         let users = await this._conversationToUsers.getByConversationId(conversationId);
         if (users) {
@@ -23,7 +24,7 @@ class messagesServices {
             throw new TypeError('group dont have participants');
         }
 
-        return message.toJSON();
+        return message;
     }
 }
 
