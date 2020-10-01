@@ -27,7 +27,8 @@ class userServices {
         }
 
         async getUserConversations(name) {
-            return await this._convToUsersModel.find({username: name}, 'name -_id');
+            let conversations = await this._convToUsersModel.find({username: name}, 'convId -_id').lean();
+            return conversations.map(obj => obj.convId);
         }
 
         async hasUser(name) {

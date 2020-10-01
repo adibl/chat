@@ -17,9 +17,6 @@ class DatabaseLoader {
                     logger.error("Cannot connect to the database!", err);
                     process.exit();
                 });
-            let usernameToSocketIds = new UsernameToSocketIdsRequests();
-            this.loaded = {
-                usernameToSocketIds};
         }
 
         return this.loaded;

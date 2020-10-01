@@ -27,7 +27,7 @@ class conversationServices {
             await this._conversationToUsers.create({convId: conversation.id, username:user});
         }
 
-        await this._webSocketHandler.sendMessage([...members, conversation.creator], conversation.id.toString(), "newGroup");
+        await this._webSocketHandler.sendMessage([...members, conversation.creator], conversation.id, "newGroup");
 
         return conversation;
     }

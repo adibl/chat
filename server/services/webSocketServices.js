@@ -17,9 +17,9 @@ class WebSocketServices {
             message = JSON.stringify(message);
         }
         for (let username of usernames) {
-            let sockets = await this._usernamesToSocketIds.get(username);
-            if (sockets) {
-                for (let socket of sockets) {
+            let userToSockets = await this._usernamesToSocketIds.find({username: username}, 'socketId -_id').lean();
+            if (userToSockets) {
+                for (let socket of userToSockets.map(obj => obj.socketId)) {
                     await this._io.to(socket).emit(type, message);
                     this._logger.info("send to " + socket);
                 }
