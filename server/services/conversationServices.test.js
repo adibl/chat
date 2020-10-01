@@ -5,17 +5,18 @@ const expect = chai.expect;
 const sinon = require("sinon");
 
 describe("conversationServices", function() {
-    let conversationRequests;
+    let conversationModel = function () {};
     let conversationToUsers;
     let conversationToMessages;
     let userServices;
     let webSocket;
 
     before(() => {
-        conversationRequests = {
-            add: sinon.spy(() => ({"creator": "adi", "name":"group"})),
-            clear: sinon.spy()
-        };
+        conversationModel.deleteMany = sinon.spy();
+        conversationModel.lean = sinon.spy((obj) => obj);
+        conversationModel.prototype.save = sinon.spy();
+        conversationModel.prototype.toJSON = sinon.fake.returns({creator: "rotem", id: "123"});
+
         conversationToUsers = {
             add : sinon.spy(() => ['adi', 'mor']),
             clear: sinon.spy()
@@ -40,26 +41,26 @@ describe("conversationServices", function() {
 
     it("clear should clear indexes", async () => {
 
-        let conversationServices = new conversationServicesFactory(conversationRequests, null,
+        let conversationServices = new conversationServicesFactory(conversationModel, null,
             conversationToUsers, conversationToMessages, webSocket);
 
         await conversationServices.clear();
-        expect(conversationRequests.clear.calledOnce).to.be.true;
+        expect(conversationModel.deleteMany.calledOnce).to.be.true;
         expect(conversationToUsers.clear.calledOnce).to.be.true;
         expect(conversationToMessages.clear.calledOnce).to.be.true;
     });
 
 
     it("should create conversation", async () => {
-        let conversationServices = new conversationServicesFactory(conversationRequests, userServices,
+        let conversationServices = new conversationServicesFactory(conversationModel, userServices,
             conversationToUsers, conversationToMessages, webSocket);
 
         let conversation = await conversationServices.createConversation({name: "rotem"}, ["mor", "adi"]);
-        expect(conversation).to.be.eql({name: "rotem"});
+        expect(conversation).to.be.eql({creator: "rotem", id: "123"});
     });
 
     it("create conversation fail due to undefined members", async () => {
-        let conversationServices = new conversationServicesFactory(conversationRequests, userServices,
+        let conversationServices = new conversationServicesFactory(conversationModel, userServices,
             conversationToUsers, conversationToMessages, webSocket);
         await expect(conversationServices.createConversation({name: "rotem"})).to.be.rejectedWith(Error);
     });
@@ -68,7 +69,7 @@ describe("conversationServices", function() {
         let userServices = {
             hasUser: sinon.fake((username) => username !== "adi")
         };
-        let conversationServices = new conversationServicesFactory(conversationRequests, userServices,
+        let conversationServices = new conversationServicesFactory(conversationModel, userServices,
             conversationToUsers, conversationToMessages, webSocket);
 
             await expect(conversationServices.createConversation({name: "rotem"}, ["mor", "adi"]))
@@ -76,9 +77,11 @@ describe("conversationServices", function() {
     });
 
     it("get conversation should work", async () => {
-        conversationRequests.get = () => ({"creator": "adi", "name":"group"});
+        let lean = {lean: sinon.fake.returns({"creator": "adi", "name":"group"})};
+        conversationModel.findById = () => lean;
+
         conversationToUsers.getByConversationId = () => ['adi', 'mor'];
-        let conversationServices = new conversationServicesFactory(conversationRequests, userServices,
+        let conversationServices = new conversationServicesFactory(conversationModel, userServices,
             conversationToUsers, conversationToMessages, webSocket);
 
         let conversation = await conversationServices.getConversation("123456");
@@ -86,7 +89,7 @@ describe("conversationServices", function() {
     });
 
     it("get conversation fail, conversation dont exist", async () => {
-        let conversationServices = new conversationServicesFactory(conversationRequests, userServices,
+        let conversationServices = new conversationServicesFactory(conversationModel, userServices,
             conversationToUsers, conversationToMessages, webSocket);
 
         try {
