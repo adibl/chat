@@ -8,8 +8,8 @@ let servicesLoader = require('../loaders/servicesLoader');
 let webSocketLoader = require("../loaders/webSocketLoader");
 const databaseLoader = require("../loaders/databseLoader");
 let database = databaseLoader.load();
-let webSocket =  webSocketLoader(server, database);
-let {userServices, conversationServices} = servicesLoader(database,webSocket);
+let webSocket = webSocketLoader(server, database);
+let {userServices, conversationServices} = servicesLoader(database, webSocket);
 const {expect} = chai;
 
 chai.use(chaiHttp);

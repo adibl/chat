@@ -10,7 +10,7 @@ const app = express();
 const server = http.createServer(app);
 
 let database = databaseLoader.load();
-let webSocket =  webSocketLoader(server, database);
+let webSocket = webSocketLoader(server, database);
 let {userServices, conversationServices, messageServices} = servicesLoader(database, webSocket);
 routersLoader(app, userServices, messageServices, conversationServices);
 

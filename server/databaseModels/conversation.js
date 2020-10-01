@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
     name: {type: 'string'},
-    type: {type: 'string',required: true, enum: ['group', 'personal']},
-    creator: {type: 'string',required: true}
+    type: {type: 'string', required: true, enum: ['group', 'personal']},
+    creator: {type: 'string', required: true}
 });
 
 const Conversation = mongoose.model('Conversations', schema);

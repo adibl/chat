@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const schema = new mongoose.Schema({
-    name: {type:'string', index: { unique: true }, required: true }
+    name: {type: 'string', index: {unique: true}, required: true}
 });
 
 schema.set('toJSON', {

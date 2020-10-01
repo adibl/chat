@@ -6,16 +6,17 @@ const sinon = require("sinon");
 var mongoose = require('mongoose');
 
 
-describe("messagesServices", function() {
+describe("messagesServices", function () {
     let message = {text: "data", sender: "adi"};
     let conversationToUsers = function () {};
     let conversationToMessages = function () {};
     let webSocketHandler;
-    let mongooseModel = function () {};
+    let mongooseModel = function () {
+    };
 
     before(() => {
         conversationToUsers.create = sinon.spy();
-        let lean2 = {lean: sinon.fake.returns([{username:"adi"}, {username:"mor"}])};
+        let lean2 = {lean: sinon.fake.returns([{username: "adi"}, {username: "mor"}])};
         conversationToUsers.find = () => lean2;
 
         conversationToMessages.prototype.save = sinon.spy();
@@ -37,14 +38,14 @@ describe("messagesServices", function() {
         let messagesServices = new messagesServicesFactory(conversationToMessages, mongooseModel,
             conversationToUsers, webSocketHandler);
         expect((await messagesServices.sendMessageToGroup(message, "0000"))).to.be.eql(message);
-        expect( conversationToMessages.prototype.save.calledOnce).to.be.true;
+        expect(conversationToMessages.prototype.save.calledOnce).to.be.true;
         expect(mongooseModel.prototype.save.calledOnce).to.be.true;
         expect(webSocketHandler.sendMessage.calledOnce).to.be.true;
     });
 
     it("should fail due to null message", async () => {
         let messagesServices = new messagesServicesFactory(conversationToMessages, mongooseModel,
-        conversationToUsers, webSocketHandler);
+            conversationToUsers, webSocketHandler);
         await expect(messagesServices.sendMessageToGroup(null, "0000")).to.be.rejectedWith(Error);
     });
 

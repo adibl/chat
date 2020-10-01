@@ -10,8 +10,8 @@ let servicesLoader = require('../loaders/servicesLoader');
 let webSocketLoader = require("../loaders/webSocketLoader");
 const databaseLoader = require("../loaders/databseLoader");
 let database = databaseLoader.load();
-let webSocket =  webSocketLoader(server, database);
-let {userServices, conversationServices} = servicesLoader(database,webSocket);
+let webSocket = webSocketLoader(server, database);
+let {userServices, conversationServices} = servicesLoader(database, webSocket);
 
 chai.use(chaiHttp);
 
@@ -72,7 +72,10 @@ describe('Conversation', () => {
         let conversationId = null;
 
         before(async (done) => {
-            let conversation = await conversationServices.createConversation({creator: "adi", type:"personal"}, ["matan"]);
+            let conversation = await conversationServices.createConversation({
+                creator: "adi",
+                type: "personal"
+            }, ["matan"]);
             conversationId = conversation.id;
             done();
         });

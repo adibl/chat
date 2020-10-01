@@ -23,8 +23,8 @@ class conversationServices {
         let mongooseConv = await new this._conversationModel(conversationJson);
         mongooseConv.save();
         let conversation = mongooseConv.toJSON();
-        for(let user of [...members, conversation.creator]) {
-            await this._conversationToUsers.create({convId: conversation.id, username:user});
+        for (let user of [...members, conversation.creator]) {
+            await this._conversationToUsers.create({convId: conversation.id, username: user});
         }
 
         await this._webSocketHandler.sendMessage([...members, conversation.creator], conversation.id, "newGroup");

@@ -1,4 +1,3 @@
-
 class WebSocketServices {
 
     constructor(io, socketConnection, usernamesToSocketIds, logger) {
@@ -12,8 +11,8 @@ class WebSocketServices {
         });
     }
 
-    async sendMessage(usernames, message, type="message") {
-        if (! message instanceof String) {
+    async sendMessage(usernames, message, type = "message") {
+        if (!message instanceof String) {
             message = JSON.stringify(message);
         }
         for (let username of usernames) {

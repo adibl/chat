@@ -1,8 +1,7 @@
-
 class SocketConnections {
     constructor(usersToSocketIds, logger) {
         this._usersToSocketIds = usersToSocketIds;
-        this._logger = logger
+        this._logger = logger;
     }
 
     addUser(socket) {
@@ -13,8 +12,8 @@ class SocketConnections {
         });
 
         socket.on('disconnect', async () => {
-            let username = await this._usersToSocketIds.findOneAndDelete({ socketId: socket.id });
-            //this._logger.info(`user ${username.username} logged out`);
+            let username = await this._usersToSocketIds.findOneAndDelete({socketId: socket.id});
+            this._logger.info(`user ${username.username} logged out`);
         });
     }
 

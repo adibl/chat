@@ -24,8 +24,8 @@ function CreateRouter(userServices) {
             res.json(newUser);
         }
         catch (e) {
-            if(e instanceof mongoose.Error.ValidationError) {
-                next(createError(400), e)
+            if (e instanceof mongoose.Error.ValidationError) {
+                next(createError(400), e);
             }
 
             next(createError(500, e));

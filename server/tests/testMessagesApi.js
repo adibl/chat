@@ -9,8 +9,8 @@ let servicesLoader = require('../loaders/servicesLoader');
 let webSocketLoader = require("../loaders/webSocketLoader");
 const databaseLoader = require("../loaders/databseLoader");
 let database = databaseLoader.load();
-let webSocket =  webSocketLoader(server, database);
-let {userServices, conversationServices, messageServices} = servicesLoader(database,webSocket);
+let webSocket = webSocketLoader(server, database);
+let {userServices, conversationServices, messageServices} = servicesLoader(database, webSocket);
 
 const {expect} = chai;
 
@@ -30,7 +30,7 @@ describe('Messages', () => {
         await userServices.createOrGetUser("adi");
         await userServices.createOrGetUser("matan");
         await userServices.createOrGetUser("rotem");
-        let conversation = await conversationServices.createConversation({creator:"adi", type:"personal"}, ["rotem"]);
+        let conversation = await conversationServices.createConversation({creator: "adi", type: "personal"}, ["rotem"]);
         conversationId = conversation.id;
         done();
     });

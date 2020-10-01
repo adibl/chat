@@ -1,9 +1,8 @@
-
 const mongoose = require('mongoose');
 const schema = new mongoose.Schema({
-    text: {type: 'string',required: true},
-    sender: {type: 'string',required: true}
-}, { timestamps: { createdAt: 'created_at' } });
+    text: {type: 'string', required: true},
+    sender: {type: 'string', required: true}
+}, {timestamps: {createdAt: 'created_at'}});
 
 schema.index({"created_at": 1});
 

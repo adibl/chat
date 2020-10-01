@@ -5,8 +5,6 @@ const expect = chai.expect;
 const sinon = require("sinon");
 const mongoose = require('mongoose');
 
-
-
 describe("conversationServices", function() {
     let conversationModel = function () {};
     let conversationToUsers  = function () {};
@@ -15,13 +13,13 @@ describe("conversationServices", function() {
 
     before(() => {
         conversationModel.deleteMany = sinon.spy();
-        let lean = {lean: sinon.fake.returns({"creator": "adi", "name":"group"})};
+        let lean = {lean: sinon.fake.returns({"creator": "adi", "name": "group"})};
         conversationModel.findById = () => lean;
         conversationModel.prototype.save = sinon.spy();
         conversationModel.prototype.toJSON = sinon.fake.returns({creator: "rotem", id: "123"});
 
         conversationToUsers.create = sinon.spy();
-        let lean2 = {lean: sinon.fake.returns([{username:"adi"}, {username:"mor"}])};
+        let lean2 = {lean: sinon.fake.returns([{username: "adi"}, {username: "mor"}])};
         conversationToUsers.find = () => lean2;
 
         userServices = {
@@ -30,7 +28,7 @@ describe("conversationServices", function() {
 
         webSocket = {
             sendMessage: sinon.spy()
-        }
+        };
     });
 
     afterEach(() => {
@@ -58,8 +56,8 @@ describe("conversationServices", function() {
         let conversationServices = new conversationServicesFactory(conversationModel, userServices,
             conversationToUsers, webSocket);
 
-            await expect(conversationServices.createConversation({name: "rotem"}, ["mor", "adi"]))
-                .to.be.rejectedWith(Error);
+        await expect(conversationServices.createConversation({name: "rotem"}, ["mor", "adi"]))
+            .to.be.rejectedWith(Error);
     });
 
     it("get conversation should work", async () => {
@@ -68,7 +66,7 @@ describe("conversationServices", function() {
             conversationToUsers, webSocket);
 
         let conversation = await conversationServices.getConversation("123456");
-        expect(conversation).to.be.eql({"creator": "adi", "name":"group", "members": ['adi', 'mor']});
+        expect(conversation).to.be.eql({"creator": "adi", "name": "group", "members": ['adi', 'mor']});
     });
 
     it("get conversation fail, conversation dont exist", async () => {
