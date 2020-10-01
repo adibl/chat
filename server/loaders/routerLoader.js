@@ -10,8 +10,13 @@ module.exports = (app, userServices, messageServices, conversationServices) => {
     app.use(express.json());
     app.use(express.urlencoded());
     app.use((req, res, next) => {
+        let url = req.url;
+        res.on('finish', () => {
+            logger.info(`${req.method} ${url} - ${res.statusCode}`);
+        });
         next();
-        logger.info(`${req.method} ${req.url} - ${res.statusCode}`);
+
+
     });
 
 
