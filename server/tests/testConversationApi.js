@@ -23,7 +23,13 @@ describe('Conversation', () => {
     });
 
     after(async () => {
-        await mongoose.connection.db.dropCollection('conversations');
+        try {
+            await mongoose.connection.db.dropCollection('users');
+            await mongoose.connection.db.dropCollection('conversations');
+            await mongoose.connection.db.dropCollection('convtousers');
+        }
+        catch (e) {
+        }
     });
 
     describe('POST /conversations', () => {

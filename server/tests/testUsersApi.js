@@ -23,7 +23,13 @@ describe('Users', () => {
 
 
     after(async () => {
-        await mongoose.connection.db.dropCollection('users');
+        try {
+            await mongoose.connection.db.dropCollection('users');
+            await mongoose.connection.db.dropCollection('conversations');
+            await mongoose.connection.db.dropCollection('convtousers');
+        }
+        catch (e) {
+        }
     });
 
     describe('get /users', () => {
