@@ -1,4 +1,3 @@
-let ConversationToMessagesRequests = require('../database/requests/conversationToMessages');
 let ConversationToUsersRequests = require('../database/requests/conversationToUsers');
 let UsernameToSocketIdsRequests = require('../database/requests/usernameToSocketIds');
 const logger = require("../loaders/loggerLoader");
