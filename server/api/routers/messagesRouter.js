@@ -25,14 +25,14 @@ function CreateRouter(messageServices) {
     });
 
     router.get('/:conversationId', async function (req, res, next) {
-        let index = req.query.index;
+        let lastId = req.query.lastId;
         let limit = req.query.limit;
-        if (isNaN(Number(index)) || isNaN(Number(limit))) {
-            next(createError(404, "must contain integers limit and index as url parameters"));
+        if (isNaN(Number(limit))) {
+            next(createError(404, "must contain integers limit  as url parameter"));
         }
 
         try {
-            let messages = await messageServices.getMessages(req.params.conversationId, Number(index), Number(limit));
+            let messages = await messageServices.getMessages(req.params.conversationId, Number(lastId), Number(limit));
             res.status(200).json(messages);
         }
         catch (e) {

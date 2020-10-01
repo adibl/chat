@@ -12,7 +12,7 @@ class SocketConnections {
         });
 
         socket.on('disconnect', async () => {
-            let user = await this._usersToSocketIds.findOneAndDelete({socketId: socket.id}).lean();
+            let user = await this._usersToSocketIds.deleteOne({socketId: socket.id}).lean();
             this._logger.info(`user ${user.username} logged out`);
         });
     }

@@ -33,9 +33,15 @@ class messagesServices {
         return message;
     }
 
-    async getMessages(conversationId, index, limit) {
+    async getMessages(conversationId, lastId, limit) {
 
-        let messages = await this._convToMessageModel.find({convId: conversationId}).sort('created_at').skip(index).limit(limit);
+        let query = {convId: conversationId};
+        if (lastId) {
+            //index - limit because we need from the last message limit backwards.
+            query.messageId = {$lt: lastId};
+        }
+
+        let messages = await this._convToMessageModel.find(query).sort('-messageId').limit(limit);
         let messagesIds = messages.map(obj => obj.messageId);
         return await this._messages.find().where('_id').in(messagesIds).lean();
     }

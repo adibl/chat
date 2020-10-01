@@ -1,10 +1,14 @@
 const mongoose = require('mongoose');
+autoIncrement = require('mongoose-auto-increment');
+
+autoIncrement.initialize(mongoose.connection);
+
 const schema = new mongoose.Schema({
     text: {type: 'string', required: true},
     sender: {type: 'string', required: true}
-}, {timestamps: {createdAt: 'created_at'}});
+});
 
-schema.index({"created_at": 1});
+schema.plugin(autoIncrement.plugin, 'Message');
 
 const Message = mongoose.model('Messages', schema);
 

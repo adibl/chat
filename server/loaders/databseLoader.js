@@ -1,5 +1,6 @@
 const logger = require("../loaders/loggerLoader");
-
+const autoIncrement = require('mongoose-auto-increment');
+const mongoose = require('mongoose');
 class DatabaseLoader {
     constructor() {
         this.loaded = null;
@@ -7,8 +8,8 @@ class DatabaseLoader {
 
     load() {
         if (!this.loaded) {
-            const mongoose = require('mongoose');
-            let conn = mongoose.connect('mongodb://localhost:27017/test', {
+
+            mongoose.connect('mongodb://localhost:27017/test', {
                 useNewUrlParser: true,
                 useUnifiedTopology: true
             })
@@ -20,7 +21,6 @@ class DatabaseLoader {
                     process.exit();
                 });
         }
-
         return this.loaded;
     }
 }

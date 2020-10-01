@@ -71,7 +71,7 @@ describe('Messages', () => {
         });
 
         describe('GET /messages/:conversationId', () => {
-            let message;
+            let lastMessage;
 
             before(async () => {
                 try {
@@ -81,8 +81,9 @@ describe('Messages', () => {
                 catch (e) {
                 }
 
-                message = await messageServices.sendMessageToGroup({text: "first", sender: "adi"}, conversationId);
-                await messageServices.sendMessageToGroup({text: "second", sender: "adi"}, conversationId);
+                 await messageServices.sendMessageToGroup({text: "1", sender: "adi"}, conversationId);
+                await messageServices.sendMessageToGroup({text: "2", sender: "adi"}, conversationId);
+                lastMessage = await messageServices.sendMessageToGroup({text: "3", sender: "adi"}, conversationId);
             });
 
             after(async () => {
@@ -90,24 +91,24 @@ describe('Messages', () => {
                 await mongoose.connection.db.dropCollection('messages');
             });
 
-            it('it should get first message', (done) => {
+            it('it should get 3 message', (done) => {
                 chai.request(server)
-                    .get(`/messages/${conversationId}?index=0&limit=1`)
+                    .get(`/messages/${conversationId}?&limit=1`)
                     .end((err, res) => {
                         expect(res).to.have.status(200);
                         expect(res.body).to.be.an('Array');
-                        expect(res.body[0].text).to.be.eql('first');
+                        expect(res.body[0].text).to.be.eql('3');
                         done();
                     });
             });
 
-            it('it should get second message', (done) => {
+            it('it should get 2 message', (done) => {
                 chai.request(server)
-                    .get(`/messages/${conversationId}?index=1&limit=1`)
+                    .get(`/messages/${conversationId}?lastId=${lastMessage.id}&limit=1`)
                     .end((err, res) => {
                         expect(res).to.have.status(200);
                         expect(res.body).to.be.an('Array');
-                        expect(res.body[0].text).to.be.eql('second');
+                        expect(res.body[0].text).to.be.eql('2');
                         done();
                     });
             });
