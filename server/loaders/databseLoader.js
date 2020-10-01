@@ -1,4 +1,3 @@
-let ConversationRequests = require('../database/requests/conversations');
 let ConversationToMessagesRequests = require('../database/requests/conversationToMessages');
 let ConversationToUsersRequests = require('../database/requests/conversationToUsers');
 let UsernameToSocketIdsRequests = require('../database/requests/usernameToSocketIds');
@@ -20,11 +19,10 @@ class DatabaseLoader {
                     logger.error("Cannot connect to the database!", err);
                     process.exit();
                 });
-            let conversationRequests = new ConversationRequests();
             let conversationToMessagesRequests = new ConversationToMessagesRequests();
             let conversationToUsersRequests = new ConversationToUsersRequests();
             let usernameToSocketIds = new UsernameToSocketIdsRequests();
-            this.loaded = {conversationRequests, conversationToMessagesRequests, conversationToUsersRequests,
+            this.loaded = {conversationToMessagesRequests, conversationToUsersRequests,
                 usernameToSocketIds};
         }
 

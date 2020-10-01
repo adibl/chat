@@ -1,12 +1,19 @@
-const generateId = require("../../services/IdService");
+const mongoose = require('mongoose');
 
-class Conversation {
-    constructor(creator, type, name) {
-        this.id = generateId();
-        this.name = name;
-        this.type = type;
-        this.creator = creator;
+const schema = new mongoose.Schema({
+    name: {type: 'string'},
+    type: {type: 'string',required: true, enum: ['group', 'personal']},
+    creator: {type: 'string',required: true}
+});
+
+const Conversation = mongoose.model('Conversations', schema);
+
+schema.set('toJSON', {
+    transform: function (doc, ret, options) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
     }
-}
+});
 
 module.exports = Conversation;

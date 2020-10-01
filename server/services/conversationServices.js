@@ -1,6 +1,6 @@
 class conversationServices {
-    constructor(conversationRequests, userServices, conversationToUsers, conversationToMessages, webSocketHandler) {
-        this._conversationRequests = conversationRequests;
+    constructor(conversationModel, userServices, conversationToUsers, conversationToMessages, webSocketHandler) {
+        this._conversationModel = conversationModel;
         this._userServices = userServices;
         this._conversationToUsers = conversationToUsers;
         this._conversationToMessages = conversationToMessages;
@@ -15,24 +15,26 @@ class conversationServices {
         }
     }
 
-    async createConversation(conversation, members) {
-        if (!members || !conversation) {
+    async createConversation(conversationJson, members) {
+        if (!members || !conversationJson) {
             throw new RangeError('conversation or members dont exist');
         }
-        await this._testUsersExist([...members, conversation.creator]);
+        await this._testUsersExist([...members, conversationJson.creator]);
 
-        await this._conversationRequests.add(conversation);
-        await this._conversationToUsers.add(conversation.id, [...members, conversation.creator]);
-        await this._conversationToMessages.create(conversation.id);
-        await this._webSocketHandler.sendMessage([...members, conversation.creator], conversation.id, "newGroup");
+        let mongooseConv = await new this._conversationModel(conversationJson);
+        mongooseConv.save();
+        let conversation = mongooseConv.toJSON();
+        await this._conversationToUsers.add(conversation.id.toString(), [...members, conversation.creator]);
+        await this._conversationToMessages.create(conversation.id.toString());
+        await this._webSocketHandler.sendMessage([...members, conversation.creator], conversation.id.toString(), "newGroup");
 
         return conversation;
     }
 
     async getConversation(id) {
-        let conversation = await this._conversationRequests.get(id);
+        let conversation = await this._conversationModel.findById(id).lean();
         if (conversation) {
-            conversation.members = await this._conversationToUsers.getByConversationId(id);
+            conversation.members = await this._conversationToUsers.getByConversationId(id.toString());
             return conversation;
         }
         else {
@@ -41,7 +43,7 @@ class conversationServices {
     }
 
     async clear() {
-        await this._conversationRequests.clear();
+        await this._conversationModel.deleteMany({});
         await this._conversationToUsers.clear();
         return this._conversationToMessages.clear();
     }

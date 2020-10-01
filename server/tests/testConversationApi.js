@@ -8,8 +8,6 @@ let uuid = require('uuid');
 let servicesLoader = require('../loaders/servicesLoader');
 let webSocketLoader = require("../loaders/webSocketLoader");
 const databaseLoader = require("../loaders/databseLoader");
-const Conversation = require("../database/models/conversation");
-const User = require("../database/models/user");
 let database = databaseLoader.load();
 let webSocket =  webSocketLoader(server, database);
 let {userServices, conversationServices} = servicesLoader(database,webSocket);
@@ -69,7 +67,7 @@ describe('Conversation', () => {
 
         beforeEach(async (done) => {
             await conversationServices.clear();
-            let conversation = await conversationServices.createConversation(new Conversation("adi", "personal"), ["matan"]);
+            let conversation = await conversationServices.createConversation({creator: "adi", type:"personal"}, ["matan"]);
             conversationId = conversation.id;
             done();
         });
