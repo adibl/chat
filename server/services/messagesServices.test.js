@@ -13,18 +13,6 @@ describe("messagesServices", function() {
     let webSocketHandler;
     let mongooseModel = function () {};
 
-
-
-    class messagesRequests {
-        constructor() {
-        }
-
-        async save() {
-        }
-
-        toJSON = sinon.spy().returns(message);
-    }
-
     before(() => {
 
         conversationToUsers = {

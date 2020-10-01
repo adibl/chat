@@ -1,8 +1,8 @@
 
 const mongoose = require('mongoose');
 const schema = new mongoose.Schema({
-    text: 'string',
-    sender: 'string'
+    text: {type: 'string',required: true},
+    sender: {type: 'string',required: true}
 });
 
 const Message = mongoose.model('Messages', schema);

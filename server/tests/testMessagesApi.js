@@ -46,5 +46,15 @@ describe('Messages', () => {
                     done();
                 });
         });
+
+        it('it should fail, no sender specified', (done) => {
+            chai.request(server)
+                .post(`/messages/${conversationId}`)
+                .send({"text": "hi"})
+                .end((err, res) => {
+                    expect(res).to.have.status(404);
+                    done();
+                });
+        });
     });
 });

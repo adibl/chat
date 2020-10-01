@@ -6,6 +6,7 @@ const User = require("../database/models/user");
 
 describe("userServices", function() {
     let mongooseModel = function () {};
+
     class UsersMock {
         constructor(name) {
             this.name = name;
